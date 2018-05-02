@@ -1,0 +1,273 @@
+%!TEX output_directory = temp
+\documentclass[letterpaper, 12pt]{amsart}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%% boilerplate packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\usepackage{amsmath,amssymb,amsthm}
+	\usepackage[mathscr]{euscript}
+	\usepackage{enumerate}
+	\usepackage{graphicx}
+	\usepackage{mathrsfs}
+	\usepackage{color}
+	\usepackage{hyperref}
+	\usepackage{verbatim}
+	% \usepackage[margin=1.5in]{geometry}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%% rename the abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% \renewcommand{\abstractname}{Introduction}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% sets %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% sets 
+		\DeclareMathOperator{\N}{\mathbb{N}}
+		\DeclareMathOperator{\Z}{\mathbb{Z}}
+		\DeclareMathOperator{\Zp}{\mathbb{Z}^{+}}
+		\DeclareMathOperator{\Q}{\mathbb{Q}}
+		\DeclareMathOperator{\Qp}{\mathbb{Q}^{+}}
+		\DeclareMathOperator{\Qc}{\mathbb{Q}^{c}}
+		\DeclareMathOperator{\R}{\mathbb{R}}
+		\DeclareMathOperator{\Rp}{\mathbb{R}^{+}}
+		\DeclareMathOperator{\C}{\mathbb{C}}
+		\DeclareMathOperator{\Cnon}{\mathbb{C}^{\times}}
+		%% powerset of a set
+		\DeclareMathOperator{\pset}{\mathcal{P}}
+		%% set of continuous functions in a certain variable
+		\DeclareMathOperator{\cont}{\mathscr{C}}
+		%% set of functions in a certain variable
+		\DeclareMathOperator{\func}{\mathscr{F}}
+		
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% linear algebra %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% linear span
+		\DeclareMathOperator{\Ell}{\mathscr{L}}
+		%% bold vectors with arrows, and bold matrices
+		\newcommand{\bmat}[1]{{\mathbf{#1}}}
+		\newcommand{\bvec}[1]{{\vec{\mathbf{#1}}}}
+		%% independent vectors/matrices
+		\DeclareMathOperator{\ind}{\perp\!\!\!\perp}
+		%% order
+		\DeclareMathOperator{\ord}{\text{ord}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%% probability & statistics %%%%%%%%%%%%%%%%%%%%%%%%%
+		%% probability, expectation, variance, etc.
+		\renewcommand{\Pr}{\mathbb{P}}
+		\DeclareMathOperator{\E}{\mathbb{E}}
+		\DeclareMathOperator{\var}{\rm Var}
+		\DeclareMathOperator{\sd}{\rm SD}
+		\DeclareMathOperator{\cov}{\rm Cov}
+		\DeclareMathOperator{\SE}{\rm SE}
+		\DeclareMathOperator{\ssreg}{{\rm SS}_{{\rm Reg}}}
+		\DeclareMathOperator{\ssr}{{\rm SS}_{{\rm Res}}}
+		\DeclareMathOperator{\sst}{{\rm SS}_{{\rm Tot}}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% congruences %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\renewcommand{\mod}[1]{\ (\mathrm{mod}\ #1)}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% bracket notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		% I first used this for principal ideals, that is why the abbreviation is pid
+		\newcommand{\pid}[1]{\langle #1 \rangle}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% fatdot notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\makeatletter
+			\newcommand*\fatdot{\mathpalette\fatdot@{.5}}
+			\newcommand*\fatdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+		\makeatother
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% use pretty letters %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\DeclareMathOperator{\ep}{\varepsilon}
+		\DeclareMathOperator{\ph}{\varphi}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% amsthm %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\newtheorem{thm}{Theorem}
+
+\begin{document}
+	\title{Homework 2  -- Math 392 \\ \today}
+	\author{Alex Thies \\ \href{mailto:athies@uoregon.edu}{\lowercase{athies$@$uoregon.edu}}}
+
+	\maketitle
+
+	\section{Book Problems}
+	\label{sec:book_problems}
+		\subsection*{Problem 7.66}
+		\label{sub:problem_7_66}
+		For the polynomial $a(x) = 2 + x+ 2x^{2} + x^{3} + 0x^{4} + 2x^{5}$ in $\Z_{3}[x]$, calculate $a(c)$ for every $c \in \Z_{3}$. 
+		Are there any roots for $a(x)$ in $\Z_{3}$? 
+		(Don't forget to use $+_{3}$ and $\cdot_{3}$ for elements of $\Z_{3}$.)
+			\begin{proof}
+			We compute the following,
+
+			\begin{figure}[h]
+				\begin{tabular}{c|c}
+				$c \in \Z_{3}$ & $a(c)$ \\
+				\hline
+				0 & $a(0) = 2 + 0 + \cdots + 0 = 2$. \\ 
+				1 & $a(1) = 2 + 1 + 2 + 1 + 0 + 2 = 8 \equiv 2 \mod{3}$. \\
+				2 & $a(2) = 2 + 2 + 2 + 2 + 0 + 4 = 12 \equiv 0 \mod{3}$.
+				\end{tabular}
+			\end{figure}
+
+			Thus $a(0) = 2$, $a(1) = 2$, and $a(2) = 0$.
+
+			Notice that $c = 2$ is a root.
+			\end{proof}
+		% subsection problem_7_66 (end)
+
+		\subsection*{Problem 7.67}
+		\label{sub:problem_7_67}
+		Suppose $A$ and $K$ are commutative rings with unity and $f : A \to K$ is a nonzero ring homomorphism. 
+		Prove: If $c \in A$ is a root for $a(x) \in A[x]$ then $f(c)$ is a root for $\bar{f}(a(x))$ in $K[x]$.
+			\begin{proof}
+			Let $A$, $K$, and $f$ be as above, and let $c \in A$ be a root for $a(x) \in A[x]$, i.e., let $a(c) = 0_{A}$.
+			Recall that $\bar{f}(a(x))$ outputs a new polynomial that lives in $K[x]$, we will show that $\bar{f}(a(f(c)) = 0_{K}$, and thus $f(c) \in K$ is a root for $\bar{f}(a(f(c)) \in K[x]$.
+			We compute the following, making frequent use of the fact that $f$ is a ring homomorphism.
+				\begin{align*}
+				\bar{f}(a(f(c))) &= f(a_{0}) + f(a_{1})f(c) + f(a_{2})f^{2}(c) + \cdots + f(a_{n})f^{n}(c), \\
+				&= f(a_{0}) + f(a_{1}c) + f(a_{2}c^{2}) + \cdots + f(a_{n}c^{n}), \\
+				&= f\left( a_{0} + a_{1}c + a_{2}c^{2} + \cdots + a_{n}c^{n} \right), \\
+				&= f(a(c)), \\
+				&= f(0_{A}), \\
+				&= 0_{K}.
+				\end{align*}
+			Thus, $f(c) \in K$ is a root for $\bar{f}(a(x)) \in K[x]$, as we aimed to prove.				
+			\end{proof}
+		% subsection problem_7_67 (end)
+
+		\subsection*{Problem 7.68}
+		\label{sub:problem_7_68}
+		Complete the proof of Theorem 7.35 by showing that $h_{c}(a(x) + b(x)) = a(c) + b(c) = h_{c}(a(x)) + h_{c}(b(x))$ for $a(x), b(x) \in A[x]$.
+			\begin{proof}
+			Let $h_{c}$, $a(x)$, $b(x)$ be as defined in Theorem 7.35.
+			We will show that $h_{c}$ is additive,
+				\begin{align*}
+				h_{c}(a(x) + b(x)) &= h_{c}\left( \sum\limits_{i=0}^{n} a_{i}x^{i} + \sum\limits_{i=0}^{m} b_{i}x^{i} \right), \\
+				&= h_{c}\left( \sum\limits_{i=0}^{\max{(n,m)}} (a_{i} + b_{i})x^{i} \right), \\
+				&= \sum\limits_{i=0}^{\max{(n,m)}} (a_{i} + b_{i})c^{i}, \\
+				&= \sum\limits_{i=0}^{n} a_{i}c^{i} + \sum\limits_{i=0}^{m} b_{i}c^{i}, \\
+				&= a(c) + b(c), \\
+				&= h_{c}(a(x)) + h_{c}(b(x)).
+				\end{align*}
+			Thus, $h_{c}$ is additive, as we aimed to show.				
+			\end{proof}
+		% subsection problem_7_68 (end)
+
+		\subsection*{Problem 7.70}
+		\label{sub:problem_7_70}
+		Define $S = \{ a(x) \in \Z[x] : a(0) = a \ \text{and } a(2) = a \}$. 
+		Prove that $S$ is an ideal of $\Z[x]$.
+			\begin{proof}
+			To show that $S$ is an ideal of $\Z[x]$ we must prove that $S \subseteq \Z[x]$ such that $S \neq \emptyset$, that $S$ forms a ring under the polynomial arithmetic operations that are defined on $\Z[x]$, and lastly, that $S$ absorbs multiplication from $\Z[x]$.
+
+			Notice that $S$ can be colloquially defined as the set of polynomials with integer coefficients, and roots at $0$ and $2$.
+			We can see right away that $0(x) \in S$, hence $S \neq \emptyset$; $S \subseteq \Z[x]$ is obvious by how we defined $S$.
+
+			To show that $S$ forms a ring under the simple polynomial arithmetic operations on $\Z[x]$, we must show that $S$ is closed by subtraction, and under additive inverses.
+			Let $a(x),b(x) \in S$, then we can write them like
+			\begin{align*}
+			a(x) &= x(x-2)(x-c_{2})\cdots(x-c_{n}), \\
+			b(x) &= x(x-2)(x-d_{2})\cdots(x-d_{n}),
+			\end{align*}
+			where $c_{i}, d_{i}$ are the other roots of $a(x), b(x)$, that may or may not exist.
+			We can see that polynomial additition preserves roots,
+			\begin{align*}
+			a(x) + b(x) &= x(x-2)(x-c_{2})\left[ (x-c_{2})\cdots(x-c_{n}) \right. \\
+			& \left. \hspace{4cm} + (x-d_{2})\cdots(x-d_{n}) \right],
+			\end{align*}
+			hence $a(x) + b(x) \in S$, and $S$ is closed under addition.
+			We can see that the additive inverse of $a(x) \in \Z[x]$ can be generated by the polynomial $-a(x)$, where $a'_{i} \in -a(x)$ such that $a'_{i} = -a_{i}$ for each $i \in \N$.
+			Since $\Z$ and $\Z[x]$ are rings, these individual additive inverse coefficients exist, thus $S$ is closed under the taking of additive inverses.
+			Taken together, these properties of $S$ imply that $S$ is closed under subtraction; it remains to show that $S$ absorbs multiplication from $\Z[x]$.
+			This is easily seen by the associativity of polynomial multiplication.
+
+			Let $f(x) \in \Z[x]$, suc that $f(x)$ has roots $e_{i}$, we compute the following,
+			\begin{align*}
+			a(x) \cdot f(x) &= [x(x-2)(x-c_{1})\cdots(x-c_{n})] \cdot [(x-e_{1})\cdots(x-e_{n})], \\
+			&= x(x-2) [(x-c_{1})\cdots(x-c_{n})(x-e_{1})\cdots(x-e_{n})].
+			\end{align*}
+			Hence $a(x)f(x)$ has roots at $0$ and $2$, thus $a(x)f(x) \in S$ and $S$ absorbs multiplication from $\Z[x]$.
+			It follows that we have shown $S$ is an ideal of $\Z[x]$. 
+			\end{proof}
+		% subsection problem_7_70 (end)
+
+		\subsection*{Problem 8.1}
+		\label{sub:problem_8_1}
+		Prove: If $K$ is a field and $a(x) \in K[x]$ then every constant polynomial in $K[x]$ is a factor of $a(x)$. 
+		(Remember that $0(x)$ is not a constant polynomial.)
+			\begin{proof}
+			Let $K$, $a(x)$ be as above, and let $b(x) \in K[x]$ such that $b(x) = b_{0}$ for arbitrary $b_{0} \in K$.
+			We want to show that there exists a polynomial $f(x) \in K[x]$ such that $a(x) = b(x)f(x)$.
+			Consider the polynomial $f(x) = \sum_{i=0}^{n} f_{i}x^{i}$, where $f_{i} = a_{i}/b_{0}$.
+			Recall that since $K$ is a field, $1/b_{0} \in K$, so $f(x) \in K[x]$.
+			We compute the following,
+				\begin{align*}
+				b(x)f(x) &= b_{0}\sum\limits_{i=0}^{n} f_{i}x^{i}, \\
+				&= \sum\limits_{i=0}^{n} b_{0}\left( \frac{a_{i}}{b_{0}} \right)x^{i}, \\
+				&= \sum\limits_{i=0}^{n} a_{i}x^{i}, \\
+				&= a(x).
+				\end{align*}
+			Thus, for a field $K$ and polynomial ring $K[x]$, each nonzero constant polynomial that lives in $K[x]$ is a factor of any other element of $K[x]$, as we aimed to show.				
+			\end{proof}
+		% subsection problem_8_1 (end)
+
+		\subsection*{Problem 8.4}
+		\label{sub:problem_8_4}
+		Find nonzero polynomials $a(x), b(x) \in \Z_{10}[x]$ which are associates but $\deg(a(x)) \neq \deg(b(x))$.
+			\begin{proof}
+			Let $b(x) = 2x^{2} + 7x + 1$, and let $c = 5$.
+			We compute the following,
+				\begin{align*}
+				c \cdot b(x) &= 10x^{2} + 35x + 5, \\
+				&\equiv 0x^{2} + 5x + 5 \mod{10}.
+				\end{align*}
+			So with $a(x) = 5(x+1)$, we can see that $a(x)$ and $b(x)$ are associates while their degrees are not equal.				
+			\end{proof}
+		% subsection problem_8_4 (end)
+
+		\subsection*{Problem 8.5}
+		\label{sub:problem_8_5}
+		Suppose $K$ is a field and $a(x) \in K[x]$ with $a(x) \neq 0(x)$. 
+		Prove: If $b(x), e(x) \in K[x]$ with $a(x) = b(x)e(x)$ and $\deg(e(x)) \neq 0$, then $\deg(b(x)) < \deg(a(x))$.
+			\begin{proof}
+			Let $K$, $a(x)$ be as above and assume that there exist $b(x), e(x) \in K[x]$ such that $a(x) = b(x)e(x)$, and $e(x) \neq 0(x)$.
+			Since $K$ is a field, $K[x]$ is an integral domain, thus $\deg(a(x)) = \deg(b(x)) + \deg(e(x))$.
+			From here its pretty clear that $\deg(a(x)) \geq \deg(b(x))$.
+			\end{proof}
+		% subsection problem_8_5 (end)
+
+		\subsection*{Problem 8.19}
+		\label{sub:problem_8_19}
+		Find two nonconstant polynomials $a(x), b(x) \in \Z_{5}[x]$ which have exactly the same roots in $\Z_{5}$ but are not associates.
+			\begin{proof}
+			Let $a(x) = (x^{2} + 1)(x-1)$ and $b(x) = (x^{2} + 2)(x-1)$.
+			Notice that $a(x)$ and $b(x)$ have exactly the same roots in $\Z_{5}$, that being $c = 1$.
+			If we expand these polynomials we see that $a(x) = x^{3} - 2x^{2} + x - 2$ and $b(x) = x^{3} - 2x^{2} + 2x - 4$, it is clear that these are not associates.
+			\end{proof}
+		% subsection problem_8_19 (end)
+
+		This assignment got away from me a little bit towards the end of the week, so I was unable to finish the last two problems in time.
+
+		\subsection*{Problem 8.25}
+		\label{sub:problem_8_25}
+		Prove Theorem 8.12.
+			\setcounter{thm}{11}
+			\begin{thm}
+			Let $K$ be a field, and assume that $p(x) \in K[x]$ is irreducible over $K$.
+			If $a(x)$, $b(x) \in K[x]$ and $p(x)$ is a factor of the product $a(x)b(x)$, then $p(x)$ is a factor of at least one of $a(x)$ or $b(x)$.
+			\end{thm}
+			\begin{proof}
+			\end{proof}
+		% subsection problem_8_25 (end)
+
+		\subsection*{Problem 8.28}
+		\label{sub:problem_8_28}
+		Show that the assumption of $p(x)$ irreducible in Theorem 8.12 was needed, by finding nonconstant polynomials $a(x),b(x),c(x) \in \Z_{5}[x]$ so that $b(x)$ is a factor of $a(x)c(x)$ but $b(x)$ is not a factor of either $a(x)$ or $c(x)$.
+			\begin{proof}
+			\end{proof}
+		% subsection problem_8_28 (end)
+	% section book_problems (end)
+\end{document}

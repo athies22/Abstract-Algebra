@@ -1,0 +1,1214 @@
+%!TEX output_directory = summTemp
+\documentclass[letterpaper, 12pt]{article}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%% boilerplate packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\usepackage{amsmath,amssymb,amsthm}
+	\usepackage[mathscr]{euscript}
+	\usepackage{enumerate}
+	\usepackage{graphicx}
+	\usepackage{mathrsfs}
+	\usepackage[dvipsnames]{xcolor}
+	% \usepackage{hyperref}
+	\usepackage{verbatim}
+	\usepackage{stmaryrd}
+	% \usepackage[margin=1.5in]{geometry}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%% rename the abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% \renewcommand{\abstractname}{Introduction}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% sets %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% sets 
+		\DeclareMathOperator{\N}{\mathbb{N}}
+		\DeclareMathOperator{\Z}{\mathbb{Z}}
+		\DeclareMathOperator{\Zp}{\mathbb{Z}^{+}}
+		\DeclareMathOperator{\Q}{\mathbb{Q}}
+		\DeclareMathOperator{\Qp}{\mathbb{Q}^{+}}
+		\DeclareMathOperator{\Qc}{\mathbb{Q}^{c}}
+		\DeclareMathOperator{\R}{\mathbb{R}}
+		\DeclareMathOperator{\Rp}{\mathbb{R}^{+}}
+		\DeclareMathOperator{\C}{\mathbb{C}}
+		\DeclareMathOperator{\Cnon}{\mathbb{C}^{\times}}
+		%% powerset of a set
+		\DeclareMathOperator{\pset}{\mathcal{P}}
+		%% set of continuous functions in a certain variable
+		\DeclareMathOperator{\cont}{\mathscr{C}}
+		%% set of functions in a certain variable
+		\DeclareMathOperator{\func}{\mathscr{F}}
+		
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% linear algebra %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% linear span
+		\DeclareMathOperator{\Ell}{\mathscr{L}}
+		%% bold vectors with arrows, and bold matrices
+		\newcommand{\bmat}[1]{{\mathbf{#1}}}
+		\newcommand{\bvec}[1]{{\vec{\mathbf{#1}}}}
+		%% independent vectors/matrices
+		\DeclareMathOperator{\ind}{\perp\!\!\!\perp}
+		%% order
+		\newcommand{\ord}[1]{\text{ord}(#1)}
+		\renewcommand{\char}[1]{\text{char}(#1)}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%% probability & statistics %%%%%%%%%%%%%%%%%%%%%%%%%
+		%% probability, expectation, variance, etc.
+		\renewcommand{\Pr}{\mathbb{P}}
+		\DeclareMathOperator{\E}{\mathbb{E}}
+		\DeclareMathOperator{\var}{\rm Var}
+		\DeclareMathOperator{\sd}{\rm SD}
+		\DeclareMathOperator{\cov}{\rm Cov}
+		\DeclareMathOperator{\SE}{\rm SE}
+		\DeclareMathOperator{\ssreg}{{\rm SS}_{{\rm Reg}}}
+		\DeclareMathOperator{\ssr}{{\rm SS}_{{\rm Res}}}
+		\DeclareMathOperator{\sst}{{\rm SS}_{{\rm Tot}}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% congruences %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\renewcommand{\mod}[1]{\ (\mathrm{mod}\ #1)}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% bracket notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		% I first used this for principal ideals, that is why the abbreviation is pid
+		\newcommand{\pid}[1]{\langle #1 \rangle}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% fatdot notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\makeatletter
+			\newcommand*\fatdot{\mathpalette\fatdot@{.5}}
+			\newcommand*\fatdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+		\makeatother
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% use pretty letters %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\DeclareMathOperator{\ep}{\varepsilon}
+		\DeclareMathOperator{\ph}{\varphi}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% theorems %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\newtheorem{defn}{Definition}
+		\newtheorem{thm}{Theorem}
+\begin{document}
+	\pagenumbering{gobble}
+	\title{\color{red} DRAFT \color{black} \\ Commentary Portfolio} % \\ Mathematics 392 -- Winter 2018 \\ University of Oregon}
+	\author{Student \#1091}
+
+	\maketitle
+
+	\tableofcontents
+	\newpage
+
+	\section*{Note to the reader}
+	\label{sec:note_to_the_reader}
+	Given that I am struggling to find a way to turn this document into something that is useful for my future self (which would be in keeping with the stated intention for this assignment), please do not judge harshley the poor quality of the work herein.
+	Since we are writing the commentary for our future selves, any use of the word `you' is directed towards a future version of me, not the disinterested reader who is only reading this because they are required to do so.
+	To belabor this point as much as possible, if I say `you did something stupid when first learning this material,' I am calling myself stupid, something that is oft warranted.
+	% This assignment has quickly devolved into the sort of high school project that gets burned at the end of the term.
+
+	Questions about the validity of the converse of various theorems will likely be delayed until the penultimate draft, or omitted entirely.
+	% section note_to_the_reader (end)
+
+	\pagenumbering{roman}
+	\setcounter{page}{2}
+
+	\newpage
+	
+	\pagenumbering{arabic}
+	\setcounter{section}{6}
+	\section{Polynomials over a Ring}
+	\label{sec:polynomials_over_a_ring}
+		\subsection{Polynomials over a Ring}
+		\label{sub:polynomials_over_a_ring}
+			\paragraph{\color{blue}Commentary}
+			\color{blue}
+			Section 7.1 defines polynomials, polynomial rings, the operations of polynomial addition and multiplication, and proves that these operations form a polynomial ring $A[x]$ given a ring of coefficients $A$.
+			Section 7.2 demonstrates some interesting properties about polynomial rings, such as the additivity of degree in an integral domain.
+			This section also contains useful tools such as the Division Algorithm for Polynomials, and the function $\bar{f}$.
+			In Section 7.3 we learn to evaluate polynomials, which inherently brings along the definition of a polynomial root.
+			\color{black}
+			% paragraph commentary (end)
+
+			\begin{defn}
+			Let $A$ be a commutative ring with unity. 
+			For each nonnegative integer $n$ and elements $a_{0}, a_{1}, \dots , a_{n} \in A$ we can define a polynomial over $A$, $a(x)$, by: $$a(x) = a_{0} + a_{1}x + a_{2}x^{2} + \cdots + a_{n}x^{n} \ \ \ \ \ \rm or \it \ \ \ \ \ \sum\limits_{i=0}^{n}a_{i}x^{i}.$$
+			The set of all polynomials over a ring $A$ is denoted $A[x]$.
+			\end{defn}
+			\setcounter{defn}{3}
+			\begin{defn}
+			Suppose $A$ is a commutative ring with unity and $a(x) \in A[x]$ with $a(x) = a_{0} + a_{1}x + \cdots + a_{n}x^{n}$ for some nonnegative integer $n$.
+				\begin{enumerate}[(i)]
+				\item The elements $a_{0},a_{1}, \dots , a_{n} \in A$ are the coefficients of $a(x)$.
+				\item For each $0 \leq i \leq n$, $a_{i}x^{i}$ is called a term of $a(x)$.
+				\item The largest nonnegative integer $n$ with $a_{n} \neq 0_{A}$ (if one exists) is the degree of $a(x)$, denoted $\deg(a(x)) = n$. 
+				So for $k > n$ we know $a_{k} = 0_{A}$.
+				\item If all coefficients of $a(x)$ are $0_{A}$ we say the degree of $a(x)$ is $-\infty$.
+				\item For $n \geq 0$ if $\deg(a(x)) = n$ then $a_{n}$ is called the leading coefficient of $a(x)$.
+				\end{enumerate}
+			\end{defn}
+
+			\begin{defn}
+			Let $A$ be a commutative ring with unity. 
+			For polynomials $a(x), b(x) \in A[x]$ we say $a(x) = b(x)$ if and only if they have the same degree and if the degree is equal to $n \geq 0$ then for every $i \leq n$, $a_{i} = b_{i}$.
+			\end{defn} 
+
+			\begin{defn}
+			Let $A$ be a commutative ring with unity and let $a(x), b(x) \in A[x]$ as shown below. $$a(x) = \sum\limits_{i=0}^{n}a_{i}x^{i} \hspace{2cm} b(x) = \sum\limits_{i=0}^{m}b_{i}x^{i}$$
+			We define the new polynomial $c(x) = a(x) + b(x)$ as follows where $k = \max\{ n,m \}$. $$c(x) = \sum\limits_{i=0}^{k}c_{i}x^{i} \hspace{5mm} and \hspace{5mm} c_{i}=a_{i}+b_{i}$$
+			Remember, if $i > n$ or $i > m$ we assume $a = 0_{A}$ or $b = 0_{A}$, respectively.
+			\end{defn}
+
+			\setcounter{defn}{7}
+			\begin{defn}
+			Let $A$ be a commutative ring with unity and polynomials $a(x), b(x) \in A[x]$ as shown below. $$a(x) = \sum\limits_{i=0}^{n}a_{i}x^{i} \hspace{2cm} b(x) = \sum\limits_{i=0}^{m}b_{i}x^{i}$$
+			Define the new polynomial $d(x) = a(x)b(x)$ as follows. $$d(x) = \sum\limits_{i=0}^{n+m}d_{i}x^{i} \hspace{5mm} where \hspace{5mm} d_{i} = \sum\limits_{j+t=i} a_{j} \cdot_{A} b_{t}$$
+			Note: $0 \leq j \leq n$ and $0 \leq t \leq m$.
+			\end{defn}
+			\paragraph{\color{blue}Commentary}
+			\color{blue} For arbitrary reasons I prefer to write the product of polynomials as $$a(x)b(x) = \sum\limits_{i+j = 0}^{n+m} a_{i}b_{j}x^{i+j}.$$
+			\color{black}
+			% paragraph commentary (end)
+
+			\setcounter{thm}{10}
+			\begin{thm}
+			Let $A$ be a commutative ring with unity. 
+			The operations of polynomial addition and polynomial multiplication from Definitions 7.6 and 7.8 are associative in $A[x]$.
+			\end{thm}
+			\color{blue}
+			\begin{proof}[Proof Sketch]
+			Let $a(x),b(x),c(x) \in A[x]$, and use the definitions to show associativity.
+			\end{proof}
+			\color{black}
+
+			\setcounter{thm}{12}
+			\begin{thm}
+			Let $A$ be a commutative ring with unity. 
+			In $A[x]$, polynomial addition and polynomial multiplication are both commutative.
+			\end{thm}
+			\color{blue}
+			\begin{proof}[Proof Sketch]
+			Chase the definitions.
+			\end{proof}
+			\color{black}
+
+			\begin{thm}
+			Let $A$ be a commutative ring with unity. 
+			Then the distributive laws hold in $A[x]$.
+			\end{thm}
+			\color{ForestGreen}
+			\begin{proof}
+			Let $A$ be a commutative ring with unity. 
+			Consider the three polynomials in $A[x]$ below.$$a(x) = \sum\limits_{i=0}^{n} a_{i}x^{i} \hspace{5mm} b(x) = \sum\limits_{i=0}^{n} b_{i}x^{i} \hspace{5mm} c(x) = \sum\limits_{i=0}^{n} c_{i}x^{i}$$
+			
+			Since by Theorem 7.13 polynomial multiplication is commutative we only need to show that $a(x)[b(x) +c(x)] = a(x)b(x) + a(x)c(x)$. 
+			For help with notation we will use$ d(x) = b(x) + c(x)$ and $a(x)d(x) = p(x)$. 
+			Thus $d_{t} = b_{t} +_{A} e_{t}$ for each $0 \leq t \leq n$. 
+			Remember that the coefficients are all from $A$ and the distributive law holds in $A$, so for each $0 \leq i \leq 2n$ we can calculate $p_{i}$ as seen below.$$p_{i} = \sum\limits_{j+t=i} (a_{j} \cdot_{A} d_{t}) = \sum\limits_{j+t=i} (a_{j} \cdot_{A} [b_{t} +_{A} c_{t}]) = \sum\limits_{j+t=i} (a_{j} \cdot_{A} b_{t}) +_{A} (a_{j} \cdot_{A} c_{t})$$
+			
+			If we call $s(x) = a(x)b(x)$ and $u(x) = a(x)e(x)$ then for $0 \leq i \leq 2n$ we have:$$s_{i} = \sum\limits_{j+t=i} (a_{j} \cdot_{A} b_{t}) \hspace{5mm} u_{i} = \sum\limits_{j+t=i} (a_{j} \cdot_{A} c_{t})$$
+			
+			Clearly (as these sums are finite), $p_{i} = s_{i} +_{A} u_{i}$ for each $i$ and so $p(x) = s(x) + u(x)$. 
+			Thus we have $a(x)[b(x) +c(x)] = a(x)b(x) +a(x)c(x)$ and the distributive laws hold.
+			\end{proof}
+			\color{black}
+
+			\begin{thm}
+			Let $A$ be a commutative ring with unity. 
+			Then the set $A[x]$ of polynomials over $A$ is a commutative ring with unity.
+			\end{thm}
+			\color{blue}
+			\begin{proof}[Proof Sketch]
+			Given the preceding theorems, the only missing pieces to this proof is to show that $0(x)$ and $1(x)$ are the zero and unity of $A[x]$, respectively, and that additive inverses exist.
+			This is another case of chasing definitions, which is to say a useful exercise, but not a good use of our time here.
+			\end{proof}
+			\color{black}
+		% subsection polynomials_over_a_ring (end)
+
+		\subsection{Properties of Polynomial Rings}
+		\label{sub:properties_of_polynomial_rings}
+			\setcounter{thm}{16}
+			\begin{thm}
+			If $A$ is an integral domain then $A[x]$ is also an integral domain.
+			\end{thm}
+			\color{blue}
+			\begin{proof}[Proof Sketch]
+			From Theorem 7.15 we have that $A$ being an integral domain implies $A[x]$ is a commutative ring with unity, thus it will suffice to show that there are no zero divisors in $A[x]$, this is achieved easily with a proof by contradiction.
+
+			This theorem is pretty useful, given that fields are also integral domains.
+			Moreover, polynomials are nicer to deal with in integral domains because degree is additive when there are no zero divisors.
+			\end{proof}
+			\color{black}
+
+			\setcounter{thm}{19}
+			\begin{thm}
+			Let $A$ be an \textit{integral domain}, and nonzero $a(x), b(x) \in A[x]$. 
+			If $\deg(a(x)) = n$ and $\deg(b(x)) = m$, then $\deg(a(x)b(x)) = n + m$.
+			\end{thm}
+			\color{blue}
+			\begin{proof}[Proof Sketch]
+			This can be shown by easily by invoking the definitions of polynomial multiplication and zero divisors.
+			Given that this is pretty much a direct consequence of the previous Theorem and basic definitions, I would classify this result as a corollary rather than a full fledged theorem.
+			\end{proof}
+			\color{black}
+
+			\setcounter{thm}{21}
+			\begin{thm}
+			If $A$ is a commutative ring with unity then $\char{A} = \char{A[x]}$.
+			\end{thm}
+			\color{blue}
+			\begin{proof}[Commentary]
+			Given that I have yet to use this theorem as of this writing, we omit its proof.
+			\end{proof}
+			\color{black}
+
+			\setcounter{thm}{23}
+			\begin{thm}[The Division Algorithm]
+			Let $K$ be a field and $a(x),b(x) \in K[x]$. 
+			If $b(x) \neq 0(x)$ then there exist unique polynomials $q(x),r(x) \in K[x]$, for which $a(x) = b(x)q(x) + r(x)$ and either $\deg(r(x)) < \deg(b(x))$ or $r(x) = 0(x)$.
+			\end{thm}
+
+			\paragraph*{\color{blue}Commentary}
+			\color{blue}
+			We omit the full proof here, due to the ``computational tool'' nature of the theorem.
+			To my future self: If things have gone according to plan and you're a high school mathematics teacher, you do not need to jog your memory with examples of polynomial long division.
+			If you do, you have failed.
+			% paragraph commentary (end)
+			\color{black}
+
+			% \color{ForestGreen}
+			% \begin{proof}
+			% To make the proof easier to read we will not put $+_{K}$ or $\cdot_{K}$ in our equations, so make sure you know what multiplication or addition is being discussed. 
+			% Suppose that $K$ is a field and $a(x),b(x) \in K[x]$, with $b(x) \neq 0(x)$. 
+			% We will look at different cases, and in each case find the appropriate $q(x)$ and $r(x)$ in $K[x]$.
+			% 	\color{blue}
+			% 	\paragraph*{\color{blue} Case (i) - $\deg{a(x)} < \deg{b(x)}$}
+			% 	\label{par:case_i}
+			% 	% paragraph case_i (end)
+
+			% 	\color{ForestGreen}
+			% 	\paragraph*{\color{ForestGreen} Case (ii) - $\deg{a(x)} = \deg{b(x)}$}
+			% 	\label{par:case_ii}
+			% 	Assume that $\deg{a(x)} = \deg{b(x)} = n$. 
+			% 	Thus $b_{n} \neq 0_{K}$ and since $K$ is a field, we have $b_{n}^{-1} \in K$.
+			% 	Let $q(x) = (a_{n}b_{n}^{-1}) + 0_{K}x$,then $q(x) \in K[x]$ and $d(x) = q(x)b(x)$has degree $n$.
+			% 	Now define $r(x) = a(x) - q(x)b(x)$, then clearly $a(x) = b(x)q(x) + r(x)$. 
+			% 	We only need to show that either $\deg{r(x)} < \deg{b(x)}$ or $r(x) = 0(x)$ to complete this part of the proof.
+			% 	Assume $r(x) \neq 0(x)$ then $r_{n} = a_{n} - a_{n} = 0_{K}$, and for all $j > n$, $r_{j} = 0_{K}$ since both $a(x)$ and $d(x)$ have degree $n$. 
+			% 	Thus $\deg{r(x)} < n$ and $\deg{r(x)} < \deg{b(x)}$ as needed.
+			% 	% paragraph case_ii (end)
+
+			% 	\paragraph*{\color{ForestGreen} Case (iii) - $\deg{a(x)} > \deg{b(x)}$}
+			% 	\label{par:case_iii}
+			% 	Suppose that $\deg{a(x)} > \deg{b(x)}$. 
+			% 	Let $n = \deg{a(x)}$ and $m = \deg{b(x)}$. 
+			% 	As $n > m$, then $n - m$ is a positive integer. 
+			% 	As in case (ii), since $b_{m} \neq 0_{K}$ there is an element $b_{m}^{-1} \in K$.
+			% 	\[ \text{Define } q(x) \in K[x] \ \text{by } q(x) = (a_{n}b_{m}^{-1})x^{n-m}. \]
+			% 	Then $\deg{q(x)} = n - m$ and $q_{n-m} = a_{n}b_{m}^{-1}$, but for all other nonnegative integers $t$, $q_{t} = 0_{K}$.
+			% 	Now the polynomial $d(x) = q(x)b(x)$ has degree $(n - m) + m = n$.
+			% 	\[ d_{n} = q_{n-m}b_{m} = (a_{n}b_{m}^{-1})b_{m} = a_{n} \]
+			% 	Exactly as in (ii) we let $r(x) = a(x) - q(x)b(x)$, so that $a(x) = b(x)q(x) +r(x)$. 
+			% 	We know from the same steps as (ii) that $deg(r(x)) \leq  n - 1$, but if $\deg{r(x)} > m$ we can now repeat his process on $r(x)$ and $b(x)$ to produce $c(x), s(x) \in K[x]$ with $r(x) = c(x)b(x) +s(x)$ and $\deg{s(x)} < n - 1$ or $s(x) = 0(x)$.
+			% 	\[ a(x) = q(x)b(x) + c(x)b(x) + s(x) = [q(x) + c(x)]b(x) + s(x) \]
+			% 	Thus we now have a remainder with an even lower degree than $r(x)$. 
+			% 	Repeating this at most $n - m$ times we will eventually find remainder $0(x)$ or a remainder $r'(x)$ with $\deg{r'(x)} < m$ as needed.
+			% 	% paragraph case_iii (end)
+			% \end{proof}
+			% \color{black}
+
+			\setcounter{thm}{25}
+			\begin{thm}
+			Let $K$ be a field. 
+			Then every ideal of $K[x]$ is a principal ideal.
+			\end{thm}
+			\color{ForestGreen}
+			\begin{proof}
+			Let $K$ be a field, and suppose $S$ is an ideal of $K[x]$. 
+			As in the proof of Theorem 5.18, if $S = \{0(x)\}$ or $S = K[x]$, then $S = \pid{0(x)}$ or $S = \pid{1(x)}$, respectively, and $S$ is principal. 
+			Thus assume that $S$ is not one of these trivial ideals and so there is polynomial $a(x) \in S$ with $a(x) \neq 0(x)$.
+
+			As $a(x) \neq 0(x)$ then $\deg(a(x)) \geq 0$, so first assume $\deg(a(x)) = 0$.
+			Thus $a(x)$ is a nonzero constant polynomial, $a(x) = a_{0}$ with $a_{0} = 0_{K}$. 
+			We know $a_{0}$ is a unit with inverse $a_{0}^{-1} \in K$, and so the polynomial $b(x) = (a_{0})^{-1}$ is in $K[x]$. 
+			But $S$ absorbs products from $K[x]$ so $a(x)b(x) \in S$, or $1(x) \in S$. 
+			This contradicts that $S$ is not equal to $K[x]$ by Theorem 5.12 and so $S$ cannot contain a polynomial of degree 0.
+			
+			Now $S$ contains a nonzero polynomial, $a(x)$, but cannot contain a polynomial of degree 0.
+			Thus for every nonzero $a(x) \in S$, $\deg(a(x))$ is a positive integer.
+			
+			\begin{center}{Define B = $\{n \in \Z : \deg(q(x)) = n \ \text{for some nonzero } q(x) \in S \}$.}\end{center}
+			
+			Clearly, $B \subseteq \Zp$, but $\Z$ is an integral system (Definition 6.32) which tells us that $B$ has a least element, call it $m$. 
+			By definition of $B$ there exists some polynomial $p(x) \in S$ with $\deg(p(x)) = m$. 
+			We will now show that $S = \pid{p(x)}$.
+			
+			As $p(x) \in S$ and $S$ is an ideal it is clear that $\pid{p(x)} = S$, so we only need to show that $\pid{p(x)} \supseteq S$. 
+			Let $b(x) \in S$. 
+			If $b(x) = 0(x)$ then $b(x) = 0(x)p(x)$ and $b(x) \in \pid{p(x)}$, so assume instead that $b(x) \neq 0(x)$.
+
+			Now we know $\deg(b(x)) \in B$, which tells us that either $\deg(b(x)) = m$ or $\deg(b(x)) > m$. 
+			Using Theorem 7.24 we find polynomials $q(x),r(x) \in K[x]$ with $b(x) = p(x)q(x) +r(x)$ and $0 < \deg(r(x)) < \deg(p(x))$ or $r(x) = 0(x)$. 
+			But $r(x) = b(x) - p(x)q(x)$ and $b(x),p(x) \in S$, so as $S$ is an ideal $r(x) \in S$. 
+			If $r(x) \neq 0(x)$ we would have a contradiction since $m$ is the least element of $B$. 
+			Thus we must have $r(x) = 0(x)$ and so $b(x) = p(x)q(x)$. 
+			Hence $b(x) \in \pid{p(x)}$, $S = \pid{p(x)}$, and $S$ is a principal ideal.
+			\end{proof}
+			\color{black}
+
+			\begin{thm}
+			Let $A$ be a commutative ring with unity. 
+			Then the function $f : A \to A[x]$ defined by $f(a) = a + 0_{A}x$ is an injective ring homomorphism.
+			\end{thm}
+			\color{ForestGreen}
+			\begin{proof}
+			Let $A$ be a commutative ring with unity, and define $f : A \to A[x]$ by $f(a) = a + 0_{A}x$. 
+			To see that $f$ is a ring homomorphism, let $a, b \in A$.
+			\[ f(a +_{A} b) = (a +_{A} b) + 0_{A}x \]
+			\[ f(a) + f(b) = (a + 0_{A}x) + (b + 0_{A}x) = (a +_{A} b) + 0_{A}x \]
+
+			Thus $f(a +_{A} b) = f(a) + f(b)$. 
+			Verification of $f(ab) = f(a)f(b)$ using polynomial multiplication is an exercise at the end of the chapter.
+			
+			\color{blue}
+			\paragraph*{\color{blue} Proof of multiplicativity}
+			\label{par:proof_of_multiplicativity}
+			Let $a,b$ be as above, and let $c = a \cdot_{A} b$, obviously $c \in A$.
+			\[ f(a \cdot_{A} b) = f(c) = c + 0_{A}x \]
+			\[ f(a) \cdot_{A} f(b) = (a + 0_{A}x) \cdot_{A} (b + 0_{A}x) = c + 0_{A}x \]
+
+			Thus $f(a \cdot_{A} b) = f(a) \cdot f(b)$.
+			% paragraph proof_of_multiplicativity (end)
+			\vspace*{5mm}
+			\color{ForestGreen}
+
+			Thus the function $f$ is a ring homomorphism.
+
+			To see that $f$ is injective, suppose we have $c \in A$ with $c \in \ker(f)$. 
+			Thus $f(c) = 0(x)$ since $0_{A[x]} = 0(x)$, and so $c + 0_{A}x= 0(x)$. 
+			This can only be true if $c = 0_{A}$ so $\ker(f) = \{0_{A}\}$. 
+			Hence $f$ is injective by Theorem 5.29.
+			\end{proof}
+			\color{black}
+
+			\begin{thm}
+			Let $A$ and $K$ be commutative rings with unity, and suppose that $f : A \to K$ is a ring homomorphism. 
+			Then the function $\bar{f} : A[x] \to K[x]$ defined below is also a ring homomorphism. $$\bar{f}(a_{0} + a_{1}x + \dots + a_{n}x^{n}) = f(a_{0}) + f(a_{1})x + \dots + f(a_{n})x^{n}$$
+			\end{thm}
+			\color{ForestGreen}
+			\begin{proof}
+			Suppose $A$ and $K$ are commutative rings with unity, and $f : A \to K$ is a ring homomorphism. 
+			Clearly, $f : A[x] \to K[x]$ is well defined since $f$ is well defined, and so each coefficient of $\bar{f}(a(x))$ is unique. 
+			To see that $\bar{f}$ is a homomorphism, for $a(x), b(x) \in A[x]$ we need to show that $\bar{f}(a(x) + b(x)) = \bar{f}(a(x)) + \bar{f}(b(x))$ and $\bar{f}(a(x)b(x)) = \bar{f}(a(x))\bar{f}(b(x))$.
+			As an exercise at the end of the chapter you will show the first of these, so we will look at the second.
+
+			Suppose $a(x),b(x) \in A[x]$ and $d(x) = a(x)b(x)$. 
+			\[ a(x) = \sum\limits_{i=0}^{n} a_{i}x^{i} \hspace*{5mm} b(x) = \sum\limits_{i=0}^{m} b_{i}x^{i} \]
+			\[ d(x) = \sum\limits_{i=0}^{n+m} d_{i}x^{i} \ \text{where } d_{i} = \sum\limits_{j+t=i} a_{j}b_{t}x^{i} \]
+			Thus using that $f$ is a homomorphism we see that $\bar{f}(a(x)b(x))$ the steps below.
+			\begin{align*}
+			\bar{f}(&a(x)b(x)) = \bar{f}(d(x)) = \sum\limits_{i=0}^{n+m} f(d_{i})x^{i}, \\
+			&= \sum\limits_{i=0}^{n+m} f\left( \sum\limits_{j+t=i} (a_{j}b_{t}) \right) x^{i} = \sum\limits_{i=0}^{n+m} \left( \sum\limits_{j+t=i} f(a_{j}b_{t}) \right) x^{i}, \\
+			&= \sum\limits_{i=0}^{n+m} \left( \sum\limits_{j+t=i} f(a_{j})f(b_{t}) \right) x^{i} = \bar{f}(a(x))\bar{f}(b(x)).
+			\end{align*}
+
+			\color{blue}
+			\paragraph*{\color{blue} Proof of additivity}
+			\label{par:proof_of_additivity}
+			I agree that this should be left as an exercise, so let's do that.
+			% paragraph proof_of_additivity (end)
+			\vspace*{2mm}
+
+			\color{ForestGreen}
+			Thus $\bar{f}$ is a homomorphism.
+			\end{proof}
+			\color{black}
+
+			\setcounter{thm}{29}
+			\begin{thm}
+			Let $A, K$ be commutative rings with unity, and suppose that $f:A \to K$ is an isomorphism.
+			Then the extension $\bar{f} : A[x] \to K[x]$ is also an isomorphism.
+			\end{thm}
+			\color{blue}
+			\begin{proof}[Proof Sketch]
+			Don't try to use the first isomorphism theorem here, instead proceed by the definitions of surjective, injective, additive, and multiplicative functions.
+			The author includes the following hint:
+
+			Don't forget that in order for polynomials to be equal they must have identical coefficients.
+			When assuming $\bar{f}(a(x)) = \bar{f}(b(x))$ for the proof of injectivity, you have that the coefficients are indeed identical.
+			What are the coefficients?
+			\end{proof}
+			\color{black}
+		% subsection properties_of_polynomial_rings (end)
+
+		\subsection{Polynomial Functions and Roots}
+		\label{sub:polynomial_functions_and_roots}
+			\setcounter{defn}{32}
+			\begin{defn}
+			Let $A$ be a commutative ring with unity and $a(x) \in A[x]$ with $a(x) \neq 0(x)$. 
+			If $c \in A$ and $\deg(a(x)) = n$, we define the element $a(c) \in A$ as follows: $$a(c) = a_{0} +_{A} (a_{1} \cdot_{A} c) +_{A} (a_{2} \cdot_{A} c^{2}) +_{A} \cdots +_{A} (a_{n} \cdot_{A} c^{n}).$$
+			If $a(x) = 0(x)$ we say $a(c) = 0_{A}$ for all $c \in A$.
+			\end{defn}
+
+			\setcounter{thm}{34}
+			\begin{thm}
+			Let $A$ be an integral domain. 
+			The substitution function $h_{c}: A[x] \to A$ defined by $h_{c}(a(x)) = a(c))$ is a ring homomorphism.
+			\end{thm}
+			\color{blue}
+			\begin{proof}
+			Let $h_{c}$, $a(x)$, $b(x)$ be as defined in Theorem 7.35.
+			We will show that $h_{c}$ is additive,
+				\begin{align*}
+				h_{c}(a(x) + b(x)) &= h_{c}\left( \sum\limits_{i=0}^{n} a_{i}x^{i} + \sum\limits_{i=0}^{m} b_{i}x^{i} \right), \\
+				&= h_{c}\left( \sum\limits_{i=0}^{\max{(n,m)}} (a_{i} + b_{i})x^{i} \right), \\
+				&= \sum\limits_{i=0}^{\max{(n,m)}} (a_{i} + b_{i})c^{i}, \\
+				&= \sum\limits_{i=0}^{n} a_{i}c^{i} + \sum\limits_{i=0}^{m} b_{i}c^{i}, \\
+				&= a(c) + b(c), \\
+				&= h_{c}(a(x)) + h_{c}(b(x)).
+				\end{align*}
+			Observe that $A$ must be an integral domain in order for each of the terms to `stay alive' through the process of adding all of the terms together, and then pulling them apart again.
+			Thus, $h_{c}$ is additive, as we aimed to show.	
+			\end{proof}
+			\color{black}
+
+			\setcounter{defn}{36}
+			\begin{defn}
+			Let $A$ be a commutative ring with unity, $c \in A$, and $a(x) \in A[x] \ \ a(x) \neq 0(x)$.
+			We say that $c$ is a root of the polynomial $a(x)$ exactly when $a(c) = 0_{A}$. 
+			We do not say any element of $A$ is a root of $0(x)$ even though $0(c) = 0_{A}$ for each $c \in A$.
+			\end{defn}
+		% subsection polynomial_functions_and_roots (end)
+	% section polynomials_over_a_ring (end)
+
+	\section{Factoring Polynomials}
+	\label{sec:factoring_polynomials}
+		\subsection{Factors and Irreducible Polynomials}
+		\label{sec:factors_and_irreducible_polynomials}
+			\paragraph{\color{blue}Commentary}
+			\color{blue}
+			In Chapter 8 we focus on factoring polynomials, which devolves into arguments about irreducibility, associates, roots, and factors.
+			Section 8.1 helps us define these concepts and introduces their elementary properties.
+			Section 8.2 continues this line of inquiry in the direction of finding the roots and factors of a polynomial.
+			Section 8.3 focuses specifically on the question of factoring polynomials in $\Q$.
+			\color{black}
+			% paragraph commentary (end)
+
+			\setcounter{defn}{0}
+			\setcounter{thm}{0}
+
+			\begin{defn}
+			Let $A$ be a commutative ring with unity and $a(x), d(x) \in A[x]$. 
+			We say that $a(x)$ is a factor of $d(x)$ if there exists a polynomial $b(x) \in A[x]$ with $d(x) = a(x)b(x)$.
+			\end{defn}
+
+			\setcounter{defn}{3}
+			\begin{defn}
+			Let $A$ be an integral domain. 
+			Polynomials $a(x),b(x) \in A[x]$ are called associates if there is a nonzero element $c \in A$ so that the constant polynomial $c(x) = c$ has $a(x) = c(x)b(x)$.
+			
+			We will frequently write $a(x) = cb(x)$ instead of first defining the constant polynomial $c(x) = c$.
+			\end{defn}
+
+			\setcounter{thm}{4}
+			\begin{thm}
+			Let $A$ be an integral domain and suppose $a(x), b(x) \in A[x]$ are associates. 
+			Then $c \in A$ is a root of $a(x)$ if and only if $c$ is a root of $b(x)$.
+			\end{thm}
+			\color{blue}
+			\begin{proof}[Proof Sketch]
+			This should be a very accessible proof for my future self, the author includes a useful hint:
+
+			Use Theorem 7.35 (the evaluation function is a homomorphism) to help, and that $A$ is an integral domain (what does that mean?).
+			\end{proof}
+			\color{black}
+
+			\setcounter{defn}{6}
+			\begin{defn}
+			Let $A$ be an integral domain with $a(x) \in A[x]$ and $\deg(a(x))>0$.
+			We say that $a(x)$ is irreducible over $A$ if every factor of $a(x)$ in $A[x]$ is either a constant polynomial or an associate of $a(x)$.
+			If instead a nonconstant factor of $a(x)$ which is not an associate of $a(x)$ exists in $A[x]$, we say that $a(x)$ is reducible over $A$.
+			\end{defn}
+
+			\setcounter{thm}{7}
+			\begin{thm}
+			Let $K$ be a field and suppose $a(x), b(x) \in K[x]$ are associates. 
+			The polynomial $a(x)$ is irreducible over $K$ if and only if $b(x)$ is irreducible over $K$.
+			\end{thm}
+			\color{blue}
+			\begin{proof}
+			Let $K$, $a(x)$, and $b(x)$ be as above.
+
+			$\Rightarrow)$ Assume $a(x)$ is irreducible over $K$, and suppose by way of contradiction that $b(x)$ is reducible over $K$.
+			Then we know there exists polynomials $d(x)$,$f(x) \in K[x]$ such that $b(x) = d(x)f(x)$.
+			And since $a(x)$ and $b(x)$ are associates we can write $a(x) = cb(x) = c[d(x)f(x)] \lightning$
+			
+			This implies that $a(x)$, which we assumed to be irreducible over $K$, has factors in $K[x]$, a contradiction.
+			A similar argument can be used to prove the converse.
+			\end{proof}
+			\color{black}
+
+			\begin{thm}
+			Let $K$ be a field. 
+			Every polynomial in $K[x]$ of degree 1 is irreducible over $K$.
+			\end{thm}
+			\color{blue}
+			\begin{proof}
+			Let $K$ be a field and $a(x) \in K[x]$ such that $\deg{a(x)} = 1$.
+			Since $K$ is a field $K[x]$ is an integral domain and thus the degree of polynomials is additive in $K[x]$.
+			We can write $a(x) = b(x)c(x)$, and since $\deg{a(x)} = 1$, we know that either $\beta = \deg{b(x)} = 1$ and $\gamma = \deg{c(x)} = 0$, or the other way around.
+			This means that we can only factor $a(x)$ into associates, which is the definition of being irreducible.
+
+			Hence, for a field $K$, every polynomial in $K[x]$ of degree 1 is irreducible over $K$.
+			\end{proof}
+			\color{black}
+
+			\setcounter{thm}{10}
+			\begin{thm}
+			Suppose $K$ is a field, and $p(x) \in K[x]$. 
+			If $p(x)$ is irreducible over $K$ then $\pid{p(x)}$ is a maximal ideal of $K[x]$.
+			\end{thm}
+			\color{ForestGreen}
+			\begin{proof}
+			Assume $K$ is a field, $p(x) \in K[x]$, and $p(x)$ is irreducible over $K$. 
+			Let $S = \pid{p(x)}$, and we will show $S$ is a maximal ideal. 
+			Assume instead there is an ideal $T$ in $K[x]$ with $S \subset T \subset K[x]$. 
+			Notice that as $\deg(p(x)) > 0$ and $p(x) \in S$ then $S \neq \{0(x)\}$ and $T \neq \{0(x)\}$.
+
+			By Theorem 7.26 $T$ must be a principal ideal. 
+			Thus there exists $b(x) \in T$ with $T = \pid{b(x)}$ and $b(x) \neq 0(x)$. 
+			Now $p(x) \in T$ and so $p(x) = b(x)q(x)$ for some $q(x) \in K[x]$. 
+			But $p(x)$ is irreducible over $K$ and $b(x)$ is a factor of $p(x)$, so either $b(x)$ is an associate of $p(x)$ or $b(x)$ is a constant polynomial.
+
+			Suppose first that $b(x)$ is a constant polynomial, $b(x) = b_{0}$ with $b_{0} \neq 0_{K}$. 
+			Since $K$ is a field, the polynomial $s(x) = b_{0}^{-1}$ is in $K[x]$ and $b(x)s(x) \in T$. 
+			But $b(x)s(x) = 1(x)$ so by Theorem 5.12 we have $T = K[x]$ contradicting the choice of $T$.
+
+			Thus $b(x)$ must be an associate of $p(x)$ instead, and there is a nonzero $c \in K$ with $p(x) = cb(x)$. 
+			$K$ is a field, so we know $c^{-1} \in K$ which tells us $c^{-1}p(x) = b(x)$ and thus $b(x) \in S$. 
+			Since $S$ is an ideal we now know that every element of $T$, of the form $b(x)w(x)$, is also in $S$ and $T = S$ which again contradicts the choice of $T$. 
+			Every possibility has lead us to a contradiction, so no such $T$ can exist, and $S = \pid{p(x)}$ is a maximal ideal of $K[x]$.
+			\end{proof}
+			\color{black}
+
+			\paragraph{\color{blue}Commentary}
+			\color{blue}
+			The following theorem tells us that polynomials that are irreducible over a ring of coefficients $K$ act like prime numbers in the polynomial ring $K[x]$.
+			\color{black}
+			% paragraph commentary (end)
+			\begin{thm}
+			Let $K$ be a field, and assume that $p(x) \in K[x]$ is irreducible over $K$. 
+			If $a(x), b(x) \in K[x]$ and $p(x)$ is a factor of the product $a(x)b(x)$, then $p(x)$ is a factor of at least one of $a(x)$ or $b(x)$.
+			\end{thm}
+			\color{blue}
+			\begin{proof}[Proof Sketch]
+			While this theorem is dripping with Number Theory, the proof is mostly reliant on facts about principal and maximal ideals.
+			The author includes this hint:
+
+			Use Theorems 8.11 and 6.23.
+			Remember that $b(x) \in \pid{p(x)}$ means that $p(x)$ is a factor of $b(x)$.
+
+			To check the validity of your proof, a detailed answer can be found in the solutions to Homework 2.
+			If you have access to this some years after writing it, you'd better have access to your old homeworks, and their solutions.
+			\end{proof}
+			\color{black}
+
+			\setcounter{thm}{13}
+			\begin{thm}
+			Let $K$ and $E$ be fields, and suppose that $\bar{f} : K \to E$ is an \textit{isomorphism}. 
+			The polynomial $p(x) \in K[x]$ is irreducible over $K$ if and only if $\pid{p(x)}$ is irreducible over $E$.
+			\end{thm}
+			\color{ForestGreen}
+			\begin{proof}
+			Let $K$ and $E$ be fields, $f : K \to E$ an isomorphism, and $p(x) \in K[x]$.
+			$\Rightarrow)$ Assume $p(x)$ is irreducible over $K$, and for a contradiction suppose $\bar{f}(p(x))$ is reducible over $E$. 
+			Thus there exist polynomials $q(x),r(x) \in E[x]$ with $\pid{p(x)} = q(x)r(x)$, $\deg(q(x)) > 0$, and $\deg(r(x)) > 0$.
+
+			By Theorem 7.30 $\bar{f}$ is an isomorphism, and thus onto, so we must have $s(x), t(x) \in K[x]$ with $\bar{f}(s(x)) = q(x)$, and $\bar{f}(t(x)) = r(x)$. 
+			Also $\deg(s(x)) = \deg(q(x))$, and $\deg(r(x)) = \deg(t(x))$ (an exercise in Chapter 7). 
+			Since $\bar{f}$ is a homomorphism we have the following equalities:$$\bar{f}(s(x)t(x)) = \bar{f}(s(x))\bar{f}(t(x)) = q(x)r(x) = \bar{f}(p(x)).$$
+
+			But $\bar{f}$ is one to one so $p(x) = s(x)t(x)$. 
+			Since $\deg(s(x)) > 0$ and $\deg(t(x)) > 0$ this contradicts that $p(x)$ is irreducible over $K$. Thus $\pid{p(x)}$ is irreducible over $E$.
+
+			\color{blue}
+			$\Leftarrow)$ Suppose that $b(x) = x - c$ is a factor of $a(x)$, we will show that $c \in K$ is a root of $a(x)$.
+			Since $b(x)$ is a factor of $a(x)$, we can write $a(x) = b(x)d(x)$ for some polynomial $d(x)$.
+			Further, since $K$ is a field, $K[x]$ is an integral domain and the zero product property works like we'd like it to, so we have $a(c) = (c - c)d(c) = 0$, hence $c$ is a root of $a(x)$.
+			\end{proof}
+			\color{black}
+		% subsection factors_and_irreducible_polynomials (end)
+
+		\subsection{Roots and Factors}
+		\label{sec:roots_and_factors}
+			\begin{thm}
+			Let $K$ be a field and $a(x) \in K[x]$ with $a(x) \neq 0(x)$. 
+			The element $c \in K$ is a root of $a(x)$ if and only if $b(x) = -c + x$ is a factor of $a(x)$.
+			\end{thm}
+			\color{blue}
+			\begin{proof}[Proof Sketch]
+			Use polynomial long division, and the evaluation homomorphism for the forward direction, you proved the backwards direction in Homework 3.
+			\end{proof}
+			\color{black}
+
+			\setcounter{thm}{16}
+			\begin{thm}
+			Suppose $K$ is a field and $a(x) \in K[x]$ with $a(x) \neq 0(x)$. 
+			If the distinct elements $c_{1}, c_{2}, \dots , c_{n} \in K$ are all roots of $a(x)$, then the product $b(x) = (-c_{1} + x)( -c_{2} + x) \cdots (-c_{n} + x)$ is a factor of $a(x)$.
+			\end{thm}
+			\color{blue}
+			\begin{proof}[Proof Sketch]
+			Use induction, and in so doing use Theorem 8.15 a bunch of times.
+			\end{proof}
+			\color{black}
+
+			\setcounter{thm}{18}
+			\begin{thm}
+			Let $K$ be a field. 
+			If $c_{1}, c_{2}, \dots , c_{n} \in K$ are distinct roots of the nonzero polynomial $a(x) \in K[x]$, then $\deg(a(x)) \geq n$.
+			\end{thm}
+			\color{blue}
+			\begin{proof}
+			Let $K$, $a(x)$ be as above.
+			By Theorem 8.17 we can write $a(x) = b(x)f(x)$ where $f(x) = \prod_{i=1}^{n} (x - c_{i})$ for distinct roots $c_{i} \in K$.
+			Since $K$ is a field, $K[x]$ is an integral domain and degree is additive for elements of $K[x]$.
+			Let $\deg{a(x)} = \alpha$, $\deg{b(x)} = \beta$, $\deg{f(x)} = \eta$.
+			Its clear that $\eta = n$, and by the same reasoning that allows us to conclude that, we can also surmise $\alpha \geq \eta$, hence $\deg(a(x)) \geq n$, as desired.
+			\end{proof}
+			\color{black}
+
+			\begin{thm}
+			Suppose $K$ is a field and $a(x) \in K[x]$. 
+			If $\deg(a(x)) > 0$ then there exist a positive integer $m$ and polynomials $b_{1}(x),b_{2}(x), \dots ,b_{m}(x) \in K[x]$ which are irreducible over $K$ and $a(x) = b_{1}(x)b_{2}(x)\cdots b_{m}(x)$.
+			\end{thm}
+			\paragraph{\color{blue}Commentary}
+			\color{blue}
+			This let's use write any polynomial as a product of its irreducible polynomial factors, just as we can write integers as a product of its prime factors.
+			The proof in the book is fairly readable.
+			\color{black}
+
+			\setcounter{thm}{21}
+			\begin{thm}
+			Let $K$ be a field and $a(x) \in K[x]$ with $\deg(a(x)) = 2$ or $\deg(a(x)) = 3$. 
+			The polynomial $a(x)$ is reducible over $K$ if and only if $a(x)$ has a root in $K$.
+			\end{thm}
+			\paragraph{\color{blue}Commentary}
+			\color{blue}
+			This is one of the few pieces of commentary that I feel is actually useful.
+			This theorem is exceedingly important, a frequent mistake (that you made a lot when first learning this material) is that one assumes \textit{any} polynomial with no roots over a field is therefore irreducible, this theorem tells us that that is only the case for polynomials with degree no greater than three.
+			By definition constants and linear polynomials are irreducible, so this covers the only other cases.
+
+			Bottom line: If its degree four or higher, you probably have some work to do.
+			\color{black}
+
+			\setcounter{defn}{23}
+			\begin{defn}
+			Let $K$ be a field and $a(x) \in K[x]$. 
+			Suppose $a(x) \neq 0(x)$, with $\deg(a(x)) = n$. 
+			The polynomial $a(x)$ is \textbf{\textit{monic}} if $a_{n} = 1_{K}$.
+			\end{defn}
+
+			\setcounter{defn}{25}
+			\begin{defn}
+			Let $K$ be a field and $a(x) \in K$ with $a(x) \neq 0(x)$. 
+			Suppose $c \in K$ is a root of $a(x)$. 
+			If there is an integer $m > 0$ for which the polynomial $b(x) = (-c +x)^{m}$ is a factor of $a(x)$ but $d(x) = (-c + x)^{m+1}$ is not a factor of $a(x)$, then we say that $c$ is a root of $a(x)$ with multiplicity $m$.
+			\end{defn}
+
+			\setcounter{thm}{26}
+			\begin{thm}
+			Let $K$ be a field and $a(x) \in K[x]$ with $a(x) \neq 0(x)$. 
+			If $\deg(a(x)) = n$ then there can be at most $n$ distinct roots of $a(x)$ in $K$.
+			\end{thm}
+			\color{blue}
+			\begin{proof}
+			Let $K$ be a field and $a(x) \in K[x]$ with $a(x) \neq 0(x)$, and assume that $\deg{a(x)} = n$.
+			Since $\deg{a(x)} = n$, we can write $a(x) = b(x)f(x)$ for some polynomials $b(x)$ and $f(x) = \prod_{i=1}^{n} (x-c_{i})$, each of which is an element of $K[x]$, where $c_{i} \in K$ are the roots of $a(x)$.
+			Notice that the linear factors that comprise $f(x)$ each has degree 1, thus $f(x) = \prod_{i=1}^{n} (x-c_{i})$ has degree $n$, as $K$ is a field and $K[x]$ and integral domain.
+			That tells us that the only option for $b(x)$ is a constant polynomial with degree 0.
+			This implies that $f(x)$ takes into account each of the distinct roots of $a(x)$, hence $a(x)$ has at most $n$ distinct roots in $K$.
+			\end{proof}
+			\color{black}
+
+			\begin{thm}
+			Let $K$ be an infinite field. 
+			If $a(x),b(x) \in K[x]$, and $a(x) \neq b(x)$, then there must exist some $c \neq K$ for which $a(c) \neq b(c).$
+			\end{thm}
+			\color{blue}
+			\begin{proof}[Proof Sketch]
+			This is a fairly straightforward concept that was discussed in Lecture 5 on 19 January, 2018; it can be found on page 177 of your notes.
+			Again, if you don't have your old notes, but you have this document, something has gone awry.
+			\end{proof}
+			\color{black}
+		% subsection roots_and_factors (end)
+
+		\subsection{Factorization over $\Q$}
+		\label{sec:factorization_over_q}
+			\paragraph{\color{blue}Commentary}
+			\color{blue}
+			The following theorems are tools with which we can factor polynomials over the rationals, the fact that the tools are few in number and generally not that powerful are an indication of how difficult it is to factor over an infinite field, and offers a quick-and-dirty explanation as to why finding the roots of the Riemann zeta function is so damned hard (and worth a million dollars).
+			\color{black}
+
+			\begin{thm}
+			If $a(x) \in \Q[x]$ with $a(x) \neq 0(x)$ then there is a polynomial $b(x) \in \Z[x]$ with $\deg(a(x)) = \deg(b(x))$ which has exactly the same rational roots as $a(x)$.
+			\end{thm}
+
+			\setcounter{thm}{30}
+			\begin{thm}[The Rational Roots Theorem]
+			Let $a(x) \in \Z[x]$ with $a(x) \neq 0(x)$ and $\deg(a(x)) = n$. 
+			If the rational number $\frac{s}{t} \ (s,t \in \Z$ with no common prime factors and $t \neq 0)$ is a root of $a(x)$ then $s$ must evenly divide $a_{0}$ and $t$ must evenly divide $a_{n}$.
+			\end{thm}
+
+			\setcounter{thm}{32}
+			\begin{thm}
+			If $a(x) \in Z[x]$ and $a(x) = b(x)c(x)$ with $b(x),c(x) \in \Q[x]$, $\deg(b(x)) > 0$, and $\deg(c(x)) > 0$, then there exist polynomials $u(x), w(x) \in \Z[x]$ with $a(x) = u(x)w(x)$, $\deg(u(x)) > 0$, and $\deg(w(x)) > 0$.
+			\end{thm}
+
+			\setcounter{thm}{34}
+			\begin{thm}[Eisenstein's Criterion]
+			Suppose $a(x) \in \Z[x]$ and $\deg(a(x)) = n$ with $n > 0$. 
+			If there exists a prime number $p$ which divides coefficients $a_{0}, a_{1}, \dots, a_{n-1}$ but not $a_{n}$, and $p^{2}$ does not divide $a_{0}$, then $a(x)$ is irreducible over $\Q$.
+			\end{thm}
+
+			\setcounter{thm}{36}
+			\begin{thm}
+			Suppose $a(x) \in \Z[x]$ is a monic polynomial and $\deg(a(x)) = k$ with $k > 0$. 
+			If there exists $n > 1$ so that $\bar{f}_{n}(a(x))$ is irreducible in $\Z_{n}[x]$ then $a(x)$ is also irreducible in $\Z[x]$.
+			\end{thm}
+		% subsection factorization_over_q (end)
+	% section factoring_polynomials (end)
+
+	\section{Extension Fields}
+	\label{sec:extension_fields}
+		\paragraph{\color{blue}Commentary}
+		\color{blue}
+		In Chapter 9 we turn our attention to Fields.
+		When considering groups and rings, we examined their sub-objects and sub-structures.
+		Here, we flip the script and consider \textit{field extensions}, basically going in the other direction.
+		Given a field, what other fields (aside from itself) is the field a sub-field of?
+		This leads us to the subject of Minimum Polynomials in \S 9.2, Algebraic Extensions in \S 9.3, and Root Fields in \S 9.4.
+
+		I have nothing useful or intelligent to say about the content from Chapter 9, I would refer anyone looking to enhance their understanding of the material to the examples in the texbook, the lecture notes, or the myriad of online resources for students of modern algebra.
+		\color{black}
+
+		\setcounter{defn}{0}
+		\setcounter{thm}{0}
+
+		\subsection{Extension Field}
+		\label{sec:extension_field}
+			\begin{defn}
+			Suppose that $K$ and $E$ are fields with $K \subseteq E$.
+			If for all $a,b \in K$ we have $a +_{K} b = a +_{E} b$ and $a \cdot_{K} b = a \cdot_{E} b$, then $K$ is a subfield of $E$ or $E$ is an extension field of $K$.
+			\end{defn}
+
+			\begin{defn}
+			Suppose $E$ is an extension field of $K$, and $c \in E$
+				\begin{enumerate}[(i)]
+				\item If there exists $a(x) \in K[x]$ with $a(x) \neq 0(x)$ and $a(c) = 0_{E}$, then $c$ is \textbf{\textit{algebraic over $K$}}.
+				\item If for \underline{every nonzero} $a(x) \in K[x]$ we have $a(c) \neq 0_{E}$, then $c$ is \textbf{\textit{transcendental over $K$}}.
+				\end{enumerate}
+			\end{defn}
+
+			\setcounter{thm}{3}
+			\begin{thm}
+			Suppose $E$ is an extension field of $K$, $a(x) \in K[x]$, and there is $c \in E$ with $a(c) = 0_{E}$.
+				\begin{enumerate}[(i)]
+				\item If $\deg(a(x)) = 1$, then $c \in K$.
+				\item If $a(x)$ is irreducible over $K$ and $\deg(a(x)) > 1$, then $c \not\in K$
+				\end{enumerate}
+			\end{thm}
+
+			\begin{thm}
+			Suppose $K$ is a field.
+			$E$ is an extension field of $K$ and $c \in E$.
+			IF $c$ is algebraic over $K$, then there exists a field $K(c)$ (``\textbf{K adjoin c}'') with:
+				\begin{enumerate}[(i)]
+				\item $K \subseteq K(c) \subseteq E$.
+				\item $c \in K(c)$.
+				\item For any subfield $S$ of $E$ with $K \subseteq S$ and $c \in S$ we have $K(c) \subseteq S$.
+				\end{enumerate}
+			\end{thm}
+
+			\setcounter{thm}{6}
+			\begin{thm}
+			Let $K$ be a field and assume $a(x) \in K[x]$ is irreducible over $K$.
+			Then there exists a field $E$ so that $E$ is an extension field of $K$ and $a(x)$ has a root in $E$.
+			\end{thm}
+		% subsection extension_field (end)
+
+		\subsection{Minimum Polynomial}
+		\label{sec:minimum_polynomial}
+			\setcounter{thm}{8}
+			\begin{thm}
+			If $K$ is a field, $E$ is an extension field of $K$, and $c \in E$ is algebraic over $K$, then there is a \textbf{\textit{unique monic}} polynomial $p(x) \in K[x]$ that is irreducible over $K$ and has $c$ as a root.
+			\end{thm}
+
+			\setcounter{defn}{9}
+			\begin{defn}
+			Let $K$ be a field, $E$ and extension field of $K$, and $c \in E$ algebraic over $K$.
+			The unique monic polynomial $p(x) \in K[x]$ that is irreducible over $K$ and has $c$ as a root is called \textbf{\textit{the minimum polynomial}} for $c$ over $K$.
+			\end{defn}
+
+			\setcounter{thm}{11}
+			\begin{thm}
+			Suppose $K$ be a field, $E$ and extension field of $K$, and $c \in E$ algebraic over $K$ with minimum polynomial $p(x) \in K[x]$.
+				\begin{enumerate}[(i)]
+				\item Using the homomorphism $f_{c} : K[x] \to E$ as defined in Theorem 9.5, $\ker{(f_{c})} = \pid{p(x)}$.
+				\item If $b(x) \in K[x]$ is a nonzero polynomial with $b(c) = )_{E}$, then $b(x) = p(x)q(x)$ for some $q(x) \in K[x]$.
+				\end{enumerate}
+			\end{thm}
+
+			\begin{thm}
+			Suppose $K$ be a field, $E$ and extension field of $K$, and $c \in E$ algebraic over $K$.
+			If $p(x)$ is the minimum polynomial for $c$ over $K$, and $\deg(p(x)) = n$, then: $$K(c) = \{ a(c) : a(x) \in K[x] \ \text{and either } a(x) = 0(x) \ \text{or } \deg(a(x)) < n \}.$$
+			\end{thm}
+		% subsection minimum_polynomial (end)
+
+		\subsection{Algebraic Extensions}
+		\label{sec:algebraic_extensions}
+			\setcounter{defn}{15}
+			\begin{defn}
+			Let $K$ be a field and $E$ an extension field of $K$.
+			If every element of $E$ is algebraic over $K$ we say that $E$ is an \textbf{algebraic extension} of $K$.
+			\end{defn}
+
+			\begin{defn}
+			Let $K$ be a field and $E$ an extension field of $K$.
+			A nonempty subset of $E$, $B = \{ u_{1}, u_{2}, \dots, u_{m} \}$ is called a \textbf{basis for E over K} when the following hold:
+				\begin{enumerate}[(i)]
+				\item For every element $s \in E$ there exist $a_{1}, a_{2}, \dots, a_{m} \in K$ so that $s = a_{1}u_{1} + a_{2}u_{2} + \dots a_{m}u_{m}$ ($B$ spans $E$ over $K$).
+				\item If $a_{1}, a_{2}, \dots, a_{m} \in K$ with $a_{1}u_{1} + a_{2}u_{2} + \dots a_{m}u_{m} = 0_{E}$ then $a_{i} = 0_{K}$ for all $i = 1, \dots, m$ ($B$ is independent over $K$).
+				\end{enumerate}
+				
+			If there exist $m$ elements of $E$ that form a basis for $E$ over $K$ we say $E$ is a \textbf{finite extension} of $K$ of degree $m$, and write $[E:K] = m$.
+			\end{defn}
+
+			\setcounter{thm}{18}
+			\begin{thm}
+			Let $K$ be a field and $E$ an extension field of $K$.
+				\begin{enumerate}[(i)]
+				\item Every basis for $E$ over $K$ has the same cardinality.
+				\item Every subset of $E$ that spans $E$ contains a basis for $E$ over $K$.
+				\end{enumerate}
+			\end{thm}
+
+			\begin{thm}
+			Suppose $K$ is a field, $c$ is algebraic over $K$ with minimum polynomial $p(x)$, and $\deg(p(x)) = n$.
+			Then the set $B = \{ 1_{K}, c, c^{2}, \dots, c^{n-1} \}$ is a bsis for $K(c)$ over $K$ and $[K(c):K]=\deg(p(x))$.
+			\end{thm}
+
+			\begin{thm}
+			Let $K$ be a field and $E$ an extension field of $K$ with $[E:K] = n$ for some $n>0$.
+			Then $E$ is an algebraic extension of $K$.
+			\end{thm}
+
+			\begin{thm}
+			Suppose that $K$ is a field and $L$ is a finite extension of $K$.
+			If $E$ is a finite extension of $L$, then $E$ is also a finite extension of $K$ and $[E:K] = [E:L][L:K]$.
+			\end{thm}
+		% subsection algebraic_extensions (end)
+
+	% 	\subsection{Root Field of a Polynomial}
+	% 	\label{sec:root_field_of_a_polynomial}
+	% 		\setcounter{defn}{22}
+	% 		\begin{defn}
+	% 		Let $K$ be a field and $a(x) \in K[x]$ have $\deg(a(x)) > 0$.
+	% 		The \textbf{root field for $a(x)$ over $K$} is a field extension $E$ of $K$ with the following properties:
+	% 			\begin{enumerate}[(i)]
+	% 			\item In $E[x], a(x)$ can be factored into a product of polynomials of degree 1.
+	% 			\item For any extension of $K$, $L$, which satisfies (i), we have $K \subseteq E \subseteq L$.
+	% 			\end{enumerate}
+	% 		\end{defn}
+
+	% 		\setcounter{defn}{24}
+	% 		\begin{defn}
+	% 		Let $K$ be a field and $c_{1}, c_{2}$ algebraic over $K$.
+	% 		Let $L = K(c_{1})$, then the field $K(c_{1},c_{2}) = L(c_{2})$ is called the \textbf{iterated extension} of $K$.
+	% 		\end{defn}
+
+	% 		\setcounter{thm}{25}
+	% 		\begin{thm}
+	% 		Let $K$ be a field and $a(x) \in K[x]$ with $\deg(a(x)) > 0$.
+	% 		If $E$ is the root field of $a(x)$ over $K$, and the elements $c_{1}, c_{2}, \dots, c_{n} \in E$ are all of the distinct roots of $a(x)$, then $E = K(c_{1}, c_{2}, \dots, c_{n})$.
+	% 		\end{thm}
+
+	% 		\setcounter{defn}{27}
+	% 		\begin{defn}
+	% 		Suppose that $E$ is an extension field of $K$ with $c \in E$.
+	% 		A field extension $K(c)$ is called a \textbf{simple extension} of $K$.
+	% 		\end{defn}
+
+	% 		\begin{defn}
+	% 		Let $K$ be a field and $p(x) \in K[x]$.
+	% 		We say $p(x)$ is \textbf{separable} if no irreducible factor of $p(x)$ has multiple roots in any extension field of $K$.
+	% 		Otherwise, we say $p(x)$ is \textbf{inseparable}.
+	% 		\end{defn}
+
+	% 		\setcounter{thm}{30}
+	% 		\begin{thm}
+	% 		Let $K$ be a field with $\char{K} = 0$.
+	% 		Then every irreducible polynomial in $K[x]$ is separable.
+	% 		\end{thm}
+
+	% 		\begin{thm}
+	% 		Let $K$ be a finite field with $\char{K} = q$ for some prime $q$.
+	% 			\begin{enumerate}[(i)]
+	% 			\item For any polynomial $b(x) = b_{0} + b_{1}x + \cdots + b_{t}x^{t} \in K[x]$ we have $(b(x))^{q} = b_{0}^{q} + b_{1}^{q}x^{q} + \cdots + b_{t}^{q}x^{qt}$.
+	% 			\item For any element $s \in K$ there is $r \in K$ with $s = r^{q}$.
+	% 			\end{enumerate}
+	% 		\end{thm}
+
+	% 		\begin{thm}
+	% 		Let $K$ be a finite field.
+	% 		Then every irreducible polynomial in $K[x]$ is separable.
+	% 		\end{thm}
+
+	% 		\begin{thm}
+	% 		Let $K$ be a field of characteristic 0, and $E$ a finite extension of $K$.
+	% 		Then $E$ is a simple extension of $K$, meaning there is some $c \in E$ with $E = K(c)$.
+	% 		\end{thm}
+	% 	% subsection root_field_of_a_polynomial (end)
+	% % section extension_fields (end)
+
+	% \section{Galois Theory}
+	% \label{sec:galois_theory}
+	% 	\setcounter{defn}{0}
+	% 	\setcounter{thm}{0}
+
+		% \paragraph{\color{blue}Commentary}
+		% \color{blue}
+		% I have nothing useful or intelligent to say about the content from Chapter 10, I would refer anyone looking to enhance their understanding of the material to the examples in the texbook, the lecture notes, or the myriad of online resources for students of modern algebra.
+		% \color{black}
+
+	% 	\subsection{Isomorphisms and Extension Fields}
+	% 	\label{sec:isomorphisms_and_extension_fields}
+	% 		\setcounter{defn}{1}
+	% 		\begin{defn}
+	% 		Let $K$ be a field and $f : K \to K$ be a function.
+	% 		If $f$ is an isomorphism we say that $f$ is an \textbf{automorphism of K}.
+	% 		\end{defn}
+
+	% 		\begin{defn}
+	% 		Let $K$ be a field and $E_{1}, E_{2}$ be exention fields of $K$.
+	% 		Suppose $f : E_{1} \to E_{2}$ is an isomorphism.
+	% 		If for every $a \in K$ we have $f(a) = a$, then we say that \textbf{f fixes K}.
+	% 		\end{defn}
+
+	% 		\setcounter{thm}{3}
+	% 		\begin{thm}
+	% 		Suppose $K_{1}, K_{2}$ are fields, $f : K_{1} \to K_{2}$ is an isomorphism, and $p(x) \in K_{1}[x]$ is irreducible over $K_{1}$.
+	% 		Then there exist extension fields $K_{1}(c_{1})$ and $K_{2}(c_{2})$ with the following properties:
+	% 			\begin{enumerate}[(i)]
+	% 			\item $c_{1}$ is a root of $p(x)$ and $c_{2}$ is a root of $\bar{f}(p(x))$ (as defined in Theorem 7.28).
+	% 			\item There exists an isomorphism $g : K_{1}(c_{1}) \to K_{2}(c_{2})$ with $g(c_{1}) = c_{2}$ for any $a \in K_{1}$, $g(a) = f(a)$.
+	% 			\end{enumerate}
+	% 		\end{thm}
+
+	% 		\setcounter{thm}{6}
+	% 		\begin{thm}
+	% 		Let $K$ be a field and $p(x) \in K[x]$ an irreducible polynomial.
+	% 		If $c_{1}$ and $c_{2}$ are roots of $p(x)$ in some extension of $K$, then $K(c_{1}) \cong K(c_{2})$ where the isomorphism $g : K(c_{1}) \to K(c_{2})$ maps $g(c_{1}) = c_{2}$ and fixes $K$.
+	% 		\end{thm}
+
+	% 		\setcounter{thm}{8}
+	% 		\begin{thm}
+	% 		Let $K$ be any field and $E_{1}, E_{2}$ extension fields of $K$, with $f : E_{1} \to E_{2}$ an isomorphism fixing $K$.
+	% 		If $p(x) \in K[x]$ and $c \in E_{1}$ is a root of $p(x)$, then $f(c) \in E_{2}$ is also a root of $p(x)$.
+	% 		\end{thm}
+	% 	% subsection isomorphisms_and_extension_fields (end)
+
+	% 	\subsection{Automorphisms of Root Fields}
+	% 	\label{sec:automorphisms_of_root_fields}
+	% 		\begin{thm}
+	% 		Let $K$ be a field and $a(x) \in K[x]$.
+	% 		If $\deg(a(x)) = n > 0$, then $a(x)$ is \underline{exactly} $n$ roots in its root field.
+	% 		\end{thm}
+
+	% 		\setcounter{thm}{11}
+	% 		\begin{thm}
+	% 		Suppose that $K$ is a field and $E_{1}, E_{2}$ are both finite exentions of $K$.
+	% 		If there exists an isomorphism $f : E_{1} \to E_{2}$ which fixes $K$, and $E_{1}$ is a root field of the polynomial $p(x) \in K[x]$, then $E_{1} = E_{2}$.
+	% 		\end{thm}
+
+	% 		\begin{thm}
+	% 		Suppose $K$ is a field and $E$ is the root field for some nonconstant $p(x) \in K[x]$.
+	% 		Suppose $L_{1}$ and $L_{2}$ are finite extension fields of $K$ with $K \subseteq L_{1} \subseteq E$.
+	% 		If there exists $f : L_{1} \to L_{2}$ an isomorphism fixing $K$, then $L_{2} \subseteq E$ and there exist an automorphism $g$ of $E$, with $g(a) = f(a)$ for all $a \in L$.
+	% 		\end{thm}
+
+	% 		\begin{thm}
+	% 		Suppose $K$ is a field, $E$ is the root field of a polynomial in $K[x]$, and $p(x) \in K[x]$ is irreducible over $K$ with $\deg(p(x)) > 1$.
+	% 		For any two distinct roots $c_{1},c_{2} \in E$ of $p(x)$, there exists an automorphism of $E$ fixing $K$, mapping $c_{1}$ to $c_{2}$.
+	% 		\end{thm}
+
+	% 		\setcounter{thm}{15}
+	% 		\begin{thm}
+	% 		Suppose $K$ is a field and $E$ is the root field of a polynomial in $K[x]$.
+	% 		If the irreducible polynomial $a(x) \in K[x]$ has one root in $E$ then every root of $a(x)$ is in $E$.
+	% 		\end{thm}
+	% 	% subsection automorphisms_of_root_fields (end)
+
+	% 	\subsection{The Galois Group of a Polynomial}
+	% 	\label{sec:the_galois_group_of_a_polynomial}
+	% 		\setcounter{thm}{17}
+	% 		\begin{thm}
+	% 		Let $K$ be a field and $p(x) \in K[x]$.
+	% 		If $E$ is the root field of $p(x)$ over $K$ then the set pf all automorphisms of $E$ fixing $K$ is a group under composition.
+	% 		\end{thm}
+
+	% 		\setcounter{defn}{18}
+	% 		\begin{defn}
+	% 		Let $K$be a field and $p(x) \in K[x]$ with root field $E$.
+	% 		The group of automorphisms of $E$ fixing $K$ is called the \textbf{Galois group of E over K}, denoted $Gal(E/K)$.
+	% 		It can also be called the \textbf{Galois group of p(x) over K}.
+	% 		\end{defn}
+
+	% 		\setcounter{thm}{19}
+	% 		\begin{thm}
+	% 		Let $K$ be a field and $E$ the root field for some $p(x) \in K[x]$.
+	% 		The number of automorphisms of $E$ fixing $K$ is equal to $[E:K]$.
+	% 		\end{thm}
+
+	% 		\setcounter{thm}{22}
+	% 		\begin{thm}
+	% 		Let $K$ be a field and $p(x) \in K[x]$ with root field $E$.
+	% 		Let $G = Gal(E/K)$.
+	% 		If $H$ is a subgroup of $G$ then the set $E_{H} = \{ y \in E : \alpha(y) = y \ \text{for every } \alpha \in H \}$ is a subfield of $E$ and $K \subseteq E_{H} \subseteq E$.
+	% 		The field $E_{H}$ is called \textbf{the fixed field for H}.
+	% 		\end{thm}
+
+	% 		\begin{thm}
+	% 		Let $K$ be a field, $p(x) \in K[x]$ with root field $E$, and $G = Gal(E/K)$.
+	% 		Ifn $L$ is a subfield of $E$ with $K \subseteq L$, then $G_{L} = \{ \alpha \in G : \ \text{for every } y \in L, \alpha(y) = y \}$ is a subgroup of $G$.
+	% 		The subgroup $G_{L}$ is called \textbf{the fixer of L}.
+	% 		\end{thm}
+	% 	% subsection the_galois_group_of_a_polynomial (end)
+
+	% 	\subsection{The Galois Correspondence}
+	% 	\label{sec:the_galois_correspondence}
+	% 		\begin{thm}
+	% 		Let $K$ be a field, $p(x) \in K[x]$ with root field $E$, and $G = Gal(E/K)$.
+	% 		If $L$ is a subfield of $E$ with $K \subseteq L \subseteq E$, then $L$ is the fixed field of $G_{L}$, i.e., $E_{G_{L}} = L$.
+	% 		\end{thm}
+
+	% 		\setcounter{thm}{26}
+	% 		\begin{thm}
+	% 		Let $K$ be a field, $p(x) \in K[x]$ with root field $E$, and $G = Gal(E/K)$.
+	% 		If $H$ is a subgroup of $G$ then the fixer of the field $E_{H}$ is $H$, i.e., $G_{E_{H}} = H$.
+	% 		\end{thm}
+
+	% 		\setcounter{thm}{28}
+	% 		\begin{thm}
+	% 		Let $K$ be a field and $E$ the root field for a polynomial over $K$.
+	% 		If $L$ is a subfield of $E$ with $K \subseteq L$ and $L$ is a root field over $K$, then $Gal(E/L) \triangleleft Gal(E/K)$ and $Gal(L/K) \cong Gal(E/K) / Gal(E/L)$.
+	% 		\end{thm}
+
+	% 		\begin{thm}
+	% 		Let $K$ be a field, $E$ the root field for a polynomial over $K$, and $L$ an intermediate field $K \subseteq L \subseteq E$.
+	% 		If $Gal(E/l) \triangleleft Gal(E/K)$ then $L$ is a root field over $K$.
+	% 		\end{thm}
+	% 	% subsection the_galois_correspondence (end)
+	% % section galois_theory (end)
+
+	% \section{Solvability}
+	% \label{sec:solvability}
+	% 	\setcounter{defn}{0}
+	% 	\setcounter{thm}{0}
+
+		% \paragraph{\color{blue}Commentary}
+		% \color{blue}
+		% I have nothing useful or intelligent to say about the content from Chapter 11, I would refer anyone looking to enhance their understanding of the material to the examples in the texbook, the lecture notes, or the myriad of online resources for students of modern algebra.
+		% \color{black}
+
+	% 	\subsection{Three Construction Problems}
+	% 	\label{sec:three_construction_problems}
+	% 		There are no definitions or theorems in this subsection.
+	% 	% subsection three_construction_problems (end)
+
+	% 	\subsection{Solvable Groups}
+	% 	\label{sec:solvable_groups}
+	% 		\begin{defn}
+	% 		A group $G$ is called a \textbf{solvable group} if there are subgroups $\{ e_{G} \} = H_{0}, H_{1}, \dots, H_{n} = G$, so that for each $0 \leq i \leq n - 1$, $H_{i} \triangleleft H_{i+1}$ and $H_{i+1} / H_{i}$ is an abelian group. 
+	% 		\end{defn}
+
+	% 		\setcounter{thm}{2}
+	% 		\begin{thm}
+	% 		The permutation group $S_{5}$ is not solvable.
+	% 		\end{thm}
+
+	% 		\begin{thm}
+	% 		The permutation group $S_{4}$ is not solvable.
+	% 		\end{thm}
+
+	% 		\begin{thm}
+	% 		Let $G$ be a group and $J$ a subgroup of $G$.
+	% 			\begin{enumerate}[(i)]
+	% 			\item If $G$ is a solvable group then $J$ is a solvable group.
+	% 			\item If $J \triangleleft G$ and both $J$ and $G/J$ are solvable groups, then $G$ is a solvable group.
+	% 			\end{enumerate}
+	% 		\end{thm}
+
+	% 		\begin{thm}
+	% 		Suppose $G$ and $B$ are groups.
+	% 		If there is an \underline{onto} homomorphism $f : G \to B$ and $G$ is a solvable group, then $B$ is a solvable group.
+	% 		\end{thm}
+
+	% 		\begin{thm}
+	% 		For each $n \geq 5$, $S_{n}$ is not a solvable group.
+	% 		\end{thm}
+	% 	% subsection solvable_groups (end)
+
+	% 	\subsection{Solvable by Radicals}
+	% 	\label{sec:solvable_by_radicals}
+	% 		\setcounter{defn}{8}
+	% 		\begin{defn}
+	% 		Let $K$ be a field.
+	% 		A \textbf{radical extension} of $K$ is a finite extension of the form $K(c_{1},\dots,c_{n})$ where for each $1 \leq i \leq n$, there is a positive integer $m_{i} \geq 2$ so that $(c_{1})^{m_{1}} \in K$ and for $1 < i \leq n$, $(c_{i})^{m_{i}} \in K(c_{1},\dots,c_{i-1})$
+	% 		\end{defn}
+
+	% 		\setcounter{defn}{10}
+	% 		\begin{defn}
+	% 		Let $K$ be a field and $p(x) \in K[x]$.
+	% 		We say that $p(x)$ is \textbf{solvable by radicals} if the root field of $p(x)$ is contained in a radical extension of $K$.
+	% 		\end{defn}
+
+	% 		\setcounter{thm}{12}
+	% 		\begin{thm}
+	% 		Let $L$ be a radical extension of $\Q$.
+	% 		Then there exists a radical extension $E$ of $\Q$, with $\Q \subseteq L \subseteq E$, where $E$ is also a root field over $\Q$.
+	% 		\end{thm}
+
+	% 		\setcounter{defn}{13}
+	% 		\begin{defn}
+	% 		For $n > 1$, the root $\omega_{n} = \cos{\left( \frac{2\pi}{n} \right)} + i \sin{\left( \frac{2\pi}{n} \right)}$ for the polynomial $-1 + x^{n} \in \Q[x]$ is called a \textbf{primitive n$^{th}$ root of unity}.
+	% 		\end{defn}
+
+	% 		\setcounter{thm}{14}
+	% 		\begin{thm}
+	% 		For each positive integer $n$, the polynomial $p(x) = -1 + x^{n}$ in $\Q[x]$ is solvable by radicals.
+	% 		\end{thm}
+
+	% 		\begin{thm}
+	% 		If $n$ is a positive integer with $n \geq 2$ then $Gal(\Q(\omega_{n})/\Q)$ is abelian.
+	% 		\end{thm}
+
+	% 		\begin{thm}
+	% 		Let $m_{1},m_{2},\dots,m_{r}$ be distinct positive integers, and $m_{j} \geq 2$ for each $j$.
+	% 		Then the field $L = \Q(\omega_{m_{1}}, \omega_{m_{2}}, \dots, \omega_{m_{r}})$ is a root field over $\Q$, and $Gal(L/\Q)$ is a solvable group.
+	% 		\end{thm}
+
+	% 		\begin{thm}
+	% 		If the polynomial $p(x) \in \Q[x]$ is solvable by radicals, then the Galois group $G$ for $p(x)$ is a solvable group.
+	% 		\end{thm}
+
+	% 		\setcounter{thm}{19}
+	% 		\begin{thm}
+	% 		If $G$ is a \underline{finite} solvable group, then there is a sequence of subgroups $\{ e_{G} \} = H_{0},H_{1},\dots,H_{n} = G$ where for each $0 \leq j < n$, $H_{j} \triangleleft H_{j+1}$, and $H_{j+1}/H_{j}$ is cyclic of prime order.
+	% 		\end{thm}
+
+	% 		\begin{thm}
+	% 		If $p(x) \in \Q[x]$ has root field $E$ and $Gal(E/\Q)$ is solvable, then $p(x)$ is solvable by radicals.
+	% 		\end{thm}
+	% 	% subsection solvable_by_radicals (end)
+	% % section solvability (end)
+\end{document}
+
+% With the addition of the portfolio assignment to the normally assigned homework problems, the amount of work assigned for Math 392 is at least double that of Math 391, for the same number of credit hours. This is akin to being told to work extra hours for no additional pay, an unreasonable prospect for any reasonable person.

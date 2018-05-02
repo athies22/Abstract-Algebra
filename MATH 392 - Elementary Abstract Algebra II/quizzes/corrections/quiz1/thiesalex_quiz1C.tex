@@ -1,0 +1,296 @@
+%!TEX output_directory = temp
+\documentclass[letterpaper, 12pt]{amsart}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%% boilerplate packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\usepackage{amsmath,amssymb,amsthm}
+	\usepackage[mathscr]{euscript}
+	\usepackage{enumerate}
+	\usepackage{graphicx}
+	\usepackage{mathrsfs}
+	\usepackage{color}
+	\usepackage{hyperref}
+	\usepackage{verbatim}
+	\usepackage{stmaryrd}
+	\usepackage{polynom}
+	% \usepackage[margin=1.5in]{geometry}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%% rename the abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% \renewcommand{\abstractname}{Introduction}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% sets %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% sets 
+		\DeclareMathOperator{\N}{\mathbb{N}}
+		\DeclareMathOperator{\Z}{\mathbb{Z}}
+		\DeclareMathOperator{\Zp}{\mathbb{Z}^{+}}
+		\DeclareMathOperator{\Q}{\mathbb{Q}}
+		\DeclareMathOperator{\Qp}{\mathbb{Q}^{+}}
+		\DeclareMathOperator{\Qc}{\mathbb{Q}^{c}}
+		\DeclareMathOperator{\R}{\mathbb{R}}
+		\DeclareMathOperator{\Rp}{\mathbb{R}^{+}}
+		\DeclareMathOperator{\C}{\mathbb{C}}
+		\DeclareMathOperator{\Cnon}{\mathbb{C}^{\times}}
+		%% powerset of a set
+		\DeclareMathOperator{\pset}{\mathcal{P}}
+		%% set of continuous functions in a certain variable
+		\DeclareMathOperator{\cont}{\mathscr{C}}
+		%% set of functions in a certain variable
+		\DeclareMathOperator{\func}{\mathscr{F}}
+		
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% linear algebra %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% linear span
+		\DeclareMathOperator{\Ell}{\mathscr{L}}
+		%% bold vectors with arrows, and bold matrices
+		\newcommand{\bmat}[1]{{\mathbf{#1}}}
+		\newcommand{\bvec}[1]{{\vec{\mathbf{#1}}}}
+		%% independent vectors/matrices
+		\DeclareMathOperator{\ind}{\perp\!\!\!\perp}
+		%% order
+		\DeclareMathOperator{\ord}{\text{ord}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%% probability & statistics %%%%%%%%%%%%%%%%%%%%%%%%%
+		%% probability, expectation, variance, etc.
+		\renewcommand{\Pr}{\mathbb{P}}
+		\DeclareMathOperator{\E}{\mathbb{E}}
+		\DeclareMathOperator{\var}{\rm Var}
+		\DeclareMathOperator{\sd}{\rm SD}
+		\DeclareMathOperator{\cov}{\rm Cov}
+		\DeclareMathOperator{\SE}{\rm SE}
+		\DeclareMathOperator{\ssreg}{{\rm SS}_{{\rm Reg}}}
+		\DeclareMathOperator{\ssr}{{\rm SS}_{{\rm Res}}}
+		\DeclareMathOperator{\sst}{{\rm SS}_{{\rm Tot}}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% congruences %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\renewcommand{\mod}[1]{\ (\mathrm{mod}\ #1)}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% bracket notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		% I first used this for principal ideals, that is why the abbreviation is pid
+		\newcommand{\pid}[1]{\langle #1 \rangle}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% fatdot notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\makeatletter
+			\newcommand*\fatdot{\mathpalette\fatdot@{.5}}
+			\newcommand*\fatdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+		\makeatother
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% use pretty letters %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\DeclareMathOperator{\ep}{\varepsilon}
+		\DeclareMathOperator{\ph}{\varphi}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% theorems %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\newtheorem{lem}{Lemma}
+		\DeclareMathOperator{\ra}{\Rightarrow)}
+		\DeclareMathOperator{\la}{\Leftarrow)}
+
+\begin{document}
+	\title{Quiz 1 Corrections  -- Math 392 \\ \today}
+	\author{Alex Thies \\ \href{mailto:athies@uoregon.edu}{\lowercase{athies$@$uoregon.edu}}}
+
+	\maketitle
+
+	\section*{Problem 1}
+	\label{sec:problem_1}
+	Let $T : \Q[x] \to \R$ be the ring homomorphism given by $$T(p(x)) = p(\sqrt{2}).$$
+	We proved last term that every kernel is an ideal, and moreover, we know that any ideal of $\Q[x]$ is a principal ideal, so we know $\ker{T} = \pid{a(x)}$ for some $a(x) \in \Q[x]$.
+	Determine this polynomial $a(x)$ (and of course, prove your claim is true).
+
+	\begin{proof}
+	We claim that $p(x) = x^{2} - 2$, we will show that $\ker{T} = \pid{x^{2} - 2}$ by double-inclusion.
+
+	Notice that $T(x^{2} - 2) = 0$, thus $x^{2} - 2 \in \ker{T}$, it follows by the zero product property that any linear combination of $x^{2} - 2$, i.e. any element of $\pid{x^{2} - 2}$ will also equal zero when evaluated at $x = \sqrt{2}$.
+	Thus, $\pid{x^{2} - 2} \subseteq \ker{T}$.
+	It remains to show that $\pid{x^{2} - 2} \supseteq \ker{T}$.
+
+	Let $b(x) \in \ker{T}$ be arbitrary, then $T(b(x)) = b(\sqrt{2}) = 0$.
+	By the division algorithm we can write $b(x) = q(x)(x^{2} - 2) + r(x)$ for unique polynomials $q(x), r(x) \in \Q[x]$ such that $\deg{r(x)} < \deg{x^{2} - 2}$, or $r(x) = 0$.
+	The remainder of the proof pertains to the nature of $(x)$.
+	For $\ker{T}$ to be a subset of $\pid{x^{2} - 2}$ we must have $r(x) = 0(x)$, which we will prove by cases.
+	Since $\deg{x^{2} - 2} = 2$, we have either $\deg{r(x)} = 1$, $\deg{r(x)} = 0$, or $r(x) = 0(x)$.
+
+	Case 1, suppose $\deg{r(x)} = 1$, then $r(x) = r_{0} + r_{1}x$ and $r_{1} \neq 0$.
+	We can see that $r(\sqrt{2}) \neq 0$, which would contradict our hypothesis that $b(x) \notin \ker{T}$.
+	Hence, $\deg{r(x)} \neq 1$.
+
+	Case 2, suppose $\deg{r(x)} = 0$, then $r(x) = r_{0}$ and $r_{0} \neq 0$.
+	We can see that $r(\sqrt{2}) \neq 0$, which would contradict our hypothesis that $b(x) \notin \ker{T}$.
+	Hence, $\deg{r(x)} \neq 0$.
+
+	This leaves us with the case that $r(x) = 0(x)$, which allows us to write $b(x) = q(x)(x^{2} - 2)$, and then conclude that $b(x) \in \pid{x^{2} - 2}$.
+	Thus, we have shown that an arbitrary element of the kernel of $T$ is inherently also an element of $\pid{x^{2} - 2}$, therefore $\ker{T} = \pid{x^{2} - 2}$, as we aimed to prove.
+	\end{proof}
+	% section problem_1 (end)
+
+	\section*{Problem 2}
+	\label{sec:problem_2}
+	List all polynomials $p(x)$ over $\Z_{2}$ that have degree 3, and determine which are reducible and which are irreducible.
+	Write all polynomials as a product of their irreducible factors.
+	For any irreducible, whether a degree 3 polynomial or a factor of something reducible, prove that it is irreducible.
+
+	\begin{proof}
+	Since $\Z_{2} = \{ 0,1 \}$, we have the following degree three polynomials from $\Z_{2}[x]$:
+
+		\begin{figure}[h]
+			\begin{tabular}{rlrl}
+			$p_{1}(x) =$ & $x^{3} + x^{2} + x + 1$ & $p_{5}(x) =$ & $x^{3} + 1$ \\
+			$p_{2}(x) =$ & $x^{3} + x + 1$ & $p_{6}(x) =$ & $x^{3} + x^{2}$ \\
+			$p_{3}(x) =$ & $x^{3} + x^{2} + 1$ & $p_{7}(x) =$ & $x^{3} + x$ \\
+			$p_{4}(x) =$ & $x^{3} + x^{2} + x$ & $p_{8}(x) =$ & $x^{3}$ 
+			\end{tabular}
+			\caption{Degree 3 polynomials from $\Z_{2}[x]$}
+			\label{deg3polys}
+		\end{figure}
+
+	We will now determine which polynomials are irreducible, and for the reducible polynomials we write them as a product of their irreducible factors.
+	Notice that since we are working in $\Z_{2}$, we have $R = \{ 0,1 \}$ as the only possible roots of our polynomials.
+	Moreover, since we cannot use any theorems about factoring in $\Q$, we will be leaning on Theorem 8.22 quite extensively.
+	Theorem 8.22 states that for a field $K$, and $a(x) \in K[x]$ with $\deg{a(x)} = 2$ or $\deg{a(x)} = 3$.
+	The polynomial $a(x)$ is reducible over $K$ if and only if $a(x)$ has a root in $K$.
+	Finally, recall that by the definition of irreducible and reducible, any linear factors are irreducible.
+
+	\paragraph{$p_{1}(x)$}
+	Let $p_{1}(x) = x^{3} + x^{2} + x + 1$.
+	We compute the following,
+		\begin{align*}
+		p_{1}(0) &= 1 \neq 0, \\
+		p_{1}(1) &= 4 \equiv 0 \mod{2}.
+		\end{align*}
+	Hence, $x = 1$ is a root, thus $p_{1}(x) = (x-1)b(x)$ for some $b(x) \in \Z_{2}[x]$; we determine $b(x)$ by polynomial long division: $$\polylongdiv{x^{3} + x^{2} + x + 1}{x - 1}$$
+	Again, since we are operating in $\Z_{2}[x]$, we have $b(x) = x^{2} + 1$, and we can write $p_{1}(x) = (x + 1)(x^{2} + 1)$.
+	We can notice that $b(1) = 0$, thus $1$ is also a root of $b(x)$, thus we can write $p_{1}(x) = (x-1)^{2}\tilde{b}(x)$ for some $\tilde{b}(x) \in \Z_{2}[x]$.
+	Again, we use polynomial long division: $$\polylongdiv{x^{3} + x^{2} + x + 1}{(x - 1)^{2}}$$
+	Thus, we have $p_{1}(x) = (x-1)^{2}(x+1)$, since these factors are linear, they are irreducible over $\Z_{2}$.
+	Notice that we can also write $p_{1}(x) = (x+1)^{3}$ because $-1 \equiv 1 \mod{2}$.
+	% paragraph p_ (end)
+	\vspace{5mm}
+	
+	\paragraph{$p_{2}(x)$}
+	Let $p_{2}(x) = x^{3} + x + 1$.
+	We compute the following
+		\begin{align*}
+		p_{2}(0) &\equiv 1 \mod{2}, \\
+		p_{2}(1) &\equiv 1 \mod{2}.
+		\end{align*}
+	Thus, $p_{2}(x)$ has no roots in $\Z_{2}$ and is irreducible over $\Z_{2}$.
+	% paragraph p_ (end)
+	\vspace{5mm}
+
+	\paragraph{$p_{3}(x)$}
+	Let $p_{3}(x) = x^{3} + x^{2} + 1$.
+	We compute the following
+		\begin{align*}
+		p_{3}(0) &\equiv 1 \mod{2}, \\
+		p_{3}(1) &\equiv 1 \mod{2}.
+		\end{align*}
+	Thus, $p_{3}(x)$ has no roots in $\Z_{2}$ and is irreducible over $\Z_{2}$.
+	% paragraph p_ (end)
+	\vspace{5mm}
+
+	\paragraph{$p_{4}(x)$}
+	Let $p_{4}(x) = x^{3}+x^{2}+x$.
+	We can easily factor this as $p_{4}(x) = x(x^{2} + x + 1)$, since $x$ is linear, it remains to show that $\tilde{p}_{4}(x) = x^{2} + x + 1$ is either irreducible, or has reducible factors.
+	We compute the following
+		\begin{align*}
+		\tilde{p}_{4}(0) &\equiv 1 \mod{2}, \\
+		\tilde{p}_{4}(1) &\equiv 1 \mod{2}.
+		\end{align*}
+	Thus, $\tilde{p}_{4}(x)$ is irreducible over $\Z_{2}$, and we have $p_{4}$ as the following product of irreducible factors: $p_{4}(x) = x(x^{2} + x + 1)$
+	% paragraph p_ (end)
+	\vspace{5mm}
+
+	\paragraph{$p_{5}(x)$}
+	Let $p_{5}(x) = x^{3} + 1$.
+	We compute the following
+		\begin{align*}
+		p_{5}(0) &\equiv 1 \mod{2}, \\
+		p_{5}(1) &\equiv 0 \mod{2}.
+		\end{align*}
+	Hence 1 is a root and we have $p_{5}(x) = (x-1)b(x)$ for some $b(x) \in \Z_{2}[x]$.
+	We compute $b(x)$: $$\polylongdiv{x^{3} + 1}{x - 1}$$
+	Thus, $b(x) = x^{2} + x + 1$; at this point it should be fairly clear that $b(x)$ is irreducible given its only possible roots of 0 and 1, thus we have $p_{5}(x) = (x-1)(x^{2} + x + 1) \equiv (x+1)(x^{2} + x + 1) \mod{2}$.
+	% paragraph p_ (end)
+	\vspace{5mm}
+
+	\paragraph{$p_{6}(x)$}
+	Let $p_{6}(x) = x^{3} + x^{2} = x^{2}(x + 1)$, each factor is already linear, so we're done.
+	% paragraph p_ (end)
+	\vspace{5mm}
+
+	\paragraph{$p_{7}(x)$}
+	Let $p_{7}(x) = x^{3} + x = x(x^{2} + 1)$, since $x$ is linear, it remains to show that $x^{2} + 1$ is either irreducible or reducible.
+	From previous work its clear that $x^{2} + 1 = (x+1)^{2}$, thus we have $p_{7}(x) = x(x+1)^{2}$.
+	% paragraph p_ (end)
+	\vspace{5mm}
+
+	\paragraph{$p_{8}(x)$}
+	Let $p_{8}(x) = x^{3}$.
+	This is already a product of irreducible linear factors, so we're done.
+	% paragraph p_ (end)
+	\vspace{5mm}
+	\end{proof}
+	% section problem_2 (end)
+
+	\section*{Problem 3}
+	\label{sec:problem_3}
+	Let $A$ and $B$ be commutative rings with unity, and let $f : A \to B$ be a ring homomorphism that is not identically zero.
+	Prove that for all $b \in B$, there exists a ring homomorphism $F : A[x] \to B$ such that $F(a) = f(a)$ for all $a \in A$ and $F(x) = b$ (meaning that $F$ maps the polynomial $x$ to $b$).
+	(Hint: use theorems; it's not necessary to prove everything from the definition).
+	You may assume that $f(1_{A}) = 1_{B}$.
+
+		\begin{lem}
+		The composition of ring homomorphisms is a ring homomorphism.
+		\end{lem}
+		\begin{proof}
+		Let $A,B,C$ be rings with ring homomorphisms $\phi: A \to B$ and $\psi: B \to C$.
+
+		Additivity:
+		\begin{align*}
+		(\phi \circ \psi)(a + b) &= \phi(\psi(a+b)), \\
+		&= \phi(\psi(a) + \psi(b)), \\
+		&= \phi(\psi(a)) + \phi(\psi(b)), \\
+		&= (\phi \circ \psi)(a) + (\phi \circ \psi)(b).
+		\end{align*}
+
+		Multiplicativity:
+		\begin{align*}
+		(\phi \circ \psi)(a \cdot b) &= \phi(\psi(a \cdot b)), \\
+		&= \phi(\psi(a) \cdot \psi(b)), \\
+		&= \phi(\psi(a)) \cdot \phi(\psi(b)), \\
+		&= (\phi \circ \psi)(a) \cdot (\phi \circ \psi)(b).
+		\end{align*}	
+		\end{proof}
+
+	\begin{proof}
+	Recall the evaluation map $h_{c}: A[x] \to A$ defined by $h_{c}(a(x)) = a(c)$, where $c \in A$.
+	By Theorem 7.35 we know that $h_{c}$ is a homomorphism.
+	By our previous Lemma we know that the composition of ring homomorphisms is a ring homomorphism, so consider the ring homomorphism $(f \circ h_{c})$.
+
+	Let $F = (f \circ h_{c})$, and let $a(x) \in A[x]$; recall that since $f$ is a function we know for some $a \in A$, there exists $b \in B$ such that $f(a) = b$.
+	If $a(x) = a_{0}$, then for any $c \in A$ we have
+		\begin{align*}
+		F(a(x)) &= (f \circ h_{c})(a(x)), \\
+		&= f(h_{c}(a_{0})), \\
+		&= f(a_{0}), \\
+		&= b.
+		\end{align*}
+	
+	If $\deg{a(x)} > 0$, then we use $c = 0_{A}$ and get the following:
+		\begin{align*}
+		F(a(x)) &= (f \circ h_{0})(a(x)), \\
+		&= f(h_{0}(a(x))), \\
+		&= f(a(0)), \\
+		&= f(a_{0}), \\
+		&= b.
+		\end{align*}
+	\end{proof}
+
+	Thus, the composition $(f \circ h_{c})$ is the ring homomorphism we were looking to find.
+	% section problem_3 (end)
+\end{document}

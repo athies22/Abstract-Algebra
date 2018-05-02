@@ -1,0 +1,358 @@
+%!TEX output_directory = temp
+\documentclass[letterpaper, 12pt]{amsart}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%% boilerplate packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\usepackage{amsmath,amssymb,amsthm}
+	\usepackage[mathscr]{euscript}
+	\usepackage{enumerate}
+	\usepackage{graphicx}
+	\usepackage{mathrsfs}
+	\usepackage{color}
+	\usepackage{hyperref}
+	\usepackage{verbatim}
+	\usepackage{stmaryrd}
+	\usepackage[margin=1.25in]{geometry}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%% rename the abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% \renewcommand{\abstractname}{Introduction}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% sets %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% sets 
+		\DeclareMathOperator{\N}{\mathbb{N}}
+		\DeclareMathOperator{\Z}{\mathbb{Z}}
+		\DeclareMathOperator{\Zp}{\mathbb{Z}^{+}}
+		\DeclareMathOperator{\Q}{\mathbb{Q}}
+		\DeclareMathOperator{\Qp}{\mathbb{Q}^{+}}
+		\DeclareMathOperator{\Qc}{\mathbb{Q}^{c}}
+		\DeclareMathOperator{\R}{\mathbb{R}}
+		\DeclareMathOperator{\Rp}{\mathbb{R}^{+}}
+		\DeclareMathOperator{\C}{\mathbb{C}}
+		\DeclareMathOperator{\Cnon}{\mathbb{C}^{\times}}
+		%% powerset of a set
+		\DeclareMathOperator{\pset}{\mathcal{P}}
+		%% set of continuous functions in a certain variable
+		\DeclareMathOperator{\cont}{\mathscr{C}}
+		%% set of functions in a certain variable
+		\DeclareMathOperator{\func}{\mathscr{F}}
+		
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% linear algebra %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% linear span
+		\DeclareMathOperator{\Ell}{\mathscr{L}}
+		%% bold vectors with arrows, and bold matrices
+		\newcommand{\bmat}[1]{{\mathbf{#1}}}
+		\newcommand{\bvec}[1]{{\vec{\mathbf{#1}}}}
+		%% independent vectors/matrices
+		\DeclareMathOperator{\ind}{\perp\!\!\!\perp}
+		%% order
+		\DeclareMathOperator{\ord}{\text{ord}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%% probability & statistics %%%%%%%%%%%%%%%%%%%%%%%%%
+		%% probability, expectation, variance, etc.
+		\renewcommand{\Pr}{\mathbb{P}}
+		\DeclareMathOperator{\E}{\mathbb{E}}
+		\DeclareMathOperator{\var}{\rm Var}
+		\DeclareMathOperator{\sd}{\rm SD}
+		\DeclareMathOperator{\cov}{\rm Cov}
+		\DeclareMathOperator{\SE}{\rm SE}
+		\DeclareMathOperator{\ssreg}{{\rm SS}_{{\rm Reg}}}
+		\DeclareMathOperator{\ssr}{{\rm SS}_{{\rm Res}}}
+		\DeclareMathOperator{\sst}{{\rm SS}_{{\rm Tot}}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% congruences %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\renewcommand{\mod}[1]{\ (\mathrm{mod}\ #1)}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% bracket notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		% I first used this for principal ideals, that is why the abbreviation is pid
+		\newcommand{\pid}[1]{\langle #1 \rangle}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% fatdot notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\makeatletter
+			\newcommand*\fatdot{\mathpalette\fatdot@{.5}}
+			\newcommand*\fatdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+		\makeatother
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% use pretty letters %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\DeclareMathOperator{\ep}{\varepsilon}
+		\DeclareMathOperator{\ph}{\varphi}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%% stolen from Jeske/Dugger %%%%%%%%%%%%%%%%%%%%%%%%%
+	% Some theorem-like environments, all numbered together starting at 1
+	% in each section.
+
+	% The default \theoremstyle is bold headings and italic body text.
+	\newtheorem{thm}{Theorem}[section]
+	\newtheorem{defn}[thm]{Definition}
+	\newtheorem{prop}[thm]{Proposition}
+	\newtheorem{claim}[thm]{Claim}
+	\newtheorem{cor}[thm]{Corollary}
+	\newtheorem{lemma}[thm]{Lemma}
+
+	\theoremstyle{definition}  % Bold headings and Roman body text.
+	\newtheorem{example}[thm]{Example}
+	\newtheorem{examples}[thm]{Examples}
+	\newtheorem{exercise}[thm]{Exercise}
+	\newtheorem{note}[thm]{Note}
+	\newtheorem{remark}[thm]{Remark}
+	\newtheorem{remarks}[thm]{Remarks}
+	\newtheorem{discussion}[thm]{Discussion}
+
+	\newcommand{\dfn}{\textbf} % Make defined words bold.
+	\newcommand{\mdfn}[1]{\dfn{\mathversion{bold}#1}} % Even make math symbols bold
+
+	% Various commands that are useful.  Please add your own.
+
+	\DeclareMathOperator{\Arg}{Arg}
+	\DeclareMathOperator{\re}{Re}
+	\DeclareMathOperator{\im}{Im}
+	\DeclareMathOperator{\Log}{Log}
+	\DeclareMathOperator{\Span}{Span}
+
+	\newcommand{\iso}{\cong}						% isometric/congruent
+	\newcommand{\ra}{\rightarrow}                   % right arrow
+	\newcommand{\Ra}{\Rightarrow}                   % right implies
+	\newcommand{\lra}{\longrightarrow}              % long right arrow
+	\newcommand{\la}{\leftarrow}                    % left arrow
+	\newcommand{\La}{\Leftarrow}                    % left implies
+	\newcommand{\lla}{\longleftarrow}               % long left arrow
+	\newcommand{\llra}[1]{\stackrel{#1}{\lra}}      % labeled long right arrow
+	\newcommand{\we}{\llra{\sim}}                   % weak equivalence
+	\newcommand{\cof}{\rightarrowtail}              % cofibration
+	\newcommand{\fib}{\twoheadrightarrow}           % fibration
+	\newcommand{\inc}{\hookrightarrow}              % inclusion
+	\newcommand{\dbra}{\rightrightarrows}           % double arrow for equalizer diagrams
+	\newcommand{\eqra}{\llra{\sim}}                 % equivalence/isomorphism
+
+	% \newcommand{\blank}{\underbar{\ \ }}          % An underscore, as in (__)xV
+	\newcommand{\blank}{-}                          % A hyphen, as in (-)xV
+	\newcommand{\Id}{Id}                            % The identity functor
+	\newcommand{\und}{\underline}
+	\newcommand{\norm}[1]{\mid \!\!#1 \!\!\mid}             %\norm{x} gives |x|
+
+	% These commands are for the period and comma in the lower right entry of
+	% a diagram.  They put the punctuation 2 pts to the right, but make
+	% TeX (and hence the diagram package) unaware of the extra width
+	% of that entry.
+	\newcommand{\period}    {{\makebox[0pt][l]{\hspace{2pt} .}}}
+	\newcommand{\comma}     {{\makebox[0pt][l]{\hspace{2pt} ,}}}
+	\newcommand{\semicolon} {{\makebox[0pt][l]{\hspace{2pt} ;}}}
+
+	\newcommand{\Cech}{\v{C}ech}
+	\newcommand{\scat}{\Delta}
+	\newcommand{\assign}{\ra}
+	\newcommand{\copr}{\,\amalg\,}
+	\newcommand{\ovcat}{\downarrow}
+	\newcommand{\pder}[2]{{\frac{\partial #1}{\partial #2}}}
+	\newcommand{\del}{\nabla}
+	\newcommand{\vectr}[1]{{\mbox{\boldmath $#1$}}}
+	\newcommand{\uvectr}[1]{\vectr{\hat #1}}
+	\newcommand{\ihat}{\uvectr \imath}
+	\newcommand{\jhat}{\uvectr \jmath}
+	\newcommand{\khat}{\uvectr k}
+	\newcommand{\rhat}{\uvectr r}
+	\newcommand{\thhat}{\uvectr \theta}
+	\newcommand{\zhat}{\uvectr z}
+	\newcommand{\rhohat}{\uvectr \rho}
+	\newcommand{\phihat}{\uvectr \phi}
+	\newcommand{\grad}{\vectr{\vec\nabla}}
+	% \newcommand{\R}{\mathbb{R}}
+	\newcommand{\vv}[1]{\vectr{v_{#1}}}
+	\newcommand{\crad}{0.1}
+	\newcommand{\lline}[1]{\overleftrightarrow{#1}}
+	\DeclareMathOperator{\area}{area}
+	\DeclareMathOperator{\vol}{vol}
+	\newcommand{\ray}[1]{\overset{\rightarrow}{#1}}
+	\newcommand{\sr}[2]{???}
+	\newcommand{\iihat}{i}
+	\newcommand{\jjhat}{j}
+	\newcommand{\kkhat}{k}
+
+		
+\begin{document}
+	\title{Homework 9  -- Math 392 \\ \today}
+	\author{Alex Thies \\ \href{mailto:athies@uoregon.edu}{\lowercase{athies$@$uoregon.edu}}}
+
+	\maketitle
+
+	\subsection*{Problem 1}
+	\label{sub:problem_1}
+	Of the following real numbers, determine which are constructible: \[ \sqrt[4]{5 + \sqrt{2}} \hspace{1cm} \sqrt[6]{2} \hspace{1cm} \frac{3}{4 + \sqrt{13}} \hspace{1cm} 3 + \sqrt[5]{8} \]
+
+	\begin{proof}
+	Recall that the constructible numbers are closed under the usual arithmetic operations, as well as the taking of square roots.
+	Hence, we will be trying to write each of the given numbers using these tools.
+	First, given the previous statement, notice that $\frac{3}{4 + \sqrt{13}}$ is obviously constructible.
+	Next, write $\sqrt[4]{5 + \sqrt{2}} = \sqrt{\sqrt{5 + \sqrt{2}}}$, thus it is also constructible.
+	For the remaining two numbers, we could appeal to the `fact' that cube roots and fifth roots aren't constructible, but I don't know if we know that for sure.
+	So, let's utilize the fact that for a constructible number $\alpha$, $\left[\Q(\alpha) : \Q \right] = 2^{n}$.
+
+	Let $\alpha = \sqrt[6]{2}$, a rational polynomial with $\alpha$ as a root is $p(x) = x^{6} - 2$.
+	By Eisenstein's Criterion we have that $p(x)$ is irreducible over the rationals as $2 | -2$, $2 \not| \hspace{1mm} 1$, and $4 \not| \hspace{1mm} 2$.
+	Since $p(x)$ is monic and irreducible, it is the minimum polynomial for $\Q(\sqrt[6]{2})$, thus $\left[\Q(\sqrt[6]{2}) : \Q \right] = 6 \neq 2^{n}$ for $n \in \N$.
+	It follows that $\sqrt[6]{2}$ is not constructible.
+	We'll use a similar process for the remaining number $3 + \sqrt[5]{8}$.
+
+	Let $\beta = 3 + \sqrt[5]{8}$, a rational polynomial with $\beta$ as a root is $q(x) = (x - 3)^{5} - 8$.
+	Expanding this polynomial gets a little messy, so let's do the efficient thing and ask a computer whether or not $q(x)$ is irreducible over $\Q$.
+	It turns out, yes, $q(x)$ is irreducible, notice that it is also monic, so $\left[\Q(3 + \sqrt[5]{8}) : \Q \right] = 5 \neq 2^{n}$ for $n \in \N$.
+	It follows that $3 + \sqrt[5]{8}$ is not constructible.
+	\end{proof}
+	% subsection problem_1 (end)
+
+	\subsection*{Problem 2}
+	\label{sub:problem_2}
+	Of the constructible numbers above, write down their explicit tower of degree-2 field extensions as guaranteed by our big theorem about constructible numbers.
+
+	\begin{proof}
+	Let's start with $\alpha = 3/(4 + \sqrt{13})$.
+	Since the only piece of $\alpha$ that can't be dealt with in $\Q = F_{0}$ is $\sqrt{13}$, we'll use the extension $F_{1} = \Q(\sqrt{13})$, which has minimum polynomial $x^{2} + 13$, so $[F_{1}:F_{0}] = 2$.
+	So the tower of degree 2 field extensions is $\Q \subset \Q(\sqrt{13})$.
+
+	Next, let's tackle $\beta = \sqrt[4]{5 + \sqrt{2}}$; it might help to write $\beta = \sqrt{\sqrt{5 + \sqrt{2}}}$.
+	The first extension is clearly $F_{1} = \Q(\sqrt{2})$.
+	We can add 5 to things in $\Q(\sqrt{2})$, so for $F_{2}$ we'll use $\Q(\sqrt{5 + \sqrt{2}})$, note that $[\Q(\sqrt{5 + \sqrt{2}}):\Q(\sqrt{2})] = 2$.
+	For our final extension we need another square root, thus $F_{3} = \Q(\sqrt[4]{5 + \sqrt{2}})$, and as before we have $[F_{3}:F_{2}] = 2$.
+	Thus, our tower of degree-2 extensions is $\Q \subset \Q(\sqrt{2}) \subset \Q(\sqrt{5 + \sqrt{2}}) \subset \Q(\sqrt[4]{5 + \sqrt{2}})$.
+	Further, its pretty easy to check that the minimum polynomial for $\beta$ over $\Q$ is of degree $2^{3}$, which agrees with the number of degree-2 finite field extensions that we found above.
+	\end{proof}
+	% subsection problem_2 (end)
+
+	\subsection*{Problem 3}
+	\label{sub:problem_3}
+	Prove that a point $P = (a, b)$ is a constructible point if and only if $a$ and $b$ are constructible numbers. 
+	(Recall: a number is constructible if you can construct a line of the same length as its absolute value. 
+	A point is constructible if it may be constructed by intersecting lines and circles according to the rules given on Wednesday.)
+
+	\begin{proof} \
+
+	$\Ra)$ Assume $a,b$ are constructible numbers, then there exist line segments $\ell_{1}$ and $\ell_{2}$ in the plane such that $|\ell_{1}| = a$ and $|\ell_{2}| = b$.
+	Consider that we can construct circles $C_{1}$ and $C_{2}$, with radii $a$ and $b$, respectively.
+	Further, recall that translations in the plane are isometries, that is, they preserve distance and angles, so we can take any arbitrary circle (with arbitrary radius) in the plane, and translate it such that its centered about the origin, i.e. we can say without loss of generality that $C_{1} : x_{1}^{2} + y_{1}^{2} = a^{2}$, and $C_{2} : x_{2}^{2} + y_{2}^{2} = b^{2}$.
+	Notice that by the closure of constructible numbers under normal arithmetic operations, as well as the taking of square roots, $x_{i}^{2}, y_{i}^{2}$ are also constructible.
+	At this point, let's disregard $C_{2}$, everything we're about to say about $C_{1}$ can be said about $C_{2}$ as well.
+	Consider an abitrary point $A$ on $C_{1}$, we can write it as $A = (\pm\sqrt{a^{2} - y_{1}^{2}}, \pm\sqrt{a^{2} - x_{1}^{2}})$.
+	Since we have shown that each component of $A$ is constructible, we can say $A$ is constructible, as desired.
+
+	$\La)$ Assume $P = (a,b)$ is a constructible point in the plane.
+	Then its distance from the origin is $c = |\sqrt{a^2 + b^2}|$, which is a constructible quantity as it only involves addition, multiplication, and the taking of square roots.
+	Thus, we can write $a = \pm\sqrt{c^{2} - b^{2}}$ and similarly $b = \pm\sqrt{c^{2} - a^{2}}$, each of which are clearly constructible by our previous statements about arithmetic operations and square roots.
+	Hence, $a,b$ are constructible, as we aimed to show.
+	\end{proof}
+	% subsection problem_3 (end)
+
+	\subsection*{Problem 4}
+	\label{sub:problem_4}
+	By definition, an angle $\alpha$ is constructible if you can construct lines that form an angle of $\alpha$. 
+	Prove that $\alpha$ is a constructible angle if and only if $\sin(\alpha)$ and $\cos(\alpha)$ are constructible numbers. 
+	(You may use that the sum and difference of constructible angles is constructible, though you could prove that too, if you want to think about straight-edge and compass constructions.)
+
+	\begin{proof} \
+
+	$\Ra)$ Assume $\alpha$ is a constructible number, then by definition there exist line segments $\overline{AB}$, $\overline{BC}$ in the plane such that $\overline{AB}$ intersects $\overline{BC}$ at $B$, making $\angle ABC = \alpha$.
+	Use the translation isometry to place $B$ on the origin, and the rotation isometry about the point $B$ so that $\overline{AB}$ lies on the positive $x$-axis.
+	Since $\angle ABC = \alpha$ is not affected by the lengths of $\overline{AB}$ and $\overline{BC}$, respectively, without loss of generality let $AB = BC = 1$.
+	Thus, we can claim that $C$ lies on the unit circle, and that $\angle ABC$ is the angle $\overline{BC}$ makes with the positive $x$-axis.
+	Using the result of the previous problem, we have that $C = (\cos{\alpha}, \sin{\alpha})$ is constructible, hence $\cos{\alpha}$ and $\sin{\alpha}$ are constructible as well.
+
+	$\La)$ Assume $\sin{\alpha}$, $\cos{\alpha}$ are constructible numbers.
+	Then there exists a right triangle, $\triangle ABC$, with sides $a,b,c$ opposite the corresponding uppercase vertices $A,B,C$, where $\angle ABC = \alpha$.
+	Notice since $\sin{\alpha} = b/a$ and $\cos{\alpha} = c/a$, we know $AB = c$, $BC = a$, $AC = b$ are constructible numbers.
+	Thus, we have found constructible line segments making an angle $\alpha$ at their intersection $B$, thus by definition $\alpha$ is constructible. 
+	\end{proof}
+	% subsection problem_4 (end)
+
+	\subsection*{Problem 5}
+	\label{sub:problem_5}
+	Prove that every constructible number is algebraic over $\Q$. 
+	Use this to prove that it is impossible to construct a square whose area is that of the unit circle.
+
+	\begin{proof}
+	Let $\alpha$ be a constructible number, the there exists a line segment $\overline{AB}$ in the plane such that $AB = \alpha$.
+	Using the translation isometry, and without loss of generality, let $\overline{AB}$ be such that one endpoint is the origin, and the other lies on the positive $x$-axis.
+	Hence, we have a line segment with endpoints $A = (0,0)$ and $B = (\alpha,0)$, we will now define a quadratic polynomial with $\alpha$ as a root.
+	Recall the vertex form of a quadratic: $f(x) = (x - h)^{2} + k$, where $Q = (h,k)$ is the vertex.
+	By the symmetry of quadratics, let $Q = (\alpha/2,-k)$ for our case, and without loss of generality let $f(x)$ have positive curvature.\footnote{This is why $k$ is negative.}
+	Thus, we have the quadratic polynomial $f(x) = (x - (\alpha/2))^{2} - k$, in standard form we have $f(x) = x^{2} - \alpha x + (\alpha^{2}/4 - k)$.
+	By construction, $f(x)$ has $\alpha$ as a root, and we can do this process for any constructible $\alpha$, hence the constructible numbers are algebraic over $\Q$, as desired.
+	We now move on to the case of squaring the circle.
+
+	The unit circle is a circle with a radius of one unit, and from Archimedes we know that the area of a circle is the product of the square of its radius and the constant $\pi$.
+	Thus, the area of a unit circle is simply $\pi$ units.
+	Recall that the area of a square is the square of its side lengths, thus the side length of a square of a given area is the square root of its area.
+	It follows that the side length of a square with the area of a unit circle, $\pi$, must be $\sqrt{\pi}$.
+	Since the constructible numbers are closed under the taking of square roots, this is possible provided that $\pi$ is a constructible number.
+	However, thanks to Lindemann and Weisterass, we know that $\pi$ is transcendental over $\Q$.
+	Above, we proved that the constructible numbers are algebraic over $\Q$, hence $\pi$ being transcendental implies that it is not constructible. 
+	Thus $\sqrt{\pi}$ is not constructible and it follows that it is impossible to construct a square with an area of $\pi$ units, as we aimed to show.
+	\end{proof}
+	% subsection problem_5 (end)
+
+	\subsection*{Problem 6}
+	\label{sub:problem_6}
+	Let $\zeta = \cos(2π/5) + i \sin(2π/5)$. 
+	From last time, you know that it is a solution to $z^{5} - 1 = 0$. 
+	You may use the fact that $\zeta + \zeta^{4} = 2 \cos(2\pi/5)$, since $\zeta - 1 = \zeta^{4}$ is the complex conjugate of $\zeta$.
+		\begin{enumerate}[\hspace{5mm}(a)]
+		\item Show that $\zeta$ is a solution of the equation $x^{4} + x^{3} + x^{2} + x + 1 = 0$. 
+		(This can be done with calculating any powers of $\zeta$ by hand.)
+
+		\item Show that if $\alpha = \zeta + \zeta^{4}$, then $\alpha^{2} = \zeta^{2} + 2 + \zeta^{3}$ 
+		(Hint: there’s a quick way to reduce the powers of $\zeta$ greater than 4 \dots)
+
+		\item Show that $\alpha^{2} + \alpha = 1$.
+
+		\item Prove that $\cos(2\pi/5)$ is a constructible number.
+
+		\item Prove $\pi/6$ is a constructible angle.
+
+		\item Prove $3^{\circ}$ is a constructible angle.
+
+		\item Prove $1^{\circ}$ is not a constructible angle. 
+		(Remember: the sum of constructible angles is constructible)
+
+		\item Prove that an angle $\theta$ (measured in degrees) is constructible if and only if $3|\theta$.
+		\end{enumerate}
+
+	\begin{proof} \
+		\begin{enumerate}[\hspace{5mm}(a)]
+			\item Let $a(x) = x^{4} + x^{3} + x^{2} + x + 1$, we will show that $\zeta$ is a root of $a(x)$.
+			Recall that $\zeta = e^{\frac{2\pi}{5}i}$, and that these are each 5th roots of unity, thus we compute the following:
+			\begin{align*}
+			a(\zeta) &= \zeta^{4} + \zeta^{3} + \zeta^{2} + \zeta + 1, \\
+			&= e^{\frac{8\pi}{5}i} + e^{\frac{6\pi}{5}i} + e^{\frac{4\pi}{5}i} + e^{\frac{2\pi}{5}i} + 1, \\
+			&= (-1)^{4/5} - (-1)^{3/5} + (-1)^{2/5} - (-1)^{1/5} + 1, \\
+			&= 0.
+			\end{align*}
+			
+
+			\item 
+
+			\item Using the previous two results, we compute the following:
+			\begin{align*}
+			1 &= \alpha^{2} + \alpha, \\
+			0 &= (\zeta^{2} + 2 + \zeta^{3}) + (\zeta + \zeta^{4}) - 1, \\
+			0 &= \zeta^{4} + \zeta^{3} + \zeta^{2} + \zeta + 1.
+			\end{align*}
+			Thus $\alpha^{2} + \alpha = 1$, as we wanted to show.
+
+			\item 
+
+			\item 
+
+			\item 
+
+			\item 
+
+			\item 
+		\end{enumerate}
+	\end{proof}
+	% subsection problem_6 (end)
+\end{document}

@@ -1,0 +1,226 @@
+%!TEX output_directory = temp
+\documentclass[letterpaper, 12pt]{amsart}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%% boilerplate packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\usepackage{amsmath,amssymb,amsthm}
+	\usepackage[mathscr]{euscript}
+	\usepackage{enumerate}
+	\usepackage{graphicx}
+	\usepackage{mathrsfs}
+	\usepackage{color}
+	\usepackage{hyperref}
+	\usepackage{verbatim}
+	\usepackage{stmaryrd}
+	% \usepackage[margin=1.5in]{geometry}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%% rename the abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% \renewcommand{\abstractname}{Introduction}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% sets %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% sets 
+		\DeclareMathOperator{\N}{\mathbb{N}}
+		\DeclareMathOperator{\Z}{\mathbb{Z}}
+		\DeclareMathOperator{\Zp}{\mathbb{Z}^{+}}
+		\DeclareMathOperator{\Q}{\mathbb{Q}}
+		\DeclareMathOperator{\Qp}{\mathbb{Q}^{+}}
+		\DeclareMathOperator{\Qc}{\mathbb{Q}^{c}}
+		\DeclareMathOperator{\R}{\mathbb{R}}
+		\DeclareMathOperator{\Rp}{\mathbb{R}^{+}}
+		\DeclareMathOperator{\C}{\mathbb{C}}
+		\DeclareMathOperator{\Cnon}{\mathbb{C}^{\times}}
+		%% powerset of a set
+		\DeclareMathOperator{\pset}{\mathcal{P}}
+		%% set of continuous functions in a certain variable
+		\DeclareMathOperator{\cont}{\mathscr{C}}
+		%% set of functions in a certain variable
+		\DeclareMathOperator{\func}{\mathscr{F}}
+		
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% linear algebra %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% linear span
+		\DeclareMathOperator{\Ell}{\mathscr{L}}
+		%% bold vectors with arrows, and bold matrices
+		\newcommand{\bmat}[1]{{\mathbf{#1}}}
+		\newcommand{\bvec}[1]{{\vec{\mathbf{#1}}}}
+		%% independent vectors/matrices
+		\DeclareMathOperator{\ind}{\perp\!\!\!\perp}
+		%% order
+		\DeclareMathOperator{\ord}{\text{ord}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%% probability & statistics %%%%%%%%%%%%%%%%%%%%%%%%%
+		%% probability, expectation, variance, etc.
+		\renewcommand{\Pr}{\mathbb{P}}
+		\DeclareMathOperator{\E}{\mathbb{E}}
+		\DeclareMathOperator{\var}{\rm Var}
+		\DeclareMathOperator{\sd}{\rm SD}
+		\DeclareMathOperator{\cov}{\rm Cov}
+		\DeclareMathOperator{\SE}{\rm SE}
+		\DeclareMathOperator{\ssreg}{{\rm SS}_{{\rm Reg}}}
+		\DeclareMathOperator{\ssr}{{\rm SS}_{{\rm Res}}}
+		\DeclareMathOperator{\sst}{{\rm SS}_{{\rm Tot}}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% congruences %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\renewcommand{\mod}[1]{\ (\mathrm{mod}\ #1)}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% bracket notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		% I first used this for principal ideals, that is why the abbreviation is pid
+		\newcommand{\pid}[1]{\langle #1 \rangle}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% fatdot notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\makeatletter
+			\newcommand*\fatdot{\mathpalette\fatdot@{.5}}
+			\newcommand*\fatdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+		\makeatother
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% use pretty letters %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\DeclareMathOperator{\ep}{\varepsilon}
+		\DeclareMathOperator{\ph}{\varphi}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% theorems %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\newtheorem{thm}{Theorem}
+		\DeclareMathOperator{\ra}{\Rightarrow)}
+		\DeclareMathOperator{\la}{\Leftarrow)}
+
+\begin{document}
+	\title{Homework 4  -- Math 392 \\ \today}
+	\author{Alex Thies \\ \href{mailto:athies@uoregon.edu}{\lowercase{athies$@$uoregon.edu}}}
+
+	\maketitle
+
+	\section{Book Problems}
+	\label{sec:book_problems}
+		\subsection*{Problem 8.49}
+		\label{sub:problem_8_49}
+		Let $b(x) = -\frac{1}{6}  - \frac{4}{6}x - \frac{8}{3}x^{2} - \frac{3}{2}x^{3} + 5x^{4}$ in $\Q[x]$.
+		Find an associate of $b(x)$ in $\Z[x]$ then determine the possible roots for $b(x)$ in $\Q$.
+
+		\begin{proof}
+		We compute the following:
+			\begin{align*}
+			b(x) &= -\frac{1}{6}  - \frac{4}{6}x - \frac{8}{3}x^{2} - \frac{3}{2}x^{3} + 5x^{4}, \\
+			&= \frac{-1 - 4x - 16x^{2} - 9x^{3} + 30x^{4}}{6}, \\
+			&= \frac{1}{6}\left( -1 - 4x - 16x^{2} - 9x^{3} + 30x^{4} \right), \\
+			&= \frac{1}{6} \tilde{b}(x).
+			\end{align*}
+		Thus we have found $\tilde{b}(x) \in \Z[x]$, which is an associate of $b(x)$.
+		\end{proof}
+		% subsection problem_8_49 (end)
+
+		\subsection*{Problem 8.56}
+		\label{sub:problem_8_56}
+		For the possible roots of $q(x) = -\frac{3}{49} - \frac{2}{7}x + x^{2} - \frac{3}{49}x^{3} - \frac{2}{7}x^{4} + x^{5}$ found in the previous problem determine which actually are roots.
+
+		\begin{proof}
+		First, we do Problem 8.55:
+			\begin{align*}
+			q(x) &= -\frac{3}{49} - \frac{2}{7}x + x^{2} - \frac{3}{49}x^{3} - \frac{2}{7}x^{4} + x^{5}, \\
+			&= \frac{-3 - 14x + 49x^{2} - 3x^{3} - 14x^{4} + 49x^{5}}{49}, \\
+			&= \frac{1}{49} \left( -3 - 14x + 49x^{2} - 3x^{3} - 14x^{4} + 49x^{5} \right), \\
+			&= \frac{1}{49} \tilde{q}(x).
+			\end{align*}
+		We now find the rational roots of $\tilde{q}(x)$, which will also be rational roots of $q(x)$.
+		Since $a_{0} = -3$ and $a_{n} = 49$, the set $R$ of all potential rational roots of $q(x)$ is $R = \{ \pm 1, \pm 1/7, \pm 1/49, \pm 3, \pm 3/7, \pm 3/49 \}$.
+		Let $R^{*}$ be the set of actual rational roots of $q(x)$.
+		I used SageMath to determine which elements of $R$ are also elements of $R^{*}$, \[ R^{*} = \{ -1, -1/7, 3/7 \}. \]
+		\end{proof}
+		% subsection problem_8_56 (end)
+
+		\subsection*{Problem 8.59}
+		\label{sub:problem_8_59}
+		Use Eisenstein's Criterion to show that the polynomial $a(x) = \frac{2}{5} + \frac{8}{15}x + \frac{2}{3}x^{2} + \frac{4}{5}x^{3} + \frac{2}{15}x^{4} + \frac{4}{15}x^{5} + \frac{1}{3}x^{6}$ is irreducible over $\Q$.
+
+		\begin{proof}
+		First we find an integral associate of $a(x)$. 
+		By utilizing the same methods as the previous problems, we find an integral associate $\tilde{a}(x) = 6 + 8x + 10x^{2} + 12x^{3} + 2x^{4} + 4x^{5} + 5x^{6}$.
+		If we can use Eisenstein's Criterion to show that $\tilde{a}(x)$ is irreducible over $\Q$, then we also know that $a(x)$ is irreducible over $\Q$ as well.
+
+		Notice that the prime $p = 2$ satisfies the conditions necessary to invoke Eisenstein's Criterion, since $2 | a_{i}, \ 0 \leq i \leq n-1$, and $2 \nmid 5$, and $2^{2} \nmid 6$.
+		Hence, by applying Eisenstein's Criterion to an integral associate of $a(x)$, we have shown that $a(x)$ is irreducible over $\Q$, as instructed.
+		\end{proof}
+		% subsection problem_8_59 (end)
+		\vspace{1cm}
+
+		We can approach the remaining three problems from the text with one basic framework.
+		First, we find an integral associate, $\tilde{a}(x)$, of $a(x)$.
+		Second, we utilize the rational roots theorem to generate a set $R$ of all potential rational roots of $\tilde{a}(x)$, and then use a computer to whittle that list down to the set $R^{*}$ of all actual rational roots of $\tilde{a}(x)$.
+		Next, we write $\tilde{a}(x)$ as a product of its linear factors and some other integral factor $b(x)$, that we find by polynomial long division.
+		Finally, we determine if $b(x)$ is irreducible over $\Q$ by one of the various methods we have learned in Section 8.3.
+		That leaves us with the ability to write $a(x)$ in terms its completely factored integral associate, as desired.
+
+		\subsection*{Problem 8.69}
+		\label{sub:problem_8_69}
+		Factor $a(x) = -\frac{1}{12} + 0x + \frac{13}{12}x^{2} + \frac{11}{12}x^{3} + \frac{1}{12}x^{4} + x^{5}$ into a product of irreducible polynomials in $\Q[x]$.
+		Be sure to verify that the factors are irreducible over $\Q[x]$.
+
+		\begin{proof}
+		We find the integral associate $\tilde{a}(x) = -1 + 13x^{2} + 11x^{3} + x^{4} + 12x^{5}$, and the set of all actual rational roots $R^{*} = \{ -1/3, 1/4 \}$.
+		Thus, we can write $\tilde{a}(x) = (x + 1/3)(x - 1/4)b(x)$ for some $b(x) \in \Z[x]$.
+		Using polynomial long division we find that $b(x) = x^{3} + x + 1$.
+		One can easily invoke the rational roots theorem on $b(x)$ to see that its only potential rational roots are $\pm 1$, which upon inspection we find are not actual roots of $b(x)$, thus $b(x)$ is irreducible over $\Q$.
+		Therefore, we can write $a(x)$ as a product of its factors that are irreducible over $\Q$, i.e., $$a(x) = \frac{1}{12} (x + 1/3)(x - 1/4)(x^{3} + x + 1).$$
+		\end{proof}
+		% subsection problem_8_69 (end)
+
+		\subsection*{Problem 8.70}
+		\label{sub:problem_8_70}
+		Factor $a(x) = -\frac{40}{3} - \frac{50}{3}x - \frac{25}{3}x^{2} - \frac{50}{3}x^{3} + \frac{7}{3}x^{4} - \frac{10}{3}x^{5} + x^{6}$ into a product of irreducible polynomials in $\Q[x]$.
+		Be sure to verify that the factors are irreducible over $\Q[x]$.
+
+		\begin{proof}
+		We find the integral associate $\tilde{a}(x) = -40 - 50x - 25x^{2} - 50x^{3} + 7x^{4} - 10x^{5} + 3x^{6}$, and set of actual rational roots $R^{*} = \{ -2/3, 4 \}$.
+		Thus, we can write $\tilde{a}(x) = (x + 2/3)(x - 4)b(x)$ for some $b(x) \in \Z[x]$.
+		Using polynomial long division we find that $b(x) = x^{4} + 5x^{2} + 5$.
+		This time instead of rational roots, we'll use Eisenstein's Criterion to show that $b(x)$ is irreducible over $\Q$.
+		Notice that $p = 5$ satisfies all of the necessary conditions under which we can invoke Eisenstein's Criterion, thus $b(x)$ is irreducible over $\Q$.
+		Therefore, we can write $a(x)$ as a product of its factors that are irreducible over $\Q$, i.e., $$a(x) = \frac{1}{3} (x + 2/3)(x - 4)(x^{4} + 5x^{2} + 5).$$
+		\end{proof}
+		% subsection problem_8_70 (end)
+
+		\subsection*{Problem 8.71}
+		\label{sub:problem_8_71}
+		Factor $a(x) = \frac{1}{6} + \frac{5}{2}x + 11x^{2} + 13x^{3} + \frac{13}{2}x^{4} + 3x^{5}$ into a product of irreducible polynomials in $\Q[x]$.
+		Be sure to verify that the factors are irreducible over $\Q[x]$.
+
+		\begin{proof}
+		We find the integral associate $\tilde{a}(x) = 1 + 15x + 66x^{2} + 78x^{3} + 39x^{4} + 18x^{5}$, and set of actual rational roots $R^{*} = \{ -1/6 \}$.
+		Thus, we can write $\tilde{a}(x) = (x + 1/6)b(x)$ for some $b(x) \in \Z[x]$.
+		Using polynomial long division we find that $b(x) = 3x^{4} + 6x^{3} + 12x^{2} + 9x - 1$.
+		We'll use rational roots for $b(x)$ this time, obtaining the set of all potential rational roots $R_{b} = \{ \pm 1, \pm 1/3 \}$, and using a computer we find that none of these are actually roots of $b(x)$, therefore $b(x)$ is irreducible over $\Q$.
+		Hence, we can write $a(x)$ as a product of its factors that are irreducible over $\Q$, i.e., $$a(x) = \frac{1}{6} (x + 1/6)(3x^{4} + 6x^{3} + 12x^{2} + 9x - 1).$$
+		\end{proof}
+		% subsection problem_8_71 (end)
+	% section book_problems (end)
+
+	\section{Extra Problems}
+	\label{sec:extra_problems}
+	Determine if the following are reducible or irreducible over the rationals:
+		\begin{enumerate}[1)]
+			\item $a(x) = x^{4} + x^{3} - x - 1$.
+			\item $b(x) = \frac{1}{28}x^{7} + \frac{1}{4}x^{6} + \frac{9}{4}x^{5} + \frac{7}{4}x^{4} + \frac{1}{4}x^{4} + \frac{1}{2}x^{2} + \frac{3}{4}x + \frac{1}{4}$.
+			\item $c(x) = x^{4} + x^{3} + 2x^{2} + x + 1$.
+			\item $d(x) = x^{4} + 8x + 15$.
+		\end{enumerate}
+
+		\begin{proof} \
+			\begin{enumerate}[1)]
+				\item Upon inspection we see that $a(x)$ has roots $\pm 1$, thus it has linear factors $(x \pm 1)$, and is reducible over $\Q$.
+
+				\item We find the integral associate $\tilde{b}(x) = 7 + 21x + 14x^{2} + 7x^{3} + 49x^{4} + 63x^{5} + 7x^{6} + x^{7}$.
+				Notice that for $\tilde{b}(x)$, we can use $p = 7$ to invoke Eisenstein's Criterion, hence $\tilde{b}(x)$ and $b(x)$ are irreducible over $\Q$.
+				
+				\item Here we can utilize the rational root theorem to see that the only potential roots are $\pm 1$, and upon inspection we see that neither are actually roots, thus $c(x)$ is irreducible over $\Q$.
+				
+				\item Again we use the rational root theorem and obtain the set of all potential rational roots $R_{d} = \{ \pm 1, \pm 3, \pm 5, \pm 15 \}$.
+				Using a computer we find that none of these are actually roots of $d(x)$, hence $d(x)$ is irreducible over $\Q$.
+			\end{enumerate}
+		\end{proof}
+	% section extra_problems (end)
+\end{document}

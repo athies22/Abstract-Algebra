@@ -1,0 +1,143 @@
+%!TEX output_directory = temp
+\documentclass[letterpaper, 12pt]{amsart}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%% boilerplate packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\usepackage{amsmath,amssymb,amsthm}
+	\usepackage[mathscr]{euscript}
+	\usepackage{enumerate}
+	\usepackage{graphicx}
+	\usepackage{mathrsfs}
+	\usepackage{color}
+	\usepackage{hyperref}
+	\usepackage{verbatim}
+	\usepackage{stmaryrd}
+	\usepackage{polynom}
+	\usepackage[margin=1.25in]{geometry}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%% rename the abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% \renewcommand{\abstractname}{Introduction}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% sets %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% sets 
+		\DeclareMathOperator{\N}{\mathbb{N}}
+		\DeclareMathOperator{\Z}{\mathbb{Z}}
+		\DeclareMathOperator{\Zp}{\mathbb{Z}^{+}}
+		\DeclareMathOperator{\Q}{\mathbb{Q}}
+		\DeclareMathOperator{\Qp}{\mathbb{Q}^{+}}
+		\DeclareMathOperator{\Qc}{\mathbb{Q}^{c}}
+		\DeclareMathOperator{\R}{\mathbb{R}}
+		\DeclareMathOperator{\Rp}{\mathbb{R}^{+}}
+		\DeclareMathOperator{\C}{\mathbb{C}}
+		\DeclareMathOperator{\Cnon}{\mathbb{C}^{\times}}
+		%% powerset of a set
+		\DeclareMathOperator{\pset}{\mathcal{P}}
+		%% set of continuous functions in a certain variable
+		\DeclareMathOperator{\cont}{\mathscr{C}}
+		%% set of functions in a certain variable
+		\DeclareMathOperator{\func}{\mathscr{F}}
+		
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% linear algebra %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% linear span
+		\DeclareMathOperator{\Ell}{\mathscr{L}}
+		%% bold vectors with arrows, and bold matrices
+		\newcommand{\bmat}[1]{{\mathbf{#1}}}
+		\newcommand{\bvec}[1]{{\vec{\mathbf{#1}}}}
+		%% independent vectors/matrices
+		\DeclareMathOperator{\ind}{\perp\!\!\!\perp}
+		%% order
+		\DeclareMathOperator{\ord}{\text{ord}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%% probability & statistics %%%%%%%%%%%%%%%%%%%%%%%%%
+		%% probability, expectation, variance, etc.
+		\renewcommand{\Pr}{\mathbb{P}}
+		\DeclareMathOperator{\E}{\mathbb{E}}
+		\DeclareMathOperator{\var}{\rm Var}
+		\DeclareMathOperator{\sd}{\rm SD}
+		\DeclareMathOperator{\cov}{\rm Cov}
+		\DeclareMathOperator{\SE}{\rm SE}
+		\DeclareMathOperator{\ssreg}{{\rm SS}_{{\rm Reg}}}
+		\DeclareMathOperator{\ssr}{{\rm SS}_{{\rm Res}}}
+		\DeclareMathOperator{\sst}{{\rm SS}_{{\rm Tot}}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% congruences %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\renewcommand{\mod}[1]{\ (\mathrm{mod}\ #1)}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% bracket notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		% I first used this for principal ideals, that is why the abbreviation is pid
+		\newcommand{\pid}[1]{\langle #1 \rangle}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% fatdot notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\makeatletter
+			\newcommand*\fatdot{\mathpalette\fatdot@{.5}}
+			\newcommand*\fatdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+		\makeatother
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% use pretty letters %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\DeclareMathOperator{\ep}{\varepsilon}
+		\DeclareMathOperator{\ph}{\varphi}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% theorems %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\newtheorem{lem}{Lemma}
+		\DeclareMathOperator{\ra}{\Rightarrow)}
+		\DeclareMathOperator{\la}{\Leftarrow)}
+
+\begin{document}
+	\title{Quiz 3 Corrections  -- Math 392 \\ \today}
+	\author{Alex Thies \\ \href{mailto:athies@uoregon.edu}{\lowercase{athies$@$uoregon.edu}}}
+
+	\maketitle
+
+	\subsection*{Problem 1}
+	\label{sub:problem_1}
+	Construct a field of order 9.
+	Carefully cite all theorems used.
+
+	\begin{proof}[Solution]
+		As I said on the original quiz, we want to make use of the fact that for $[E:K] = n$, and $|K| = q$, we have $|K(c)| = q^{n}$ for $c$ a root of the minimal polynomial of degree $n$.\footnote{This is a result of Theorem 9.20, and explained more thoroughly in the remarks following the proof of this Theorem on page 251 of the text.}
+		The field $\Z_{3}$ is a great candidate for our base field since it has order 3, and with the benefit of hindsight, we'll use an irreducible polynomial of degree 2, as $3^2 = 9$.
+
+		Consider the polynomial $p(x) = x^{2} + 1$, since $\Z_{3} = \{0,1,2\}$ we can check irreducibility by the long, but reliable way:
+			\begin{align*}
+			p(0) &= 1, \\
+			p(1) &= 2, \\
+			p(2) &= 4 \equiv 1 \mod{3}.
+			\end{align*}
+		Hence, $p(x)$ is irreducible over $\Z_{3}$, notice that it is also monic, thus minimal.
+		Let $c$ be a root of $\Z_{3}$ over some extension $\Z_{3}(c)$, it remains to create all of the basis elements of $\Z_{3}(c)$.
+		It follows that we have $\Z_{3}(c) = \{ 0, 1, 2, 0 + c, 1 + c, 2 + c, 0 + 2c, 1 + 2c, 2 + 2c \}$.
+		Notice that $|\Z_{3}(c)| = 9$ as desired.
+	\end{proof}
+	% subsection problem_1 (end)
+
+	\subsection*{Problem 3}
+	\label{sub:problem_3}
+	Let $E$ be a finite extension of $K$.
+	Let $c \in E$ be algebraic over $K$, with minimum polynomial $p(x)$.
+	Prove that $\deg(p(x)) = [E:K]$ if and only if $E = K(c)$.
+	Carefully cite all theorems used.
+	(Hint: one direction should be immediate.)
+
+	\begin{proof}
+		Let $E$, $K$, $c$, $p(x)$ be as above.
+
+		$\Rightarrow)$ Assume $\deg(p(x)) = [E:K]$, we will show that $E = K(c)$.
+		Since $E$ is a finite extension of $K$, and by Theorem 9.5 we know that $K(c) \subseteq E$, we can invoke Theorem 9.22 and write $[E:K] = [E:K(c)][K(c):K]$.
+		By Theorem 9.20, we have that $\deg(p(x)) = [K(c):K]$, and by our hypothesis we assume that $\deg(p(x)) = [E:K]$.
+		Pair these facts, and we have that $[E:K(c)] = 1$, which implies $E = K(x)$ as we aimed to show.
+		It remains to prove the converse.
+
+		$\Leftarrow)$ Assume that $E = K(c)$, we will show that $\deg(p(x)) = [E:K]$.
+		By Theorem 9.20 we have that $\deg(p(x)) = [K(c):K]$; moreover, since $E = K(c)$ we know they have identical bases, and we can write $[E:K] = [K(c):K]$, which we just said is equal to $\deg(p(x))$.
+		Thus, $\deg(p(x)) = [E:K]$, as desired.
+	\end{proof}
+	% subsection problem_3 (end)
+\end{document}

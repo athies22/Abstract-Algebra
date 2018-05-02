@@ -1,0 +1,276 @@
+%!TEX output_directory = temp
+\documentclass[letterpaper, 12pt]{amsart}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%% boilerplate packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\usepackage{amsmath,amssymb,amsthm}
+	\usepackage[mathscr]{euscript}
+	\usepackage{enumerate}
+	\usepackage{graphicx}
+	\usepackage{mathrsfs}
+	\usepackage{color}
+	\usepackage{hyperref}
+	\usepackage{verbatim}
+	\usepackage{stmaryrd}
+	% \usepackage[margin=1.5in]{geometry}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%% rename the abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% \renewcommand{\abstractname}{Introduction}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% sets %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% sets 
+		\DeclareMathOperator{\N}{\mathbb{N}}
+		\DeclareMathOperator{\Z}{\mathbb{Z}}
+		\DeclareMathOperator{\Zp}{\mathbb{Z}^{+}}
+		\DeclareMathOperator{\Q}{\mathbb{Q}}
+		\DeclareMathOperator{\Qp}{\mathbb{Q}^{+}}
+		\DeclareMathOperator{\Qc}{\mathbb{Q}^{c}}
+		\DeclareMathOperator{\R}{\mathbb{R}}
+		\DeclareMathOperator{\Rp}{\mathbb{R}^{+}}
+		\DeclareMathOperator{\C}{\mathbb{C}}
+		\DeclareMathOperator{\Cnon}{\mathbb{C}^{\times}}
+		%% powerset of a set
+		\DeclareMathOperator{\pset}{\mathcal{P}}
+		%% set of continuous functions in a certain variable
+		\DeclareMathOperator{\cont}{\mathscr{C}}
+		%% set of functions in a certain variable
+		\DeclareMathOperator{\func}{\mathscr{F}}
+		
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% linear algebra %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% linear span
+		\DeclareMathOperator{\Ell}{\mathscr{L}}
+		%% bold vectors with arrows, and bold matrices
+		\newcommand{\bmat}[1]{{\mathbf{#1}}}
+		\newcommand{\bvec}[1]{{\vec{\mathbf{#1}}}}
+		%% independent vectors/matrices
+		\DeclareMathOperator{\ind}{\perp\!\!\!\perp}
+		%% order
+		\DeclareMathOperator{\ord}{\text{ord}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%% probability & statistics %%%%%%%%%%%%%%%%%%%%%%%%%
+		%% probability, expectation, variance, etc.
+		\renewcommand{\Pr}{\mathbb{P}}
+		\DeclareMathOperator{\E}{\mathbb{E}}
+		\DeclareMathOperator{\var}{\rm Var}
+		\DeclareMathOperator{\sd}{\rm SD}
+		\DeclareMathOperator{\cov}{\rm Cov}
+		\DeclareMathOperator{\SE}{\rm SE}
+		\DeclareMathOperator{\ssreg}{{\rm SS}_{{\rm Reg}}}
+		\DeclareMathOperator{\ssr}{{\rm SS}_{{\rm Res}}}
+		\DeclareMathOperator{\sst}{{\rm SS}_{{\rm Tot}}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% congruences %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\renewcommand{\mod}[1]{\ (\mathrm{mod}\ #1)}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% bracket notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		% I first used this for principal ideals, that is why the abbreviation is pid
+		\newcommand{\pid}[1]{\langle #1 \rangle}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% fatdot notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\makeatletter
+			\newcommand*\fatdot{\mathpalette\fatdot@{.5}}
+			\newcommand*\fatdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+		\makeatother
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% use pretty letters %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\DeclareMathOperator{\ep}{\varepsilon}
+		\DeclareMathOperator{\ph}{\varphi}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% amsthm %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\newtheorem{thm}{Theorem}
+
+\begin{document}
+	\title{Homework 3  -- Math 392 \\ \today}
+	\author{Alex Thies \\ \href{mailto:athies@uoregon.edu}{\lowercase{athies$@$uoregon.edu}}}
+
+	\maketitle
+
+	\subsection*{Problem 8.22}
+	\label{sub:problem_8_22}
+	Prove Theorem 8.8.
+	\setcounter{thm}{7}
+		\begin{thm}
+		Let $K$ be a field and suppose $a(x), b(x) \in K[x]$ are associates. 
+		The polynomial $a(x)$ is irreducible over $K$ if and only if $b(x)$ is irreducible over $K$.
+		\end{thm}
+
+		\begin{proof}
+		Let $K$, $a(x)$, and $b(x)$ be as above.
+
+		$\Rightarrow)$ Assume $a(x)$ is irreducible over $K$, and suppose by way of contradiction that $b(x)$ is reducible over $K$.
+		Then we know there exists polynomials $d(x)$,$f(x) \in K[x]$ such that $b(x) = d(x)f(x)$.
+		And since $a(x)$ and $b(x)$ are associates we can write $a(x) = cb(x) = c[d(x)f(x)] \lightning$
+		
+		This implies that $a(x)$, which we assumed to be irreducible over $K$, has factors in $K[x]$, a contradiction.
+		A similar argument can be used to prove the converse.
+		\end{proof}
+	% subsection problem_8_22 (end)
+
+	\subsection*{Problem 8.23}
+	\label{sub:problem_8_23}
+	Prove Theorem 8.9.
+		\begin{thm}
+		Let $K$ be a field. 
+		Every polynomial in $K[x]$ of degree 1 is irreducible over $K$.
+		\end{thm}
+
+		\begin{proof}
+		Let $K$ be a field and $a(x) \in K[x]$ such that $\deg{a(x)} = 1$.
+		Since $K$ is a field $K[x]$ is an integral domain and thus the degree of polynomials is additive in $K[x]$.
+		We can write $a(x) = b(x)c(x)$, and since $\deg{a(x)} = 1$, we know that either $\beta = \deg{b(x)} = 1$ and $\gamma = \deg{c(x)} = 0$, or the other way around.
+		This means that we can only factor $a(x)$ into associates, which is the definition of being irreducible.
+
+		Hence, for a field $K$, every polynomial in $K[x]$ of degree 1 is irreducible over $K$.
+		\end{proof}
+	% subsection problem_8_23 (end)
+
+	\subsection*{Problem 8.30}
+	\label{sub:probem_8_30}
+	Complete the proof of Theorem 8.15.
+	\setcounter{thm}{14}
+		\begin{thm}
+		Let $K$ be a field and $a(x) \in K[x]$ with $a(x) \neq 0(x)$. 
+		The element $c \in K$ is a root of $a(x)$ if and only if $b(x) = -c + x$ is a factor of $a(x)$.
+		\end{thm}
+
+		\begin{proof}
+		Let $K$, $a(x)$ be as above.
+
+		$\Leftarrow)$ Suppose that $b(x) = x - c$ is a factor of $a(x)$, we will show that $c \in K$ is a root of $a(x)$.
+		Since $b(x)$ is a factor of $a(x)$, we can write $a(x) = b(x)d(x)$ for some polynomial $d(x)$.
+		Further, since $K$ is a field, $K[x]$ is an integral domain and the zero product property works like we'd like it to, so we have $a(c) = (c - c)d(c) = 0$, hence $c$ is a root of $a(x)$.
+		\end{proof}
+	% subsection probem_8_30 (end)
+
+	\subsection*{Problem 8.31}
+	\label{sub:probem_8_31}
+	Use the PMI to prove Theorem 8.17, for any $n \geq 1$. 
+	In the inductive step when you have $a(x) = (-c_{1} + x) \cdots (-c_{k} + x)q(x)$ be sure to show why $q(c_{k}+1)$ must equal $0_{K}$.
+	\setcounter{thm}{16}
+		\begin{thm}
+		Suppose $K$ is a field and $a(x) \in K[x]$ with $a(x) \neq 0(x)$. 
+		If the distinct elements $c_{1}, c_{2}, \dots, c_{n} \in K$ are all roots of $a(x)$, then the product $b(x) = (-c_{1} + x)(-c_{2} + x) \cdots (-c_{n} + x)$ is a factor of $a(x)$.
+		\end{thm}
+
+		This one eluded me.
+	% subsection probem_8_31 (end)
+
+	\subsection*{Problem 8.37}
+	\label{sub:probem_8_37}
+	Prove Theorem 8.19.
+	\setcounter{thm}{18}
+		\begin{thm}
+		Let $K$ be a field. 
+		If $c_{1}, c_{2}, \dots, c_{n}$ are distinct roots of the nonzero polynomial $a(x) \in K[x]$, then $\deg(a(x)) \geq n$.
+		\end{thm}
+
+		\begin{proof}
+		Let $K$, $a(x)$ be as above.
+		By Theorem 8.17 we can write $a(x) = b(x)f(x)$ where $f(x) = \prod_{i=1}^{n} (x - c_{i})$ for distinct roots $c_{i} \in K$.
+		Since $K$ is a field, $K[x]$ is an integral domain and degree is additive for elements of $K[x]$.
+		Let $\deg{a(x)} = \alpha$, $\deg{b(x)} = \beta$, $\deg{f(x)} = \eta$.
+		Its clear that $\eta = n$, and by the same reasoning that allows us to conclude that, we can also surmise $\alpha \geq \eta$, hence $\deg(a(x)) \geq n$, as desired.
+		\end{proof}
+	% subsection probem_8_37 (end)
+
+	\subsection*{Problem 8.38}
+	\label{sub:probem_8_38}
+	Complete the proof of Theorem 8.22.
+	\setcounter{thm}{21}
+		\begin{thm}
+		Let $K$ be a field and $a(x) \in K[x]$ with $\deg(a(x)) = 2$ or $\deg(a(x)) = 3$. 
+		The polynomial $a(x)$ is reducible over $K$ if and only if $a(x)$ has a root in $K$.
+		\end{thm}
+
+		\begin{proof}
+		Let $K$, $a(x)$ be as above.
+
+		$\Leftarrow)$ Assume $a(x)$ has a root $c \in K$, we will show that $a(x)$ is reducible over $K$.
+		Since $K$ is a field, $K[x]$ is an integral domain and the degree is additive.
+		We'll proceed by cases.
+
+		Case 1: $\deg{a(x)} = 2$.
+		When $\deg{a(x)} = 2$ we can write $a(x) = b(x)c(x)$ for polynomials $b(x), c(x) \in K[x]$. 
+		Let $\beta = \deg{b(x)}$ and $\gamma = \deg{c(x)}$, then we know $\beta + \gamma = 2$.
+		But since $a(x)$ has a root, one of $\beta$ or $\gamma$ must be 1 since constant polynomials don't have roots.
+		Hence, $\beta = \gamma = 1$, and we can write $a(x)$ as the product of non-constant polynomials, which defines $a(x)$ to be reducible.
+
+		Case 2: $\deg{a(x)} = 3$.
+		When $\deg{a(x)} = 3$ we can write $a(x) = d(x)e(x)$ for polynomials $d(x), e(x) \in K[x]$. 
+		Let $\delta = \deg{d(x)}$ and $\ep = \deg{e(x)}$, then we know $\delta + \ep = 3$.
+		But since $a(x)$ has a root, one of $\delta$ or $\ep$ must be 1 since constant polynomials don't have roots.
+		And with one of $\delta$ or $\ep$ being 1, the other must be 2, again allowing $a(x)$ to satisfy the definition of being reducible over $K$.
+
+		Hence, for a field $K$ and polynomial $a(x) \in K[x]$ such that $\deg(a(x)) = 2$ or $\deg(a(x)) = 3$, the polynomial $a(x)$ is reducible over $K$ if and only if $a(x)$ has a root in $K$.
+		\end{proof}
+	% subsection probem_8_38 (end)
+
+	\subsection*{Problem 8.46}
+	\label{sub:probem_8_46}
+	Prove Theorem 8.27.
+	\setcounter{thm}{26}
+		\begin{thm}
+		Let $K$ be a field and $a(x) \in K[x]$ with $a(x) \neq 0(x)$. 
+		If $\deg(a(x)) = n$ then there can be at most $n$ distinct roots of $a(x)$ in $K$.
+		\end{thm}
+
+		\begin{proof}
+		Let $K$ be a field and $a(x) \in K[x]$ with $a(x) \neq 0(x)$, and assume that $\deg{a(x)} = n$.
+		Since $\deg{a(x)} = n$, we can write $a(x) = b(x)f(x)$ for some polynomials $b(x)$ and $f(x) = \prod_{i=1}^{n} (x-c_{i})$, each of which is an element of $K[x]$, where $c_{i} \in K$ are the roots of $a(x)$.
+		Notice that the linear factors that comprise $f(x)$ each has degree 1, thus $f(x) = \prod_{i=1}^{n} (x-c_{i})$ has degree $n$, as $K$ is a field and $K[x]$ and integral domain.
+		That tells us that the only option for $b(x)$ is a constant polynomial with degree 0.
+		This implies that $f(x)$ takes into account each of the distinct roots of $a(x)$, hence $a(x)$ has at most $n$ distinct roots in $K$.
+		\end{proof}
+	% subsection probem_8_46 (end)
+
+	\subsection*{Problem 8.47}
+	\label{sub:probem_8_47}
+	Let $a(x) = \frac{1}{3} + x + \frac{2}{3}x^{2} + 3x^{3} + \frac{1}{2}x^{4}$ in $\Q[x]$.
+	Find an associate of $a(x)$ in $\Z[x]$ then determine the possible roots for $a(x)$ in $\Q$.
+		\begin{proof}
+		We proceed by finding a common denominator,
+		\begin{align*}
+		a(x) &= \frac{1}{3} + x + \frac{2}{3}x^{2} + 3x^{3} + \frac{1}{2}x^{4}, \\
+		&= \frac{2 + 3x + 4x^{2} + 18x^{3} + 3x^{4}}{6}, \\
+		&= \frac{1}{6} \left( 2 + 3x + 4x^{2} + 18x^{3} + 3x^{4} \right).
+		\end{align*}
+		We can see that $b(x) = 2 + 3x + 4x^{2} + 18x^{3} + 3x^{4} \in \Z[x]$ is an associate of $a(x)$ with $c = 1/6$.
+		We now apply the rational roots theorem with $b(x)$.
+		Since $a_{0} = 2$ and $a_{4} = 3$ are both prime, we have $s/t = 2/3$ as the only possible rational root of $a(x)$, and we can see that $a(2/3) \neq 0$, so $a(x)$ has no rational roots.
+
+		A quick trip to WolframAlpha shows that the roots of $a(x)$ are $c_{1} \doteq -5.8$, $c_{2} \doteq -0.44$, and that their exact forms are disgusting looking expressions involing lots of radicals, and are definitely not rational.
+		\end{proof}
+	% subsection probem_8_47 (end)
+
+	\subsection*{Problem 8.59}
+	\label{sub:probem_8_59}
+	Use Eisenstein's Criterion to show that the polynomial $a(x) = \frac{2}{5} + \frac{8}{15}x + \frac{2}{3}x^{2} + \frac{4}{5}x^{3} + \frac{2}{15}x^{4} + \frac{4}{15}x^{5} + \frac{1}{3}x^{6}$ is irreducible over $\Q$.
+		\begin{proof}
+		Eisenstein's Criterion states that for an integral polynomial $a(x)$ with degree $n > 0$, if a prime number $p$ that divides $a_{0}, a_{1}, \dots, a_{n-1}$, but not $a_{n}$, and $p^{2}$ does not divide $a_{0}$, then $a(x)$ is irreducible over $\Q$.
+		We use the common denominator trick to find that $b(x) = 6 + 8x + 10x^{2} + 12x^{3} + 2x^{4} + 4x^{5} + 5x^{6} \in \Z[x]$ is an associate of $a(x)$.
+		Its fairly obvious that the only prime which satisfies the criterion is $p=2$, as $b_{0}, \dots, b_{5}$ are even, $b_{6}$ is odd, and $p^{2} \not| \ 6$.
+		The fact that $b_{4} = 2$ sort of gives this one away.
+		\end{proof}
+	% subsection probem_8_59 (end)
+
+	\subsection*{Problem 8.66}
+	\label{sub:probem_8_66}
+	Use Theorem 8.37 to prove that $a(x) = 56 + 36x + 29x^{2} + x^{3}$ is irreducible over $\Q$.
+		\begin{proof}
+		Theorem 8.37 states that for a monic integral polynomial $a(x)$ with degree $k$, if there exists $n > 1$ so that $\bar{f_{n}}(a(x))$ is irreducible in $\Z_{n}$, then $a(x)$ is also irreducible in $\Z[x]$.
+		Notice that $a(x)$ is monic, and that $\bar{f_{3}}(a(x)) = 2 + 2x^{2} + x^{3}$.
+		We have $\bar{f_{3}}(a(x)) \in \Z[x]$, by the rational roots theorem the only possible root for $\bar{f_{3}}(a(x))$ is $s/t = 2$, and it is obvious upon inspection that $2 + 2(4) + 8 \neq 0$.
+		Thus by the rational roots theorem $\bar{f_{3}}(a(x))$ is irreducible over $\Q$, thus it is also irreducible over $\Z_{3}$.
+		Hence, by Theorem 8.37 with $\bar{f_{3}}(a(x))$ irreducible over $\Z_{3}$, we have $a(x)$ is irreducible over $\Z$.
+		By the rational roots theorem, since $a(x)$ is monic, its only rational roots are integers, and since we have shown $a(x)$ is irreducible over $\Z$, we can now claim that it is also irreducible over $\Q$, as desired.
+		\end{proof}
+	% subsection probem_8_66 (end)
+\end{document}

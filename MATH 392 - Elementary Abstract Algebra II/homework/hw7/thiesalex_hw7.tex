@@ -1,0 +1,254 @@
+%!TEX output_directory = temp
+\documentclass[letterpaper, 12pt]{amsart}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%% boilerplate packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\usepackage{amsmath,amssymb,amsthm}
+	\usepackage[mathscr]{euscript}
+	\usepackage{enumerate}
+	\usepackage{graphicx}
+	\usepackage{mathrsfs}
+	\usepackage{color}
+	\usepackage{hyperref}
+	\usepackage{verbatim}
+	\usepackage{stmaryrd}
+	% \usepackage[margin=1.5in]{geometry}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%% rename the abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% \renewcommand{\abstractname}{Introduction}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% sets %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% sets 
+		\DeclareMathOperator{\N}{\mathbb{N}}
+		\DeclareMathOperator{\Z}{\mathbb{Z}}
+		\DeclareMathOperator{\Zp}{\mathbb{Z}^{+}}
+		\DeclareMathOperator{\Q}{\mathbb{Q}}
+		\DeclareMathOperator{\Qp}{\mathbb{Q}^{+}}
+		\DeclareMathOperator{\Qc}{\mathbb{Q}^{c}}
+		\DeclareMathOperator{\R}{\mathbb{R}}
+		\DeclareMathOperator{\Rp}{\mathbb{R}^{+}}
+		\DeclareMathOperator{\C}{\mathbb{C}}
+		\DeclareMathOperator{\Cnon}{\mathbb{C}^{\times}}
+		%% powerset of a set
+		\DeclareMathOperator{\pset}{\mathcal{P}}
+		%% set of continuous functions in a certain variable
+		\DeclareMathOperator{\cont}{\mathscr{C}}
+		%% set of functions in a certain variable
+		\DeclareMathOperator{\func}{\mathscr{F}}
+		
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% linear algebra %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% linear span
+		\DeclareMathOperator{\Ell}{\mathscr{L}}
+		%% bold vectors with arrows, and bold matrices
+		\newcommand{\bmat}[1]{{\mathbf{#1}}}
+		\newcommand{\bvec}[1]{{\vec{\mathbf{#1}}}}
+		%% independent vectors/matrices
+		\DeclareMathOperator{\ind}{\perp\!\!\!\perp}
+		%% order
+		\DeclareMathOperator{\ord}{\text{ord}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%% probability & statistics %%%%%%%%%%%%%%%%%%%%%%%%%
+		%% probability, expectation, variance, etc.
+		\renewcommand{\Pr}{\mathbb{P}}
+		\DeclareMathOperator{\E}{\mathbb{E}}
+		\DeclareMathOperator{\var}{\rm Var}
+		\DeclareMathOperator{\sd}{\rm SD}
+		\DeclareMathOperator{\cov}{\rm Cov}
+		\DeclareMathOperator{\SE}{\rm SE}
+		\DeclareMathOperator{\ssreg}{{\rm SS}_{{\rm Reg}}}
+		\DeclareMathOperator{\ssr}{{\rm SS}_{{\rm Res}}}
+		\DeclareMathOperator{\sst}{{\rm SS}_{{\rm Tot}}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% congruences %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\renewcommand{\mod}[1]{\ (\mathrm{mod}\ #1)}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% bracket notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		% I first used this for principal ideals, that is why the abbreviation is pid
+		\newcommand{\pid}[1]{\langle #1 \rangle}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% fatdot notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\makeatletter
+			\newcommand*\fatdot{\mathpalette\fatdot@{.5}}
+			\newcommand*\fatdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+		\makeatother
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% use pretty letters %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\DeclareMathOperator{\ep}{\varepsilon}
+		\DeclareMathOperator{\ph}{\varphi}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%% stolen from Jeske/Dugger %%%%%%%%%%%%%%%%%%%%%%%%%
+	% Some theorem-like environments, all numbered together starting at 1
+	% in each section.
+
+	% The default \theoremstyle is bold headings and italic body text.
+	\newtheorem{thm}{Theorem}[section]
+	\newtheorem{defn}[thm]{Definition}
+	\newtheorem{prop}[thm]{Proposition}
+	\newtheorem{claim}[thm]{Claim}
+	\newtheorem{cor}[thm]{Corollary}
+	\newtheorem{lemma}[thm]{Lemma}
+
+	\theoremstyle{definition}  % Bold headings and Roman body text.
+	\newtheorem{example}[thm]{Example}
+	\newtheorem{examples}[thm]{Examples}
+	\newtheorem{exercise}[thm]{Exercise}
+	\newtheorem{note}[thm]{Note}
+	\newtheorem{remark}[thm]{Remark}
+	\newtheorem{remarks}[thm]{Remarks}
+	\newtheorem{discussion}[thm]{Discussion}
+
+	\newcommand{\dfn}{\textbf} % Make defined words bold.
+	\newcommand{\mdfn}[1]{\dfn{\mathversion{bold}#1}} % Even make math symbols bold
+
+	% Various commands that are useful.  Please add your own.
+
+	\DeclareMathOperator{\Arg}{Arg}
+	\DeclareMathOperator{\re}{Re}
+	\DeclareMathOperator{\im}{Im}
+	\DeclareMathOperator{\Log}{Log}
+	\DeclareMathOperator{\Span}{Span}
+
+	\newcommand{\iso}{\cong}						% isometric/congruent
+	\newcommand{\ra}{\rightarrow}                   % right arrow
+	\newcommand{\lra}{\longrightarrow}              % long right arrow
+	\newcommand{\la}{\leftarrow}                    % left arrow
+	\newcommand{\lla}{\longleftarrow}               % long left arrow
+	\newcommand{\llra}[1]{\stackrel{#1}{\lra}}      % labeled long right arrow
+	\newcommand{\we}{\llra{\sim}}                   % weak equivalence
+	\newcommand{\cof}{\rightarrowtail}              % cofibration
+	\newcommand{\fib}{\twoheadrightarrow}           % fibration
+	\newcommand{\inc}{\hookrightarrow}              % inclusion
+	\newcommand{\dbra}{\rightrightarrows}           % double arrow for equalizer diagrams
+	\newcommand{\eqra}{\llra{\sim}}                 % equivalence/isomorphism
+
+	% \newcommand{\blank}{\underbar{\ \ }}          % An underscore, as in (__)xV
+	\newcommand{\blank}{-}                          % A hyphen, as in (-)xV
+	\newcommand{\Id}{Id}                            % The identity functor
+	\newcommand{\und}{\underline}
+	\newcommand{\norm}[1]{\mid \!\!#1 \!\!\mid}             %\norm{x} gives |x|
+
+	% These commands are for the period and comma in the lower right entry of
+	% a diagram.  They put the punctuation 2 pts to the right, but make
+	% TeX (and hence the diagram package) unaware of the extra width
+	% of that entry.
+	\newcommand{\period}    {{\makebox[0pt][l]{\hspace{2pt} .}}}
+	\newcommand{\comma}     {{\makebox[0pt][l]{\hspace{2pt} ,}}}
+	\newcommand{\semicolon} {{\makebox[0pt][l]{\hspace{2pt} ;}}}
+
+	\newcommand{\Cech}{\v{C}ech}
+	\newcommand{\scat}{\Delta}
+	\newcommand{\assign}{\ra}
+	\newcommand{\copr}{\,\amalg\,}
+	\newcommand{\ovcat}{\downarrow}
+	\newcommand{\pder}[2]{{\frac{\partial #1}{\partial #2}}}
+	\newcommand{\del}{\nabla}
+	\newcommand{\vectr}[1]{{\mbox{\boldmath $#1$}}}
+	\newcommand{\uvectr}[1]{\vectr{\hat #1}}
+	\newcommand{\ihat}{\uvectr \imath}
+	\newcommand{\jhat}{\uvectr \jmath}
+	\newcommand{\khat}{\uvectr k}
+	\newcommand{\rhat}{\uvectr r}
+	\newcommand{\thhat}{\uvectr \theta}
+	\newcommand{\zhat}{\uvectr z}
+	\newcommand{\rhohat}{\uvectr \rho}
+	\newcommand{\phihat}{\uvectr \phi}
+	\newcommand{\grad}{\vectr{\vec\nabla}}
+	% \newcommand{\R}{\mathbb{R}}
+	\newcommand{\vv}[1]{\vectr{v_{#1}}}
+	\newcommand{\crad}{0.1}
+	\newcommand{\lline}[1]{\overleftrightarrow{#1}}
+	\DeclareMathOperator{\area}{area}
+	\DeclareMathOperator{\vol}{vol}
+	\newcommand{\ray}[1]{\overset{\rightarrow}{#1}}
+	\newcommand{\sr}[2]{???}
+	\newcommand{\iihat}{i}
+	\newcommand{\jjhat}{j}
+	\newcommand{\kkhat}{k}
+
+		
+\begin{document}
+	\title{Homework 7  -- Math 392 \\ \today}
+	\author{Alex Thies \\ \href{mailto:athies@uoregon.edu}{\lowercase{athies$@$uoregon.edu}}}
+
+	\maketitle
+
+	\subsection*{Problem A}
+	\label{sub:problem_a}
+	Let $K_{1} \subset K_{2} \subset \cdots \subset K_{n}$ be a chain of field extensions such that $K_{i} \subset K_{i+1}$ is algebraic.
+	Prove that $K_{1} \subset K_{n}$ is algebraic, and compute the degree of the extension, $[K_{n} : K_{1}]$.
+	% subsection problem_a (end)
+
+	% nice code for this sage: 
+		% p(x) = x**3 + x + 2
+		% sage: for i in range(5):
+		% ....:     print i, p(i), 'looping'
+		% ....:     
+		% 0 2 looping
+		% 1 4 looping
+		% 2 12 looping
+		% 3 32 looping
+		% 4 70 looping
+
+	\subsection*{Problem 9.38}
+	\label{sub:problem_9_38}
+	Let $c$ be a root [of] $p(x) = 4 + 3x + x^{2}$ in an extension of $\Z_{5}$.
+	Show that $p(x)$ is irreducible over $\Z_{5}$, and calculate the following elements in $\Z_{5}(c)$. 
+	
+		$(4 + 5c) + (6 + 3c) = $
+	
+		$(2 + 6d)(4 + 2c) = $
+	
+		$(6 + 4c)^{-1} = $
+	% subsection problem_9_38 (end)
+
+	\subsection*{Problem 9.50}
+	\label{sub:problem_9_50}
+	Find the complete addition and multiplication tables for the field $\Z_{2}(c)$ where $c$ is a root of the polynomial $p(x) = 1 + x + 0x^{2} + x^{3}$ which is irreducible over $\Z_{2}$.
+	% subsection problem_9_50 (end)
+
+	\subsection*{Problem 9.51}
+	\label{sub:problem_9_51}
+	Using the result of the previous exercise, determine if there are other roots of $p(x)$ in $\Z_{2}(c)$.
+	% subsection problem_9_51 (end)
+
+	\subsection*{Problem 9.57}
+	\label{sub:problem_9_57}
+	Suppose $K$ is a field, $E$ is [a field extension] of $K$, and $n$ is a positive integer.
+	Prove: If $[E:K] = n$ and $c \in E$ then the degree of the minimum polynomial for $c$ over $K$ must divide $n$.
+	% subsection problem_9_57 (end)
+
+	\subsection*{Problem 9.63}
+	\label{sub:problem_9_63}
+	Prove that $\sqrt{2 + i} \notin \Q\left( \sqrt[3]{2} \right)$ using Theorem 9.22.
+	% subsection problem_9_63 (end)
+
+	\subsection*{Problem 9.64}
+	\label{sub:problem_9_64}
+	Suppose that $K$ is a field and $c$ is algebraic over $K$ with $[K(c) : K] = 2$.
+	Prove: $K(c)$ is the root field for the minimum polynomial of $c$ over $K$.
+	% subsection problem_9_64 (end)
+
+	\subsection*{Problem 9.65}
+	\label{sub:problem_9_65}
+	Suppose $K$ is a field and $E$ is a finite extension of $K$.
+	Prove: There exist $u_{1}, u_{2}, \dots, u_{m} \in E$ with $E = K(u_{1}, u_{2}, \dots, u_{m})$.
+	% subsection problem_9_65 (end)
+
+	\subsection*{Problem 9.66}
+	\label{sub:problem_9_66}
+	Find the root field $E$ for $a(x) = \frac{5}{4} + 6x + \frac{11}{2}x^{2} + 2x^{3} + \frac{1}{4}x^{4}$ over $\Q$.
+	% subsection problem_9_66 (end)
+
+	\subsection*{Problem 9.67}
+	\label{sub:problem_9_67}
+	Prove that $\sqrt{2} \in \Q\left( \sqrt{2} + \sqrt{3} \right)$ and use it to show $\left[ \Q\left(\sqrt{2} + \sqrt{3} \right) : \Q \right] = 4$.
+	% subsection problem_9_67 (end)
+\end{document}

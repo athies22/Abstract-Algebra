@@ -1,0 +1,227 @@
+%!TEX output_directory = temp
+\documentclass{amsart}
+	%% Basic Info
+		\author{Alex Thies}
+		\title{Homework 1 \\ Math 391 - Fall 2017}
+		%\email{athies@uoregon.edu}
+	%% boilerplate packages
+		\usepackage{amsmath}
+		\usepackage{amssymb}
+		\usepackage{amsthm}
+		\usepackage{mathrsfs}
+		\usepackage{enumerate}
+	%% pretty letters
+		\DeclareMathOperator{\ep}{\varepsilon}
+		\DeclareMathOperator{\ph}{\varphi}
+		\DeclareMathOperator{\Ell}{\mathscr{L}}
+	%% congruences
+		\renewcommand{\mod}[1]{\ (\mathrm{mod}\ #1)}
+	%% sets
+		\DeclareMathOperator{\N}{\mathbb{N}}
+		\DeclareMathOperator{\Z}{\mathbb{Z}}
+		\DeclareMathOperator{\Zp}{\mathbb{Z}^{+}}
+		\DeclareMathOperator{\Zm}{\mathbb{Z}^{-}}
+		\DeclareMathOperator{\Q}{\mathbb{Q}}
+		\DeclareMathOperator{\Qc}{\mathbb{Q}^{c}}
+		\DeclareMathOperator{\R}{\mathbb{R}}
+		\DeclareMathOperator{\C}{\mathbb{C}}
+		\DeclareMathOperator{\pset}{\mathcal{P}}
+\begin{document}
+	\maketitle
+
+	\begin{enumerate}
+		\item[\textbf{Problem 0.9.}] For the sets $A$, $B$, and $C$ in Exercises 0.1, 0.2, 0.3, find the sets $A\cup(C \cap B)$, $\pset(A)$.
+		\begin{proof}[Solution] The sets from 0.1, 0.2, and 0.3 are 
+			\begin{align*}
+				A &= \{x : \text{$x$ is an integer and $-2 < x < 3$}\} \\
+				B &= \{x : \text{$x$ is a real number and $x^{2}-5x = 0$}\} \\
+				C &= \{x : \text{$x$ is an integer and $2x - 6 = 2$}\}
+			\end{align*}
+			We will determine $A\cup(C \cap B)$.
+			Note that $A = (-1, 2)\cap\Z$, $B = (0,5)\cap\R$, and that $C = \{ 4 \}$, thus,
+			\begin{align*}
+				A \cup (B \cap C) &= \left[ (-1, 2)\cap\Z \right] \cup \left[ \left( (0,5)\cap\R \right) \cap \{ 4 \} \right], \\
+				&= \left[ (-1, 2)\cap\Z \right] \cup \{4\}, \\
+				&= \{x : \text{$x$ is an integer and $-2 < x < 3$, or $x=4$}\}, \\
+				&= \{-1, 0, 1, 2, 4\}.
+			\end{align*}
+			We will now find $\pset(A)$.
+			Recall that $A = \{ -1, 0, 1, 2 \}$.
+			Notice that $|A| = 4$, so $|\pset(A)|$ should be $2^{|A|} = 2^{4} = 16.$
+			Thus $\pset(A) =$ $\{ \{\},$ $\{-1\},$ $\{0\},$ $\{1\},$ $\{2\},$ $\{-1,0\},$ $\{-1,1\},$ $\{-1,2\},$ $\{0,1\},$ $\{0,2\},$ $\{1,2\},$	$\{-1,0,1\},$ $\{-1,0,2\},$ $\{-1,1,2\},$ $\{0,1,2\},$ $\{-1,0,1,2\} \}$.
+			Note that we have 16 elements in $\pset(A)$, so (barring errors of order or repitition) this should be all subsets of $A$.
+		\end{proof}
+
+		\item[\textbf{Problem 0.18.}] Prove that the statement ``if $A \cap B \subset C$ then $A \subset C$ or $B \subset C$'' is true or find a counterexample with nonempty sets that makes it fail.
+		\begin{proof} We provide the following counterexample. 
+		Suppose $A = \{a : a = 2^{n}, n=0,1,2,\dots \}$, $B = \{b : b = 3^{n}, n=0,1,2,\dots \}$, and $C = \{ 1 \}$.
+		Then $A\cap B = \{ 1 \}$ as well, but observe that while $A\cap B \subseteq C$, $A \not\subset C$ and $B \not\subset C$.
+		\end{proof}
+
+		\item[\textbf{Problem 0.21.}] Prove that the statement ``$A\cap (B \cup C) = (A\cap B)\cup(A \cap C)$'' is true or find a counterexample with nonempty sets that makes it fail.
+		\begin{proof} We proceed directly,
+			\begin{align*}
+				A\cap(B \cup C) &= A \cap \{x : x \in B \text{ or }x \in A \}, \\
+				&= \{ x : x \in B \text{ or }x \in A, \text{ and } x \in A \}, \\
+				&= \{ x : x \in B \text{ and } x\in A \text{ or, }x \in C \text{ and } x \in A \}, \\
+				&= (A \cap B) \cup (A\cap C).
+			\end{align*}
+		\end{proof}
+		\newpage
+
+		\item[\textbf{Problem 0.26.}] Prove: For all $n \in \N, 1^{3} + 2^{3} + \cdots + n^{3} = \frac{n^{2}(n + 1)^{2}}{4}$.
+		\begin{proof} We proceed by mathematical induction on the natural numbers.
+			\begin{enumerate}
+				\item[\textbf{Base case:}] Note that for $n=1$, $1^{3}= 1^{2}(2)^{2}/4$.
+				\item[\textbf{Induction Hypothesis:}] Assume that $\sum_{i=1}^{n} i^{3} = n^{2}(n+1)^{2}/4$ for some $n \in \N$.
+				\item[\textbf{Induction Step:}] We compute the following,
+					\begin{align*}
+						1^{3} + 2^{3} + \cdots + (n+1)^{3} &= 1^{3} + 2^{3} + \cdots + n^{3} + (n+1)^{3} \\
+						&= \sum_{i=1}^{n} i^{3} + (n+1)^{3}, \\
+						&= \frac{n^{2}(n+1)^{2}}{4} + (n+1)^{3}, \\
+						&= (n+1)^{2} \left( \frac{n^{2}}{4} + (n+1) \right), \\
+						&= \frac{(n+1)^{2}}{4} \left( n^{2} + 4(n+1) \right), \\
+						&= \frac{(n+1)^{2}}{4} \left( n^{2} + 4n + 4) \right), \\
+						&= \frac{(n+1)^{2}}{4} (n+2)^{2}, \\
+						&= \frac{(n+1)^{2}(n+2)^{2}}{4}.
+					\end{align*}
+					Hence, we have shown for the given proposition $P$, that $P_{n} \Rightarrow P_{n+1}$.
+			\end{enumerate}
+		\end{proof}
+
+		\item[\textbf{Problem 0.27.}] Prove: For all $n \in \N$, 4 evenly divides $3^{2n-1} + 1$.
+		\begin{proof} We proceed by mathematical induction on the natural numbers.
+			\begin{enumerate}
+				\item[\textbf{Base case:}] Note that for $n=1$, $3^{2-1}+1 = 4 \equiv 0 \mod{4}$.
+				\item[\textbf{Induction Hypothesis:}] Assume that $3^{2n-1}+1 \equiv 0 \mod{4}$ for some $n \in \N$.
+				\item[\textbf{Induction Step:}] We compute the following,
+					\begin{align*}
+						3^{2n-1} + 1 &\equiv 0 \mod{4}, \\
+						3^{2n-1} &\equiv -1 \mod{4}, \\
+						3^{2n-1} &\equiv -9 \mod{4}, \\
+						9\cdot 3^{2n-1} &\equiv -9 \cdot 9 \mod{4}, \\
+						3^{2n+1} &\equiv -1 \mod{4}, \\
+						3^{2n+1} + 1 &\equiv 0 \mod{4}.
+					\end{align*}
+					Hence, we have shown for the given proposition $P$, that $P_{n} \Rightarrow P_{n+1}$.
+			\end{enumerate}
+		\end{proof}
+
+		\item[\textbf{Problem 0.30.}] Define $\sim$ on $\mathbb{Z}$ by $a \sim b$ if and only if $a = 2b$. 
+		Either prove that $\sim$ is an equivalence relation or find a counterexample showing it fails.
+		\begin{proof} Observe that $\sim$ is not reflexive upon inspection and thus not an equivalence relation. 
+		Counterexample, $(1,1) \Rightarrow 1 = 2$ which is absurd.
+		\end{proof}
+
+		\item[\textbf{Problem 0.37.}] Define $\sim$ on $\R$ by $x \sim y$ if and only if $x - y \in \Z$. 
+		Either prove that $\sim$ is an equivalence relation or find a counterexample showing it fails.
+		\begin{proof} Let $(a,b)$ denote $a \sim b$.
+		We will show that $\sim$ is reflexive, symmetric, and transitive:
+			\begin{enumerate}[(i)]
+				\item Note that $x-x = 0$, and that $0 \in \Z$, thus $x-x\in\Z$, hence $(x,x)$, which we aimed to show.
+				\item Suppose $x - y = j$ where $j \in \Z$, thus $y - x = -j$, hence $(x,y) = (y,x)$, which we aimed to show.
+				\item Assume that $(x,y)$ and $(y,z)$. Then $x - y = k$ and $y - z = \ell$, it follows that $x - z = k + \ell$; because $\Z$ is closed under addition $k + \ell \in \Z$, therefore $(x,y),(y,z) \Rightarrow (x,z)$, which we aimed to show.
+			\end{enumerate}
+		Hence, because $\sim$ is reflexive, symmetric, and transitive, it is an equivalence relation on $\R$.
+		\end{proof}
+
+		\item[\textbf{Problem 0.40.}] Determine whether the function $r: \Z \to \Z$, where $r(x) = 7x$ is injective, surjective, or bijective.
+		\begin{proof} We will show that $r$ is a bijection on $\Z$ by proving that it is injective and surjective. 
+		For $r$ to be injective, it must be true that if $x_{1} \neq x_{2}$, then $r(x_{1}) \neq r(x_{2})$, or the more useful contrapositive of the previous statement: if $r(x_{1}) = r(x_{2})$, then $x_{1} = x_{2}$. 
+		Suppose that $r(x_{1}) = r(x_{2})$ for arbitrary $x_{1}, x_{2} \in \Z$. 
+		Then $7x_{1} = 7x_{2}$, therefore $x_{1} = x_{2}$, which shows that $r$ is injective. 
+		For $r$ to be surjective it must be true that for all $x_{3} \in \Z$, there exist $x_{4} \in \Z$ such that $r(x_{4}) = x_{3}$. 
+		Suppose by way of contradiction that there exists $x_{4} \in \Z$ such that $r(x_{4}) \neq x_{3}$, but given the mapping of $r$, as well as its domain, codomain, and image, no such $x_{4}$ can exist. 
+		Thus $r$ maps to every element of the codomain an element of the domain, hence it is surjective. 
+		Given that we have also show $r$ to be injective, way may now claim that it is bijective.
+		\end{proof}
+
+		\item[\textbf{Problem 0.41.}] Determine whether the function $t: \Q \to \Q$, where $t(x) = 5x - 3$ is injective, surjective, or bijective.
+		\begin{proof} We will show that $t$ is a bijection on $\Q$ by proving that it is injective and surjective. 
+		For $t$ to be injective, it must be true that if $x_{1} \neq x_{2}$, then $t(x_{1}) \neq t(x_{2})$, or the more useful contrapositive of the previous statement: if $t(x_{1}) = t(x_{2})$, then $x_{1} = x_{2}$. 
+		Suppose that $t(x_{1}) = t(x_{2})$ for arbitrary $x_{1}, x_{2} \in \Q$. 
+		Then $5x_{1} - 3 = 5x_{2} - 3$, therefore $5x_{1} = 5x_{2}$ and thus $x_{1} = x_{2}$, which shows that $t$ is injective. 
+		For $t$ to be surjective it must be true that for all $x_{3} \in \Q$, there exist $x_{4} \in \Q$ such that $t(x_{4}) = x_{3}$. 
+		Suppose by way of contradiction that there exists $x_{4} \in \Q$ such that $t(x_{4}) \neq x_{3}$, but given the mapping of $t$, as well as its domain, codomain, and image, no such $x_{4}$ can exist. 
+		Thus $t$ maps to every element of the codomain an element of the domain, hence it is surjective. 
+		Given that we have also show $t$ to be injective, way may now claim that it is bijective.
+		\end{proof}
+
+		\item[\textbf{Problem 0.49.}] Prove: If $f$ and $g$ are functions with $f: A \to B$, $g: B \to C$ and $g$, $f$ are both bijections then $g \circ f$ is a bijection.
+		\begin{proof} Given that $f$ and $g$ are bijections, we will show directly that $g \circ f$ is also a bijection; that is, it is injective and surjective. 
+		Again utilizing the contrapositive of the definition of an injective function, we will seek to show that $(g \circ f)(x_{1}) = (g \circ f)(x_{2})$ implies that $x_{1} = x_{2}$. 
+		Suppose that $(g \circ f)(x_{1}) = (g \circ f)(x_{2})$, recall that $f$ and $g$ are both injective, then
+			\begin{align*}
+				(g \circ f)(x_{1}) &= (g \circ f)(x_{2}), \\
+				g\left( f(x_{1}) \right) &= g\left( f(x_{2}) \right), \\
+				g(x_{1}) &= g(x_{2}), \\
+				x_{1} &= x_{2}.
+			\end{align*}
+		Hence, $g \circ f$ is injective; we will now show that it is also surjective. 
+		Again, we will proceed directly from the definition. 
+		Let $z \in C$, since $g$ is surjective there exists $y \in B$ such that $z = g(y)$. 
+		Then, since $f$ is surjective there exists $x \in A$ such that $y = f(x)$. 
+		Notice that we have shown that for $z \in C$, there exists $x \in A$ such that $z = (g \circ f)(x)$, hence $g \circ f$ is surjective. 
+		We have shown that $g \circ f$ is both injective and surjective, thus it is bijective.
+		\end{proof}
+
+		\item[\textbf{Problem 0.58.}] Given the following matrices, compute $CD$ and $DC$.
+		\begin{align*}
+			C &= \begin{pmatrix}
+				1 & 1/3 & -1 \\
+				-1 & 0 & 4 \\
+				3/4 & 0 & 1
+			\end{pmatrix}, & 
+			D &= \begin{pmatrix}
+				0 & 2/5 & 2 \\
+				1 & 1 & 1/2 \\
+				3/4 & -1 & 0
+			\end{pmatrix}.
+		\end{align*}
+		\begin{proof}[Solution]
+			We compute the following,
+				\begin{align*}
+					CD &= \begin{pmatrix}
+							1 & 1/3 & -1 \\
+							-1 & 0 & 4 \\
+							3/4 & 0 & 1
+						\end{pmatrix}
+						\begin{pmatrix}
+							0 & 2/5 & 2 \\
+							1 & 1 & 1/2 \\
+							3/4 & -1 & 0
+						\end{pmatrix}, \\
+						&= \begin{pmatrix}
+						(1 \cdot 0 + 1/3 \cdot 1 - 1 \cdot 3/4) & (1 \cdot 2/5 + 1/3 \cdot 1 + 1 \cdot 1) & (1 \cdot 2 + 1/3 \cdot 1/2 - 1 \cdot 0) \\
+						(-1 \cdot 0 + 0 \cdot 1 + 4 \cdot 3/4) & (-1 \cdot 2/5 + 0 \cdot 1 - 4 \cdot 1) & (-1 \cdot 2 + 0 \cdot 1/2 + 4 \cdot 0) \\
+						(3/4 \cdot 0 + 0 \cdot 1/2 + 1 \cdot 0) & (3/4 \cdot 2/5 + 1 \cdot 1 - 1 \cdot 1) & (3/4 \cdot 2 + 0 \cdot 1/2 + 1 \cdot 0)
+						\end{pmatrix}, \\
+						&= \begin{pmatrix}
+						-5/12 & 26/15 & 13/6 \\
+						3 & -22/5 & -2 \\
+						3/4 & -7/10 & 3/2
+						\end{pmatrix}. \\ \\
+					DC &= \begin{pmatrix}
+							0 & 2/5 & 2 \\
+							1 & 1 & 1/2 \\
+							3/4 & -1 & 0
+						\end{pmatrix}
+						\begin{pmatrix}
+							1 & 1/3 & -1 \\
+							-1 & 0 & 4 \\
+							3/4 & 0 & 1
+						\end{pmatrix}, \\
+						&= \begin{pmatrix}
+						(0 \cdot 1 - 2/5 \cdot 1 + 2 \cdot 3/4) & (0 \cdot 1/3 + 2/5 \cdot 0 + 2 \cdot 0) & (0 \cdot -1 + 2/5 \cdot 4 + 2 \cdot 1) \\
+						(1 \cdot 1 - 1 \cdot 1 + 1/2 \cdot 3/4) & (1 \cdot 1/3 + 1 \cdot 0 + 1/2 \cdot 0) & (1 \cdot -1 + 1 \cdot 4 + 1/2 \cdot 1) \\
+						(3/4 \cdot 1 + 1 \cdot 1 + 0 \cdot 3/4) & (3/4 \cdot 1/3 + 1 \cdot 0 + 0 \cdot 0) & (3/4 \cdot 1 - 1 \cdot 4 + 0 \cdot 1)
+						\end{pmatrix}, \\
+						&= \begin{pmatrix}
+						11/10 & 0 & 18/5 \\
+						3/8 & 1/3 & 7/2 \\
+						7/4 & 1/4 & -19/4
+						\end{pmatrix}.
+				\end{align*}
+		\end{proof}
+	\end{enumerate}
+\end{document}

@@ -1,0 +1,332 @@
+%!TEX output_directory = temp
+\documentclass[letterpaper, 12pt]{amsart}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%% boilerplate packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\usepackage{amsmath,amssymb,amsthm}
+	\usepackage[mathscr]{euscript}
+	\usepackage{enumerate}
+	\usepackage{graphicx}
+	\usepackage{mathrsfs}
+	\usepackage{color}
+	\usepackage{hyperref}
+	\usepackage{verbatim}
+	\usepackage{stmaryrd}
+	% \usepackage[margin=1.5in]{geometry}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%% rename the abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% \renewcommand{\abstractname}{Introduction}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% sets %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% sets 
+		\DeclareMathOperator{\N}{\mathbb{N}}
+		\DeclareMathOperator{\Z}{\mathbb{Z}}
+		\DeclareMathOperator{\Zp}{\mathbb{Z}^{+}}
+		\DeclareMathOperator{\Q}{\mathbb{Q}}
+		\DeclareMathOperator{\Qp}{\mathbb{Q}^{+}}
+		\DeclareMathOperator{\Qc}{\mathbb{Q}^{c}}
+		\DeclareMathOperator{\R}{\mathbb{R}}
+		\DeclareMathOperator{\Rp}{\mathbb{R}^{+}}
+		\DeclareMathOperator{\C}{\mathbb{C}}
+		\DeclareMathOperator{\Cnon}{\mathbb{C}^{\times}}
+		%% powerset of a set
+		\DeclareMathOperator{\pset}{\mathcal{P}}
+		%% set of continuous functions in a certain variable
+		\DeclareMathOperator{\cont}{\mathscr{C}}
+		%% set of functions in a certain variable
+		\DeclareMathOperator{\func}{\mathscr{F}}
+		
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% linear algebra %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% linear span
+		\DeclareMathOperator{\Ell}{\mathscr{L}}
+		%% bold vectors with arrows, and bold matrices
+		\newcommand{\bmat}[1]{{\mathbf{#1}}}
+		\newcommand{\bvec}[1]{{\vec{\mathbf{#1}}}}
+		%% independent vectors/matrices
+		\DeclareMathOperator{\ind}{\perp\!\!\!\perp}
+		%% order
+		\DeclareMathOperator{\ord}{\text{ord}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%% probability & statistics %%%%%%%%%%%%%%%%%%%%%%%%%
+		%% probability, expectation, variance, etc.
+		\renewcommand{\Pr}{\mathbb{P}}
+		\DeclareMathOperator{\E}{\mathbb{E}}
+		\DeclareMathOperator{\var}{\rm Var}
+		\DeclareMathOperator{\sd}{\rm SD}
+		\DeclareMathOperator{\cov}{\rm Cov}
+		\DeclareMathOperator{\SE}{\rm SE}
+		\DeclareMathOperator{\ssreg}{{\rm SS}_{{\rm Reg}}}
+		\DeclareMathOperator{\ssr}{{\rm SS}_{{\rm Res}}}
+		\DeclareMathOperator{\sst}{{\rm SS}_{{\rm Tot}}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% congruences %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\renewcommand{\mod}[1]{\ (\mathrm{mod}\ #1)}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% bracket notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		% I first used this for principal ideals, that is why the abbreviation is pid
+		\newcommand{\pid}[1]{\langle #1 \rangle}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% fatdot notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\makeatletter
+			\newcommand*\fatdot{\mathpalette\fatdot@{.5}}
+			\newcommand*\fatdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+		\makeatother
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% use pretty letters %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\DeclareMathOperator{\ep}{\varepsilon}
+		\DeclareMathOperator{\ph}{\varphi}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%% stolen from Jeske/Dugger %%%%%%%%%%%%%%%%%%%%%%%%%
+	% Some theorem-like environments, all numbered together starting at 1
+	% in each section.
+
+	% The default \theoremstyle is bold headings and italic body text.
+	\newtheorem{thm}{Theorem}[section]
+	\newtheorem{defn}[thm]{Definition}
+	\newtheorem{prop}[thm]{Proposition}
+	\newtheorem{claim}[thm]{Claim}
+	\newtheorem{cor}[thm]{Corollary}
+	\newtheorem{lemma}[thm]{Lemma}
+
+	\theoremstyle{definition}  % Bold headings and Roman body text.
+	\newtheorem{example}[thm]{Example}
+	\newtheorem{examples}[thm]{Examples}
+	\newtheorem{exercise}[thm]{Exercise}
+	\newtheorem{note}[thm]{Note}
+	\newtheorem{remark}[thm]{Remark}
+	\newtheorem{remarks}[thm]{Remarks}
+	\newtheorem{discussion}[thm]{Discussion}
+
+	\newcommand{\dfn}{\textbf} % Make defined words bold.
+	\newcommand{\mdfn}[1]{\dfn{\mathversion{bold}#1}} % Even make math symbols bold
+
+	% Various commands that are useful.  Please add your own.
+
+	\DeclareMathOperator{\Arg}{Arg}
+	\DeclareMathOperator{\re}{Re}
+	\DeclareMathOperator{\im}{Im}
+	\DeclareMathOperator{\Log}{Log}
+	\DeclareMathOperator{\Span}{Span}
+
+	\newcommand{\iso}               {\cong}
+	\newcommand{\ra}{\rightarrow}                   % right arrow
+	\newcommand{\lra}{\longrightarrow}              % long right arrow
+	\newcommand{\la}{\leftarrow}                    % left arrow
+	\newcommand{\lla}{\longleftarrow}               % long left arrow
+	\newcommand{\llra}[1]{\stackrel{#1}{\lra}}      % labeled long right arrow
+	\newcommand{\we}{\llra{\sim}}                   % weak equivalence
+	\newcommand{\cof}{\rightarrowtail}              % cofibration
+	\newcommand{\fib}{\twoheadrightarrow}           % fibration
+	\newcommand{\inc}{\hookrightarrow}              % inclusion
+	\newcommand{\dbra}{\rightrightarrows}           % double arrow for equalizer diagrams
+	\newcommand{\eqra}{\llra{\sim}}                 % equivalence/isomorphism
+
+	% \newcommand{\blank}{\underbar{\ \ }}          % An underscore, as in (__)xV
+	\newcommand{\blank}{-}                          % A hyphen, as in (-)xV
+	\newcommand{\Id}{Id}                            % The identity functor
+	\newcommand{\und}{\underline}
+	\newcommand{\norm}[1]{\mid \!\!#1 \!\!\mid}             %\norm{x} gives |x|
+
+	% These commands are for the period and comma in the lower right entry of
+	% a diagram.  They put the punctuation 2 pts to the right, but make
+	% TeX (and hence the diagram package) unaware of the extra width
+	% of that entry.
+	\newcommand{\period}    {{\makebox[0pt][l]{\hspace{2pt} .}}}
+	\newcommand{\comma}     {{\makebox[0pt][l]{\hspace{2pt} ,}}}
+	\newcommand{\semicolon} {{\makebox[0pt][l]{\hspace{2pt} ;}}}
+
+	\newcommand{\Cech}{\v{C}ech}
+	\newcommand{\scat}{\Delta}
+	\newcommand{\assign}{\ra}
+	\newcommand{\copr}{\,\amalg\,}
+	\newcommand{\ovcat}{\downarrow}
+	\newcommand{\pder}[2]{{\frac{\partial #1}{\partial #2}}}
+	\newcommand{\del}{\nabla}
+	\newcommand{\vectr}[1]{{\mbox{\boldmath $#1$}}}
+	\newcommand{\uvectr}[1]{\vectr{\hat #1}}
+	\newcommand{\ihat}{\uvectr \imath}
+	\newcommand{\jhat}{\uvectr \jmath}
+	\newcommand{\khat}{\uvectr k}
+	\newcommand{\rhat}{\uvectr r}
+	\newcommand{\thhat}{\uvectr \theta}
+	\newcommand{\zhat}{\uvectr z}
+	\newcommand{\rhohat}{\uvectr \rho}
+	\newcommand{\phihat}{\uvectr \phi}
+	\newcommand{\grad}{\vectr{\vec\nabla}}
+	% \newcommand{\R}{\mathbb{R}}
+	\newcommand{\vv}[1]{\vectr{v_{#1}}}
+	\newcommand{\crad}{0.1}
+	\newcommand{\lline}[1]{\overleftrightarrow{#1}}
+	\DeclareMathOperator{\area}{area}
+	\DeclareMathOperator{\vol}{vol}
+	\newcommand{\ray}[1]{\overset{\rightarrow}{#1}}
+	\newcommand{\sr}[2]{???}
+	\newcommand{\iihat}{i}
+	\newcommand{\jjhat}{j}
+	\newcommand{\kkhat}{k}
+
+		
+\begin{document}
+	\title{Homework 6  -- Math 392 \\ \today}
+	\author{Alex Thies \\ \href{mailto:athies@uoregon.edu}{\lowercase{athies$@$uoregon.edu}}}
+
+	\maketitle
+
+	\subsection*{Problem 9.13}
+	\label{sub:problem_9_13}
+	In the proof of Theorem 9.9 the polynomial $q(x) \in K[x]$ was defined as $\ker{(f_{c})} = \pid{q(x)}$.
+	Prove that $q(x)$ is irreducible over $K$.
+
+		\begin{proof}
+		\end{proof}
+	% subsection problem_9_13 (end)
+
+	\subsection*{Problem 9.14}
+	\label{sub:problem_9_14}
+	Find the minimum polynomial for $u = \sqrt[3]{10}$ over $\Q$.
+	Be sure to prove your polynomial is irreducible.
+
+		\begin{proof}
+		Consider $a(x) = x^{3} - 10$, we compute $a(\sqrt[3]{10}) =  0$, since $a(x)$ is obviously monic it remains to show that it is irreducible over $\Q$.
+		By the rational roots theorem we have the set of all potential rational roots $R_{a} = \{ \pm 10 \}$, and its clear that neither of these are actually rational roots of $a(x)$.
+		Therefore, since $\deg{a(x)} = 3$ and $a(x)$ has no rational roots, it is irreducible over $\Q$.
+		Hence, $a(x) = x^{3} - 10$ is the minimum polynomial for $u = \sqrt[3]{10}$ over $\Q$.
+		\end{proof}
+	% subsection problem_9_14 (end)
+
+	\subsection*{Problem 9.18}
+	\label{sub:problem_9_18}
+	Find the minimum polynomial for $\sqrt{2} + \sqrt{7}$ over $\Q$.
+	Be sure to prove your polynomial is irreducible.
+
+		\begin{proof}
+		Consider $a(x) = x^{4} - 18x^{2} + 25$, we compute $a(\sqrt{2} + \sqrt{7}) = 0$, since $a(x)$ is monic it remains to show that it is irreducible over $\Q$.
+		Since $a_{0} = 5^{2}$ we cannot use Eisenstein's Criterion, thus, we must resort to the method of undetermined coefficients; but the Rational Roots Theorem will help us eliminate one case here.
+		By the Rational Roots Theorem we have the set of all potential rational roots $R_{a} = \{ \pm 5, \pm 25 \}$, we compute:
+			\begin{align*}
+			a(\pm 5) &= 200, \\
+			a(\pm 25) &= 379400.
+			\end{align*}
+		Thus, $a(x)$ has no rational roots and therefore no linear factors.
+		Since $\deg{a(x)} = 4$, it can be factored into either the product of degree two polynomials, or the product of a degree three polynomial and a linear (degree one) polynomial.
+		We've ruled out the case with a linear factor of $a(x)$, it remains to show that $a(x) \neq b(x)c(x)$ where $\deg{b(x)} = \deg{c(x)} = 2$.
+		We compute the following:
+			\begin{align*}
+			a(x) &= x^{4} - 18x^{2} + 25, \\
+			&= (x^{2} + ax + b)(x^{2} + cx + d), \\
+			&= x^{4} + x^{3}(a + c) + x^{2}(b + d + ac) + x(ad + bc) + bd.
+			\end{align*}
+		First, we have the very convenient fact that $bd = 25 \iff b = d = 5$.
+		Next, we see that $a = -c$, which allows us to compute:
+			\begin{align*}
+			-18 &= b + d + ac, \\
+			&= b + d - c^{2}, \\
+			&= 10 - c^{2}, \\
+			c^{2} &= 28, \\
+			c &= \pm2\sqrt{7}.
+			\end{align*}
+		Hence, we have the \textit{unique} factorization of $a(x)$ into degree two polynomials with irrational coefficients.
+		Therefore, $a(x)$ cannot be factored into the product of degree two polynomials that are irreducible over $\Q$, as we aimed to show.
+		Thus, we conclude that $a(x) = x^{4} - 18x^{2} + 25$ is the minimum polynomial for $u = \sqrt{2} + \sqrt{7}$ over $\Q$.			
+		\end{proof}
+	% subsection problem_9_18 (end)
+
+	\subsection*{Problem 9.19}
+	\label{sub:problem_9_19}
+	Find the minimum polynomial for $u = \sqrt[4]{2i}$ over $\Q$.
+	Be sure to prove your polynomial is irreducible.
+
+		\begin{proof}
+		Consider $a(x) = x^{8} + 4$, we compute $a(\sqrt[4]{2i}) = 0$, but unfortunately WolframAlpha tells us that $a(x) = (x^{4} - 2x^{2} + 2)(x^{4} + 2x^{2} + 2)$, so $a(x)$ is not the polynomial we're looking for.
+		Fortunately, by the zero product property, one the factors of $a(x)$ should be good candidate for the minimum polynomial for $u$ over $\Q$.
+		Consider $\tilde{a}(x) = x^{4} - 2x^{2} + 2$, we compute $\tilde{a}(\sqrt[4]{2i}) = 0$, since $\tilde{a}(x)$ is monic and upon invoking Eisenstein's Criterion with $p = 2$, we can see that $\tilde{a}(x)$ is irreducible over $\Q$.
+		Hence, $\tilde{a}(x) = x^{4} - 2x^{2} + 2$ is the minimum polynomial for $u = \sqrt[4]{2i}$ over $\Q$.
+		\end{proof}
+	% subsection problem_9_19 (end)
+
+	\subsection*{Problem 9.21}
+	\label{sub:problem_9_21}
+	Prove (i) of Theorem 9.12.
+		\setcounter{section}{9}
+		\setcounter{subsection}{12}
+		\setcounter{thm}{11}
+		\begin{thm}
+		Suppose $K$ is a field, $E$ is a field extension of $K$, and $c \in E$ is algebraic over $K$ with minimum polynomial $p(x) \in K[x]$.
+			\begin{enumerate}[(i)]
+				\item Using the homomorphism $f_{c}: K[x] \to E$ as defined by Theorem 9.5, $\ker{(f_{c})} = \pid{p(x)}$.
+				\item If $b(x) \in K[x]$ is a nonzero polynomial with $b(c) = 0_{E}$, then $b(x) = p(x)q(x)$ for some $q(x) \in K[x]$.
+			\end{enumerate}
+		\end{thm}
+
+		\begin{proof}
+		Let $K,E,c,p(x)$ be as above, we will show $\ker{f_{c}} = \pid{p(x)}$ by double inclusion.
+		Let us begin with the case where $\pid{p(x)} \subseteq \ker{(f_{c})}$.
+		By definition, since $p(x)$ is the minimal polynomial for $c$ over $K$, we have $p(c) = 0$.
+		Using the distributive property, and the fact that $f_{c}$ is a homomorphism, we compute the following:
+			\begin{align*}
+			f_{c}(\pi(x)) &= f_{c}(p(x)\sigma(x)), \\
+			&= f_{c}(p(x))f_{c}(\sigma(x)), \\
+			&= p(c) \sigma(c), \\
+			&= 0 \cdot \sigma(c), \\
+			&= 0 \cdot \sum\limits_{i=0}^{n} \sigma_{i}c^{i}, \\
+			&= \sum\limits_{i=0}^{n} (0 \cdot \sigma_{i}) c^{i}, \\
+			&= 0(x).
+			\end{align*}
+		Thus $\pi(x)$, an arbitrarily chosen element of $\pid{p(x)}$ is also an element of $\ker{f_{c}}$ which allows us to conclude that $\pid{p(x)} \subseteq \ker{f_{c}}$; it remains to show that $\pid{p(x)} \supseteq \ker{f_{c}}$.
+		
+		$\vdots$
+		\end{proof}
+	% subsection problem_9_21 (end)
+
+	\subsection*{Problem 9.22}
+	\label{sub:problem_9_22}
+	Explain how (ii) follows from (i) in Theorem 9.12.
+
+		\begin{proof}
+		Since $p(x)$ is the minimal polynomial for $c$ over $K$, we have that $p(c) = 0$.
+		To show $b(x) = p(x)q(x)$ for some $q(x) \in K[x]$, let's write something silly: $$b(c) = 0 = 0 \cdot q(c) = p(c)q(c).$$
+		\end{proof}
+	% subsection problem_9_22 (end)
+
+	\subsection*{Problem 9.31}
+	\label{sub:problem_9_31}
+	Consider the polynomial $a(x) = 5 + 3x + 4x^{2} + 6x^{3} + x^{4}$ in $\Q[x]$.
+	Prove that $a(x)$ is irreducible over $\Q$ (try Theorem 8.37 to help), then if $u$ is a root of $a(x)$ in an extension field of $\Q$, describe carefully the elements of $\Q(u)$.
+
+		\begin{proof}
+		\end{proof}
+	% subsection problem_9_31 (end)
+
+	\subsection*{Problem 9.46}
+	\label{sub:problem_9_46}
+	Find the complete addition and multiplication tables for the field $\Z_{2}(c)$ where $c$ is a root of the polynomial $p(x) = 1 + x + x^{2}$ which is irreducible over $\Z_{2}$.
+
+		\begin{proof}
+		\end{proof}
+	% subsection problem_9_46 (end)
+
+	\subsection*{Problem 9.52}
+	\label{sub:problem_9_52}
+	Find the complete addition and multiplication tables for the field $\Z_{3}(c)$ where $c$ is a root of the polynomial $p(x) = 2 + x + x^{2}$ which is irreducible over $\Z_{3}$.
+
+		\begin{proof}
+		\end{proof}
+	% subsection problem_9_52 (end)
+
+	\subsection*{Problem 9.55}
+	\label{sub:problem_9_55}
+	Suppose $K$ is a field and $c$ is algebraic over $K$.
+	Prove $[K(c) : K] = 1$ if and only if $c \in K$.
+
+		\begin{proof}
+		\end{proof}
+	% subsection problem_9_55 (end)
+\end{document}

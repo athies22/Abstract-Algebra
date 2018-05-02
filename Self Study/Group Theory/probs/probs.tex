@@ -1,0 +1,1484 @@
+%!TEX output_directory = temp
+\documentclass{amsbook}
+	%% boilerplate packages
+		\usepackage{amsmath}
+		\usepackage{amssymb}
+		\usepackage{amsthm}
+		\usepackage[mathscr]{euscript}
+		\usepackage{enumerate}
+		\usepackage{graphicx}
+		\usepackage{color}
+	%% fatdot notation
+		\makeatletter
+			\newcommand*\fatdot{\mathpalette\fatdot@{.5}}
+			\newcommand*\fatdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+		\makeatother
+	%% pretty letters
+		\DeclareMathOperator{\ep}{\varepsilon}
+		\DeclareMathOperator{\ph}{\varphi}
+		\DeclareMathOperator{\Ell}{\mathscr{L}}
+	%% congruences
+		\renewcommand{\mod}[1]{\ (\mathrm{mod}\ #1)}
+	%% brackets
+		\newcommand{\pid}[1]{\langle #1 \rangle}
+	%% order and characteristic
+		\DeclareMathOperator{\ord}{\text{ord}}
+	%% sets
+		\DeclareMathOperator{\N}{\mathbb{N}}
+		\DeclareMathOperator{\Z}{\mathbb{Z}}
+		\DeclareMathOperator{\Zp}{\mathbb{Z}^{+}}
+		\DeclareMathOperator{\Zm}{\mathbb{Z}^{-}}
+		\DeclareMathOperator{\Q}{\mathbb{Q}}
+		\DeclareMathOperator{\Qc}{\mathbb{Q}^{c}}
+		\DeclareMathOperator{\R}{\mathbb{R}}
+		\DeclareMathOperator{\C}{\mathbb{C}}
+		%% powerset of a set
+		\DeclareMathOperator{\pset}{\mathcal{P}}
+		%% set of continuous functions in a certain variable
+		\DeclareMathOperator{\cont}{\mathscr{C}}
+		%% set of functions in a certain variable
+		\DeclareMathOperator{\func}{\mathscr{F}}
+\begin{document}
+	\author{Alex Thies}
+	\title{Self Study \\ Group Theory}
+
+	\frontmatter
+
+	\maketitle
+	\newpage
+
+	\tableofcontents
+	\newpage
+
+	\section*{Frequently Used Notation}
+	\label{sec:frequently_used_notation}
+	\begin{align*}
+		f^{-1}(a)          & \hspace*{50pt} \text{the inverse image or preimage of $A$ under $f$.} \\
+		a|b                & \hspace*{50pt} \text{$a$ divides $b$.} \\
+		(a,b)              & \hspace*{50pt} \text{the greatest common divisor of $a,b$.} \\
+		[a,b]              & \hspace*{50pt} \text{the least common multiple of $a,b$.} \\
+		|A|                & \hspace*{50pt} \text{the number of elements in the set $A$, or the cardinality of $A$.} \\
+		\Z,\Zp             & \hspace*{50pt} \text{the integers, the positive integers.} \\
+		\Q,\Q^{+}          & \hspace*{50pt} \text{the rational numbers, the positive rational numbers.} \\
+		\R,\R^{+}          & \hspace*{50pt} \text{the real numbers, the positive real numbers.} \\
+		\C,\C^{\times}     & \hspace*{50pt} \text{the complex numbers, the nonzero complex numbers.} \\
+		\Z_{n}             & \hspace*{50pt} \text{the integers modulo $n$.} \\
+		A \times B         & \hspace*{50pt} \text{the cartesian product of $A$ and $B$.} \\
+		D_{2n}             & \hspace*{50pt} \text{the dihedral group of order $2n$.} \\
+		S_{n},S_{\Omega}   & \hspace*{50pt} \text{the symmetric group on $n$ letters, and on the set $\Omega$.} \\
+		Q_{8}              & \hspace*{50pt} \text{the quaternion group of order 8.} \\
+		\mathbb{F}_{N}     & \hspace*{50pt} \text{the finite field of $N$ elements.} \\
+		GL_{n}(F),GL(V)    & \hspace*{50pt} \text{the general linear groups.} \\
+		SL_{n}(F)          & \hspace*{50pt} \text{the special linear group.} \\
+		M_{n}(F)           & \hspace*{50pt} \text{the set of all $n\times n$ matrices whose entries are elements of the set $F$.} \\
+		A \cong B          & \hspace*{50pt} \text{$A$ is isomorphic to $B$.} \\
+		\ker(f)            & \hspace*{50pt} \text{the kernel of the homomorphism $f$.} \\
+		\ord(a)            & \hspace*{50pt} \text{the order of $a$.} \\
+		f(A)               & \hspace*{50pt} \text{the image of the homomorphism $f$ over the group $A$.} \\
+		H \triangleleft G  & \hspace*{50pt} \text{$H$ is a normal subgroup of $G$.} \\
+		aH,Ha              & \hspace*{50pt} \text{the left coset, and right coset of $H$ with coset representative $a$.} \\
+	\end{align*}
+
+	Matrices will be capital bold letters, e.g., $\mathbf{X}, \mathbf{Y} \in GL(V)$, vectors will be lowercase bold letters, e.g., $\mathbf{u}, \mathbf{v} \in V$.
+	% section frequently_used_notation (end)
+	\newpage
+
+	\chapter*{Preface}
+	\label{sec:preface}
+	Having utilized Chapters 4-7 from \textit{Essentials of Modern Algebra}, First Edition, by Cheryl Chute Miller in a course on Ring Theory (Math 391), I would like to gain an understanding of the Group Theory covered by Chapters 1-3.
+	Additionally, I have decided to include some Group Theory material from \textit{Abstract Algebra}, Third Edition, by David Dummitt \& Richard Foote -- the textbook used in Math 444.
+	Sections including material from the Math 444 textbook are preceded by a $\star$.
+	% chapter preface (end)
+
+	\mainmatter
+
+	\chapter{Groups}
+	\label{sec:groups}
+		\section{Introduction to Groups}
+		\label{sec:introduction_to_groups}
+			\subsection*{Problem 1.17}
+			\label{sub:problem_1_17}
+			Write out the Cayley table for the group $(\Z_{6}, +_{6})$ and identify the inverse of each element.
+			\begin{proof}[Solution] Figure \ref{117CT} is the Cayley table, observe that for $a \in \Z_{6}$ the inverse under addition modulo 6 is $a^{-1} = 6 - a$.
+			\end{proof}
+			% subsubsection problem_1_17 (end)
+
+			\subsection*{Problem 1.18}
+			\label{sub:problem_1_18}
+			Find the 10 elements of the group $\Z_{5} \times \Z_{2}$, and write out the Cayley table. 
+			Recall that its operation uses $+_{5}$ in the first coordinate and $+_{2}$ in the second. 
+			Identify the inverse of each element.
+			\begin{proof}[Solution] Figure \ref{118CT} is the Cayley table, observe that $\Z_{5} \times \Z_{2} = \{ (0,0), (1,0), (2,0),$ \\ 
+			$(3,0), (4,0), (0,1), (1,1), (2,1), (3,1), (4,1) \}$.
+			The identities are colored in red, thus for $(m,n) \in \Z_{5}\times\Z_{2}$ the inverses are $\left\{(m,n)^{-1} = \left( m^{-1} , n^{-1} \right) : m^{-1} = 5 - m \text{ and } \right.$\\ 
+			$ \left. n^{-1} = 2 - n\right\}$.
+			\end{proof}
+			% subsubsection problem_1_18 (end)
+
+			\subsection*{Problem 1.19}
+			\label{sub:problem_1_19}
+			What does Theorem 1.14 tell us about the entries in the Cayley table of a group?
+			\begin{proof}[Solution]
+			Theorem 1.14 states that: Suppose $G$ is a group under the operation $*$.
+			\begin{enumerate}[(i)]
+				\item There is exactly one element in $G$ that has the property of an identity.
+				\item For each element $a \in G$ there is exactly one element of $G$ that satisfies the property of the inverse of $a$.
+			\end{enumerate}
+			
+			My guess is that the identity elements $e_{G}$ are unique in their respective rows and columns of the table, like Sudoku.
+			\end{proof}
+			% subsubsection problem_1_19 (end)
+
+			\subsection*{Problem 1.20}
+			\label{sub:problem_1_20}
+			Prove that a set with exactly one element, $A = \{a\}$, will always form a group since there is only one way to define an operation on the set. 
+			Be sure to show that the properties of a group all hold.
+			\begin{proof} Let $A$ be as above.
+			Since the operation $*$ must be closed over $A$ the only operation that works is the identity, i.e., the only operation that holds over $A$ is $*:A \to A$ defined by $a \mapsto a$.
+			We must show that $(A, *)$ is a group, i.e., we will show that $*$ is associative, that there exists a unique identity element $e_{G} \in A$, and that there exists a unique inverse element $a^{-1} \in A$ for each $a \in A$.
+
+			Notice that $(a*a)*a = a * a = a$, and that $a*(a*a) = a * a = a$, thus by transitvity we have that $*$ is associative.
+			Additionally, note tha $a \in A$ satisfies the necessary and sufficient properties of both the identity $e_{G}$, and the inverse (of itself) $a^{-1} = a$.
+			Finally, notice that $*$ is obviously commutative, therefore the group formed from a set containing only one element is always an abelian group.
+			\end{proof}
+			% subsubsection problem_1_20 (end)
+
+			\subsection*{Problem 1.21}
+			\label{sub:problem_1_21}
+			We can even create groups with games! 
+			Consider four cups placed in a square pattern on a table. 
+			If we have a penny in one of the cups there are four ways we can move it to another cup: Horizontally, Vertically, Diagonally, or Stay where it is. 
+			We will label them $H, V, D, S$. 
+			To define an operation, consider two movements in a row, i.e., $x*y$ means we first move the penny as $x$ tells us to, then after that move the penny as $y$ instructs. 
+			For example, $H * V = D$ since if we first move it horizontally and then vertically altogether we have moved it diagonally. 
+			Create the Cayley table for this group, identify the identity, and the inverse of each element.
+			\begin{proof}[Solution] Call this group $(G, *)$.
+			Figure \ref{121CT} is the Cayley table, note that $S$ is the identity and that for each $a \in G$, we have the inverse $a^{-1} = a$.
+			Notice that groups with this property (that each element is its own inverse) have symmetric Cayley tables.
+			\end{proof}
+			% subsubsection problem_1_21 (end)
+
+			\subsection*{Problem 1.22}
+			\label{sub:problem_1_22}
+			Prove that the set $A = \left\{ \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}, \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}, \begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}, \right.$ \\
+			$ \left. \begin{pmatrix} -1 & 0 \\ 0 & -1 \end{pmatrix} \right\}$ is a group under matrix multiplication. 
+			Is it abelian?
+			\begin{proof} Recall that matrix multiplication is always associative, it remains to find identities and inverses.
+			Figure \ref{122CT} is the Cayley table, note that the two-by-two identity matrix contained in $A$ is the identity of $(A,\times)$, i.e., $e_{G} = \mathbf{I}_{2}$ and that each element of $A$ is its own inverse under matrix multiplication.
+			Finally, notice that Figure \ref{122CT} is symmetric, therefore $(A, \times)$ is an abelian group.
+			\end{proof}
+			% subsubsection problem_1_22 (end)
+
+			\subsection*{Problem 1.23}
+			\label{sub:problem_1_23}
+			Verify that $\func(\R)$ is a group using the addition of functions as defined in Example 1.13.
+			\begin{proof}[Solution] We will show that $(\func(\R), +)$ is a group under normal function addition.
+			We will do this by showing that $+$ is associative, and that an identity and inverses exist under $+$.
+
+			Let $f,g,h \in \func(\R)$ and compute that $f+(g+h) = f(x) + (g + h)(x) = f(x) + g(x) + h(x) = (f + g)(x) +h(x) = (f + g) + h$, thus $+$ is associative over $\func(\R)$.
+			Notice that $0(x) \in \func(\R)$ is the identity, thus for each $f \in \func(\R)$, we have $-f \in \func(\R)$ as an inverse.
+			Hence, $(\func(\R), +)$ is a group.
+			\end{proof}
+			% subsubsection problem_1_23 (end)
+		% section introduction_to_groups (end)
+
+		\section{Basic Algebra in Groups}
+		\label{sec:basic_algebra_in_groups}
+			\subsection*{Problem 1.24}
+			\label{sub:problem_1_24}
+			Prove the Cancellation Law (Theorem 1.20). 
+			Do not use any theorems that occur after it in the text. \\
+
+			\noindent\textit{Theorem}. (Cancellation Law) Suppose $G$ is a group and $a,b,c \in G$.
+			\begin{enumerate}[(i)]
+				\item If $ab = ac$ then $b = c$.
+				\item If $ba = ca$ then $b = c$.
+			\end{enumerate}
+			
+			\begin{proof} Let $G, a,b,c$ be as above.
+			Recall that since $G$ is a group, there exists a unique inverse $a^{-1} \in G$ such that $aa^{-1} = e_{G} = a^{-1}a$.
+			Suppose $ab = ac$, we compute the following:
+				\begin{align*}
+				ab &= ac, \\
+				a^{-1}ab &= a^{-1}ac, \\
+				e_{G}b &= e_{G}c, \\
+				b &= c.
+				\end{align*}
+			Thus $ab = ac$ implies that $b=c$ as desired.
+			A similar argument shows the second part of the theorem.
+				\begin{align*}
+				ba &= ca, \\
+				baa^{-1} &= caa^{-1}, \\
+				be_{G} &= ce_{G}, \\
+				b &=  c.
+				\end{align*}
+			Thus $ba = ca$ implies that $b=c$, and the theorem is proved.
+			\end{proof}
+			% subsubsection problem_1_24 (end)
+
+			\subsection*{Problem 1.25}
+			\label{sub:problem_1_25}
+			Assume $G$ is a group and $a \in G$. 
+			Consider a fixed integer $k$ and use PMI (Theorem 0.3) to prove that for all $n \in \N, a^{n}a^{k} = a^{n+k}$. 
+			You will need to consider cases here since $k$ can be positive, negative, or 0.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_1_25 (end)
+
+			\subsection*{Problem 1.26}
+			\label{sub:problem_1_26}
+			Prove Theorem 1.23 (ii) for the case of $n > 0$ and $m < 0$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_1_26 (end)
+
+			\subsection*{Problem 1.27}
+			\label{sub:problem_1_27}
+			Assume $G$ is a group and $a \in G$. 
+			Prove by PMI (Theorem 0.3) that for $n \in \N, \left(a^{n}\right)^{-1} = a^{-n}$.
+			\begin{proof} Let $a,G$ be as above.
+			Notice that for $n=1$ we have $(a^{1})^{-1} = a^{-1}$.
+			Assume that for some natural number $n$ we have $(a^{n})^{-1} = a^{-n}$.
+			We compute the following,
+				\begin{align*}
+					\left( a^{n+1} \right)^{-1} &= \left( a^{n} a \right)^{-1}, \\
+					&= (a^{n})^{-1} a^{-1}, \\
+					&= a^{-n} a^{-1}, \\
+					&= a^{-n-1}, \\
+					&= a^{-(n+1)}.
+				\end{align*}
+			Thus, for the given proposition $P$ we have shown that $P(n) \Rightarrow P(n+1)$.			
+			\end{proof}
+			% subsubsection problem_1_27 (end)
+
+			\subsection*{Problem 1.28}
+			\label{sub:problem_1_28}
+			Suppose $G$ is a group with $a, b \in G$. 
+			Prove: If $a^{3} = b$, then $b = aba^{-1}$.
+			\begin{proof} Let $G,a,b$ be as above and suppose that $a^{3} = b$, we compute the following,
+				\begin{align*}
+					a^{3} &= b, \\
+					a(aaa)a^{-1} &= aba^{-1}, \\
+					(aaa)\left(aa^{-1}\right) &= aba^{-1}, \\
+					a^{3}e_{G} &= aba^{-1}, \\
+					b &= aba^{-1}.
+				\end{align*}
+			\end{proof}
+			% subsubsection problem_1_28 (end)
+
+			\subsection*{Problem 1.29}
+			\label{sub:problem_1_29}
+			Suppose $G$ is a group and $a, b \in G$. 
+			Prove by PMI for all $n \in \N, (aba^{-1})^{n} = ab^{n}a^{-1}$.
+			Do not assume $G$ is abelian.
+			\begin{proof} Let $G,a,b,n$ be as above.
+			We proceed by mathematical induction over the natural numbers $n \in \N$.
+			Notice the base case $n = 1$ holds since $$\left(aba^{-1}\right)^{1} = ab^{1}a^{-1}.$$
+			Thus, assume that for some $n \in \N$ the following is true $$(aba^{-1})^{n} = ab^{n}a^{-1}.$$
+			We compute the following,
+				\begin{align*}
+					\left(aba^{-1}\right)^{n+1} &= \left(aba^{-1}\right)\left(aba^{-1}\right)^{n} = \left(aba^{-1}\right)^{n}\left(aba^{-1}\right),\\
+					&= \left(aba^{-1}\right) ab^{n}a^{-1} = ab^{n}a^{-1}\left(aba^{-1}\right), \\
+					&= ab\left(a^{-1}a\right)b^{n}a^{-1} = ab^{n}\left(a^{-1}a\right)ba^{-1}, \\
+					&= ab(e_{G})b^{n}a^{-1} = ab(e_{G})b^{n}a^{-1}, \\
+					&= abb^{n}a^{-1}, \\
+					&= ab^{n+1}a^{-1}.
+				\end{align*}
+			Hence, for the given proposition $P$, we have shown that $P(n) \Rightarrow P(n+1)$.			
+			\end{proof}
+			% subsubsection problem_1_29 (end)
+
+			\subsection*{Problem 1.30}
+			\label{sub:problem_1_30}
+			Suppose $G$ is a group and $a, b \in G$. 
+			Prove: If $n \in \N$ and $\ord(b) = n$, then $\ord(aba^{-1}) = n$.
+			Use the result of the previous exercise to help.
+			\begin{proof} Let $G,a,b$ be as above, suppose $n \in \N$ and $\ord(a) = n$.
+			Recall that for all $n \in \N$ we have $(aba^{-1})^{n} = ab^{n}a^{-1}$, we compute that
+				\begin{align*}
+					(aba^{-1})^{n} &= ab^{n}a^{-1}, \\
+					&= a e_{G} a^{-1}, \\
+					&= aa^{-1}, \\
+					&= e_{G}.
+				\end{align*}
+			Thus, $\ord(b) = n$ implies that $\ord(aba^{-1}) = n$.
+			\end{proof}
+			% subsubsection problem_1_30 (end)
+
+			\subsection*{Problem 1.31}
+			\label{sub:problem_1_31}
+			Find the order of each element in the group $(\Z_{12}, +_{12})$.
+			\begin{proof}[Solution] We compute the following,\\
+
+				\begin{tabular}{cc|cc|cc}
+				$n$ & $\ord(n)$ & $n$ & $\ord(n)$ & $n$ & $\ord(n)$ \\
+				\hline
+				\hline
+				0 & 0  & 4 & 2  & 8  & 2 \\
+				1 & 11 & 5 & 11 & 9  & 3 \\
+				2 & 5  & 6 & 1  & 10 & 5 \\
+				3 & 3  & 7 & 11 & 11 & 11
+				\end{tabular}
+			\end{proof}
+			% subsubsection problem_1_31 (end)
+
+			\subsection*{Problem 1.32}
+			\label{sub:problem_1_32}
+			Find the order of each element in the group $(\Z_{7} +_{7})$.
+			\begin{proof}[Solution] We compute that for each $a \in \Z_{7}/\{0\}$ we have $\ord(a) = 6$ and $\ord(0)=0$.
+			\end{proof}
+			% subsubsection problem_1_4_32 (end)
+
+			\subsection*{Problem 1.33}
+			\label{sub:problem_1_4_33}
+			Find the order of each element in the group $A = \left\{ \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}, \right.$ \\
+			$\left. \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}, \begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}, \begin{pmatrix} -1 & 0 \\ 0 & -1 \end{pmatrix} \right\}$ under matrix multiplication.
+			\begin{proof}[Solution] Note that $e_{A} = \mathbf{I}_{2}$, we compute that $\ord(e_{A}) = 0$, and that for each other $a \in A$ we have $\ord(a) = 1$.
+			\end{proof}
+			% subsubsection problem_1_33 (end)
+
+			\subsection*{Problem 1.34}
+			\label{sub:problem_1_34}
+			Find the order of each element in the group $G = \{Horizontally, $ \\
+			$Vertically, Diagonally, Stay\}$ from exercise 21 above (use the operation defined in that exercise).
+			\begin{proof}[Solution] Recall that $e_{G} = S$, we compute that $\ord(e_{A}) = 0$, and that for each other $a \in A$ we have $\ord(a) = 1$.
+			\end{proof}
+			% subsubsection problem_1_34 (end)
+
+			\subsection*{Problem 1.35}
+			\label{sub:problem_1_35}
+			Complete the proof of Theorem 1.26.\\
+
+			\noindent\textit{Theorem}. Suppose $G$ is a group and $a \in G$ with $\ord(a) = n$ for some $n \in \N$.
+			For any $t \in \Z$, $a^{t} = e_{G}$ if and only if $n$ divides $t$, i.e., $t = nq$ for some unique integer $q$.
+			\begin{proof} $\Rightarrow)$ was done in the book.
+
+			$\Leftarrow)$ Let $G,a,n$ be as above.
+			Let $t \in \Z$ such that $n|t$.
+			We will show that $a^{t} = e_{G}$ for all $t$ such that $n|t$.
+				\begin{align*}
+					a^{t} &= a^{nq}, \\
+					&= \left( a^{n} \right)^{q}, \\
+					&= e_{G}^{n}, \\
+					&= e_{G}.
+				\end{align*}
+			\end{proof}
+			% subsubsection problem_1_35 (end)
+
+			\subsection*{Problem 1.36}
+			\label{sub:problem_1_36}
+			Suppose $G$ is a group and $a \in G$. 
+			Prove: if $\ord(a) = 6$ then $\ord(a^{5}) = 6$. 
+			Do any other elements $a^{2}, a^{3}, a^{4}$ have have order 6? 
+			Explain.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_1_36 (end)
+
+			\subsection*{Problem 1.37}
+			\label{sub:problem_1_37}
+			Suppose $G$ is a group and $a \in G$. 
+			Assume $a^{50} = e_{G}$ but $a^{75} \neq e_{G}$ and $a^{10} \neq e_{G}$. 
+			Find the order of $a$, and prove that your answer is correct.
+			\begin{proof}[Solution] Let $G,a$ be as above.
+			We claim that $\ord(a) = 50$, but suppose that there exists a different $m \in \Z$ such that $m \leq 50$ and $a^{m} = e_{G}$.
+			We will show that $m$ must be 50.
+
+			We know by a theorem that if there exist $t \in \Z$ such that $a^{t} = e_{G}$, and $\ord(a) = n$, then $n|t$.
+			Thus, since $a^{50} = e_{G}$ we know that $m|50$; therefore we can claim that $m \in \{ 1,2,5,10,25,50 \}$.
+			We also know that $a^{75} \neq e_{G}$, thus the divisors of 75 cannot be candidates for $m$, thus we can narrow down the set of possible $m$ to $\{ 2,10,50 \}$.
+			Finally, we know that $a^{10} \neq e_{G}$, by the above argument we know that $m$ can neither be 2 nor 10, thus $m = 50$ and $\ord(a) = 50$ as we aimed to show.
+			\end{proof}
+			% subsubsection problem_1_37 (end)
+
+			\subsection*{Problem 1.38}
+			\label{sub:problem_1_38}
+			Suppose $G$ is a group and $a \in G$ with $a \neq e_{G}$.
+			\textbf{Prove}: If $a^{p}=e_{G}$ for some prime number $p$, then $\ord(a) = p$.
+			\begin{proof}
+			Let $G,a$ be as above.
+			Suppose $a^{p} = e_{G}$ for some prime number $p$.
+			Further, suppose that there exists $n \in \Z$, $n \leq p$ such that $a^{n} = e_{G}$; we will show that $n = p$.
+
+			Since $a^{p} = e_{G}$, $a^{n} = e_{G}$, and $n \leq p$ we know that $n|p$.
+			But since $p$ is prime, that means that $n=1$, or $n = p$.
+			\begin{enumerate}
+				\item[\textbf{Case 1}:] Let $n = p$, we're done.
+				\item[\textbf{Case 2}:] Let $n = 1$, so we have $a^{1} = e_{G}$, but we assumed $a \neq a_{G}$, so this case fails.
+			\end{enumerate}
+			Thus, $\ord(a) = p$.		
+			\end{proof}
+			% subsubsection problem_1_38 (end)
+
+			\subsection*{Problem 1.39}
+			\label{sub:problem_1_39}
+			Suppose $G$ is a group and $a \in G$. 
+			Prove: If $\ord(a)$ is an even integer then for any odd $k \in \Z$, $a^{k} \neq e_{G}$. 
+			Would the statement still be true if the words even and odd changed places, i.e., if $\ord(a)$ is odd then for any even $k \in \Z, a^{k} \neq e_{G}$? 
+			Give a brief justification of your answer.
+			\begin{proof}
+			Let $a,G$ be as above.
+			Suppose that $\ord(a) = 2n$ for some $n \in \Z$, and $k \in \Z$ such that $k = 2m+1$ for some $m \in \Z$.
+			Then we can compute $a^{2n} = e_{G} \iff a^{2n+1} = a$.
+			Thus if $a$ has even order, $a$ raised to an odd power can never equal the identity.
+			A similar argument shows the same for $a$ with odd order and even powers.
+			\end{proof}
+			% subsubsection problem_1_39 (end)
+		% section basic_algebra_in_groups (end)
+
+		\section{Subgroups}
+		\label{sec:subgroups}
+			\subsection*{Problem 1.40}
+			\label{sub:problem_1_40}
+			Prove or disprove that $H = \{ 0,3, 6, 9 \}$ is a subgroup of $(\Z_{12}, +_{12})$.
+			\begin{proof} Its obvious that $H$ is nonempty, observe Figure \ref{140CT} to see that $H$ is closed under $+_{12}$, has an identity, and each element of $H$ has an inverse under $+_{12}$, thus $H$ is a subgroup of $(\Z_{12}, +_{12})$.
+			\end{proof}
+			% subsubsection problem_1_40 (end)
+
+			\subsection*{Problem 1.41}
+			\label{sub:problem_1_41}
+			Prove or disprove that $H = \{ 0,3, 6, 9 \}$ is a subgroup of $(\Z_{10}, +_{10})$.
+			\begin{proof} Notice that $3 +_{10} 9 = 2$ and $2 \notin H$ thus $H$ is not closed under $+_{10}$ and not a subgroup of $\Z_{10}$
+			\end{proof}
+			% subsubsection problem_1_41 (end)
+
+			\subsection*{Problem 1.42}
+			\label{sub:problem_1_42}
+			Prove that $H = \{ 0,2, 4, 8, 16 \}$ is a subgroup of $(\Z_{18}, +_{18})$.
+			\begin{proof} Observe rows 3,4 and columns 3,4 from Figure \ref{142CT} indicate that there does not exist $8^{-1} \in H$ under $+_{18}$, thus $H$ is not a subgroup of $\Z_{18}$.
+			\end{proof}
+			% subsubsection problem_1_42 (end)
+
+			\subsection*{Problem 1.43}
+			\label{sub:problem_1_43}
+			Prove or disprove that $H = \{(0, 0), (0, 2), (1, 0), (1,2) \}$ is a subgroup of $\Z_{2} \times \Z_{4}$ under the operation using $+_{2}$ in the first coordinate and $+_{4}$ in the second coordinate.
+			\begin{proof} As in Problem 1.40 it is obvious to see that $H$ is nonempty, observe Figure \ref{143CT} to see that $H$ has all of the properties of a subgroup of $\Z_{2} \times \Z_{4}$ under the operation using $+_{2}$ in the first coordinate and $+_{4}$ in the second coordinate.
+			\end{proof}
+			% subsubsection problem_1_43 (end)
+
+			\subsection*{Problem 1.44}
+			\label{sub:problem_1_44}
+			Prove or disprove that $H = \{ 0,2, 4, 6 \}$ is a subgroup of $(\Z_{7} +_{7})$.
+			\begin{proof} Notice that $2 +_{7} 6 = 1$ and that $1 \notin H$, thus $H$ is not closed under $+_{7}$ and not a subgroup of $\Z_{7}$.
+			\end{proof}
+			% subsubsection problem_1_44 (end)
+
+			\subsection*{Problem 1.45}
+			\label{sub:problem_1_45}
+			Determine if the set $G = \{ \frac{n}{3} : n \in \Z \}$ is a subgroup of $(\Q,+)$. 
+			Either prove that it is or give a specific example of how it fails.
+			\begin{proof} It is obvious to see that $G$ is nonempty, it remains to show that $G$ is closed under addition, has an inverse, and that each element of $G$ has an inverse under addition.
+
+			Since integer addition is closed, we know that $G$ is closed under addition.
+			As before, since integer addition has an identity and inverse, we know that $G$ has the same properties, thus $G$ satisfies all of the necessary and sufficient conditions required of a subgroup.
+			\end{proof}
+			% subsubsection problem_1_45 (end)
+
+			\subsection*{Problem 1.46}
+			\label{sub:problem_1_46}
+			Determine if the set $\left\{ \frac{1}{n} : n \in \Z, n \neq 0 \right\}$ is a subgroup of $(\Q^{*},\cdot)$ (nonzero rational numbers). 
+			Either prove that it is or give a specific example of how it fails.
+			\begin{proof} Notice that there do not exist inverses under $\cdot$ in $G$ since the numerator is fixed and $n \in \Z/\{0\}$, thus $G$ is not a subgroup of $(\Q^{*},\cdot)$.
+			\end{proof}
+			% subsubsection problem_1_46 (end)
+
+			\subsection*{Problem 1.47}
+			\label{sub:problem_1_47}
+			Determine if $K = \{ 3n : n \in \Z \}$ is a subgroup of $(\Z,+)$. 
+			Either prove that it is or give a specific example of how it fails.
+			\begin{proof} Notice that $K$ is nonempty, we will now show that $K$ is closed under addition, and contains inverses under addition.
+
+			Let $a,b \in K$, then 
+				\begin{align*}
+					a+b &= 3n + 3m, \\
+					&= 3(n + m), \\
+					&= 3\ell \ \ \ \text{for some integer $\ell = n+m$.}
+				\end{align*}
+			Thus $K$ is closed under addition.
+			Since $-n \in \Z$ we have $a^{-1} = 3(-n) \in K$, so for each $a \in K$ there exists a unique $a^{-1} \in K$.
+			Hence, $K$ is a subgroup.	
+			\end{proof}
+			% subsubsection problem_1_47 (end)
+
+			\subsection*{Problem 1.48}
+			\label{sub:problem_1_48}
+			Determine if $K = \{ 3 + n : n \in \Z \}$ is a subgroup of $(\Z, +)$.
+			Either prove that it is or give a specific example of how it fails.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_1_48 (end)
+
+			\subsection*{Problem 1.49}
+			\label{sub:problem_1_49}
+			Consider the set $H = \left\{ \begin{pmatrix} a & b \\ -b & -a \end{pmatrix} : a,b \in \R \right\}$.
+			Determine if $H$ is a subgroup of $M_{2}(\R)$ under usual addition of matrices.
+			\begin{proof} Let $H$ be as above, notice that $H \neq \emptyset$ is obvious.
+			We will show that $H$ is closed under matrix addition.
+			Let $\mathbf{X},\mathbf{Y} \in H$, then
+				\begin{align*}
+					\mathbf{X} + \mathbf{Y} &= \begin{pmatrix} a & b \\ -b & -a \end{pmatrix} + \begin{pmatrix} c & d \\ -d & -c \end{pmatrix}, \\
+					&= \begin{pmatrix} a+c & b+d \\ -(b+d) & -(a+c) \end{pmatrix}.
+				\end{align*}
+			Since $\R$ is closed under addition we know that $\mathbf{X}+\mathbf{Y} \in H$, thus $H$ is closed under matrix addition.
+			It remains to show that $H$ has inverses for each of its elements.
+			Notice that for $\mathbf{X} \in H$ we have $\mathbf{X}^{-1} = \begin{pmatrix} -a & -b \\ b & a \end{pmatrix}$ such that $a \neq b$.
+			Hence, $H$ is a subgroup of $M_{2}(\R)$.
+			\end{proof}
+			% subsubsection problem_1_49 (end)
+
+			\subsection*{Problem 1.50}
+			\label{sub:problem_1_50}
+			Determine if the set $K = \{ x^{2} : x \in \R \}$ is a subgroup of $(\R, +)$. 
+			(Note that $x^{2}$ means usual multiplication.)
+			\begin{proof}
+			Notice that $x^{2} + y^{2} \neq (x + y)^{2}$ therefore $K$ is not closed under addition and not a subgroup.
+			\end{proof}
+			% subsubsection problem_1_50 (end)
+
+			\subsection*{Problem 1.51}
+			\label{sub:problem_1_51}
+			Determine if the set $K = \{ x^{2} : x \in \R^{+} \}$ is a subgroup of $(\R^{+},\cdot)$. 
+			(Note that $x^{2}$ means usual multiplication, and $\R^{+}$ is the set of positive real numbers.)
+			\begin{proof} Let $K$ be as above, notice that $K \neq \emptyset$ is obvious.
+			We will show that $K$ is closed under $\cdot$ and has inverses for each of its elements under $\cdot$.
+			Let $a,b \in K$, then there exist $x,y \in \R$ such that $a = x^{2}, b = y^{2}$.
+			So we have $$ab = x^{2}y^{2} = (xy)^{2}$$ and since $xy \in \R$ we have that $K$ is closed.
+			It remains to show that $K$ has inverses for each of its elements under $\cdot$.
+			Notice that $a^{-1} = x^{-2} = 1/x^{2}$ and that $1/x^{2} \in \R^{+}$.
+			Hence, $K$ is a subgroup of $(\R^{+},\cdot)$.
+			\end{proof}
+			% subsubsection problem_1_51 (end)
+
+			\subsection*{Problem 1.52}
+			\label{sub:problem_1_52}
+			Let $G$ be a group, and define the set $H = \{ a \in G : a^{2} = e_{G} \}$. 
+			Prove: If $G$ is abelian then $H$ is a subgroup of $G$. 
+			Where does your proof break down if we do not know $G$ is abelian?
+			\begin{proof} Let $G,H$ be as above and suppose $G$ is an abelian group.
+			Consider $a \in G$, since $G$ is abelian we know that $a^{2} \in G$ so $H$ is nonempty.
+			We will now show that $H$ is closed under $*$.
+			Let $\alpha,\beta \in H$, then for $a,b \in G$ we have $\alpha = a^{2}, \beta = b^{2}$, thus,
+				\begin{align*}
+					\alpha * \beta &= a^{2} * b^{2}, \\
+					&= a(ab)b, \\
+					&= a(ba)b, \ \ \ \ \text{this is where we need that $G$ is abelian;} \\
+					&= (ab)^{2}.
+				\end{align*}
+			Thus, $\alpha\beta \in H$, it remains to show that for each $\alpha \in H$ we have $\alpha^{-1} \in H$ such that $\alpha \alpha^{-1} = e_{H}$.
+			We can see that $\alpha^{-1} = a^{-2}$ fairly easily.
+			Thus, we have shown that the subset of squares of a group is a subgroup.
+			\end{proof}
+			% subsubsection problem_1_52 (end)
+
+			\subsection*{Problem 1.53}
+			\label{sub:problem_1_53}
+			Prove Theorem 1.33.
+
+			\noindent{\textit{Lemma}:} Let $G$ be a group, the identity of $G$ is also the identity for $H$, any subgroup of $G$ i.e., $e_{G} = e_{H}$.
+			\begin{proof}
+			\end{proof}		
+			\noindent{\textit{Corollary}:} Any pair of subgroups of $G$ are not disjoint because they have their shared identity element in common.\\
+
+			\noindent{\textit{Theorem}.} Let $G$ be a group. 
+			If $H_{1}$ and $H_{1}$ are both subgroups of $G$ then $H_{1} \cap H_{2}$ is also a subgroup of $G$.
+			\begin{proof} Let $G,H_{1},H_{2}$ be as above.
+			We must show that $H_{1} \cap H_{2}$ is nonempty, closed under $*$ and has an inverse for each of its elements under $*$, where $*$ is from $(G,*)$.
+			Since $H_{i}$ are subgroups they're nonempty, but we must show that their intersection is also nonempty, i.e., we must show that any pair of subgroups of $G$ are not disjoint, which we did in the Lemma.
+			Thus, since $H_{1},H_{2}$ are not disjoint, $H_{1} \cap H_{2}$ is nonempty; it remains to show that $H_{1} \cap H_{2}$ is closed under $*$ and has inverses for each of its elements under $*$.
+
+			Let $a,b \in H_{1} \cap H_{2}$, thus $a,b \in H_{1},H_{2},G$ as well.
+			Notice that $ab \in H_{1},H_{2}$ as well since $H_{1},H_{2}$ are subgroups of $G$, hence $ab \in H_{1} \cap H_{2}$ and thus $H_{1} \cap H_{2}$ is closed under $*$.
+
+			Since $G,H_{1},H_{2}$ are groups, for each $a$ in these groups we have $a^{-1}$, thus $a_{-1} \in H_{1} \cap H_{2}$.
+			Hence, $H_{1} \cap H_{2}$ is a subgroup of $G$.
+			\end{proof}
+			% subsubsection problem_1_53 (end)
+		% section subgroups (end)
+
+		\section{Homomorphisms}
+		\label{sec:homomorphisms}
+			\subsection*{Problem 1.54}
+			\label{sub:problem_1_54}
+			Determine if the function $f : \Z_{8} \to \Z_{4}$ defined by $f(x) = 2x \mod{4}$ is a homomorphism between groups $(\Z_{8}, +_{8})$ and $(\Z_{4}, +_{4})$ In this definition $2x$ means usual integer multiplication.
+			\begin{proof} Recall that since $\Z_{8}$ and $\Z_{4}$ are groups, they are closed.
+			Notice from Figure \ref{154f1} that the only ouputs of $f$ over $\Z_{8}$ are 0 and 2.
+			Additionally, observe from Figure \ref{154CT} that the only outputs of $+_{4}$ given inputs 0 and 2 are again 0 and 2, thus $f$ is a homomorphism.
+			Thus, for each $a,b \in \Z_{8}$ we have $f(a)f(b)=f(ab)$.
+			\end{proof}
+			% subsubsection problem_1_54 (end)
+
+			\subsection*{Problem 1.55}
+			\label{sub:problem_1_55}
+			Prove that for any $n \in \N$ with $n > 1$, the function $f:\Z \to \Z_{n}$ defined by $f(x) = x \mod{n}$ is a homomorphism between groups $(\Z,+)$ and $(\Z_{n},+_{n})$.
+			\begin{proof} Let $a,b \in \Z$.
+			Observe that $f(a) = a \mod{n}$ and $f(b) = b \mod{n}$, thus their sum is $f(a)+f(b) = a + b \mod{n}$.
+			Also, we have $f(a + b) = a + b \mod{n}$, so $f(a+b) = f(a) + f(b)$ as desired.
+			\end{proof}
+			% subsubsection problem_1_55(end)
+
+			\subsection*{Problem 1.56}
+			\label{sub:problem_1_56}
+			Prove that the function $f: \Z \to \Z$ defined by $f(x) = 4x$ is a homomorphism of $(\Z, +)$. 
+			(Note that $4x$ means usual integer multiplication.)
+			\begin{proof} Let $a,b \in \Z$ and $f$ be as above.
+			Then $f(a) = 4a$, $f(b) = 4b$, and $f(a+b) = 4(a+b)$.
+			Additionally, we have $f(a)+f(b) = 4(a+b)$.
+			Hence, $f$ is a homomorphism.
+			\end{proof}
+			% subsubsection problem_1_56 (end)
+
+			\subsection*{Problem 1.57}
+			\label{sub:problem_1_57}
+			Determine if the function $g : \R \to \R$ defined by $g(x) = x^{2} + 1$ is a homomorphism of$(\R, +)$.
+			\begin{proof} Let $g$ be as above, suppose $a,b \in \R$, then $g(a+b) = (a+b)^{2} + 1 = a^{2} + 2ab + b^{2} + 1$.
+			Additionally, we have $g(a) + g(b) = a^{2} + b^{2} + 2$.
+			Notice that $g(a) + g(b) \neq g(a+b)$, hence $g$ is \underline{not} a homomorphism.
+			\end{proof}
+			% subsubsection problem_1_57 (end)
+
+			\subsection*{Problem 1.58}
+			\label{sub:problem_1_58}
+			Determine if the function $h : \Z \to \Z$ defined by $h(x) = x^{3}$ is a homomorphism of $(\Z, +)$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_1_58 (end)
+
+			\subsection*{Problem 1.59}
+			\label{sub:problem_1_59}
+			Determine if the function $g : \R^{+} \to \R^{+}$ defined by $g(x) = 1/x$ is a homomorphism of $(\R^{+},\cdot)$. 
+			Recall that $\R^{+}$ is the set of positive real numbers.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_1_59 (end)
+
+			\subsection*{Problem 1.60}
+			\label{sub:problem_1_60}
+			Determine if the function $f : M_{2}(\R) \to \R$ defined by $f\left( \begin{bmatrix} a & b \\ c & d \end{bmatrix} \right) = a + b$ is a homomorphism. 
+			Recall that both $M_{2}(\R)$ and $\R$ use an operation of addition.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_1_60 (end)
+
+			\subsection*{Problem 1.61}
+			\label{sub:problem_1_61}
+			Use PMI to prove (iii) of Theorem 1.37.\\
+
+			\noindent{\textit{Theorem}.} Let $G$ and $K$ be groups and suppose $f: G \to K$ is a homomorphism. 
+			Then the following must hold:
+			\begin{enumerate}[(i)]
+				\item $f(e_{G}) = e_{K}$
+				\item $f\left( a^{-1} \right) = \left( f(a) \right)^{-1}$ for each $a \in G$.
+				\item For every $n \in \Z$ and $a \in G$, $\left( f(a) \right)^{n} = f\left( a^{n} \right)$.
+				\item For every $a \in G$, if $a$ has finite order then $\ord(f(a))$ evenly divides $\ord(a)$.
+			\end{enumerate}
+			
+			\begin{proof} Let $G,K,a,n,f$ be as above.
+			Notice that for $n=1$ we have $f(a)^{1} = f(a^{1})$.
+			Assume that for some $n \in \N$ that $\left( f(a) \right)^{n} = f\left( a^{n} \right)$.
+			We compute that,
+				\begin{align*}
+					\left( f(a) \right)^{n+1} &= \left( f(a) \right)^{n}f(a), \\
+					&= f\left(a^{n}\right)f\left(a\right), \\
+					&= f\left(a^{n}a\right), \\
+					&= f\left(a^{n+1}\right).
+				\end{align*}
+			Thus we have shown that for the given proposition $P$, that $P(n) \Rightarrow P(n+1)$.			
+			\end{proof}
+			% subsubsection problem_1_61 (end)
+
+			\subsection*{Problem 1.62}
+			\label{sub:problem_1_62}
+			Prove (iv) of Theorem 1.37.
+			\begin{proof} Let $G,a,f$ be as in the previous problem.
+			Since $a$ has finite order, there exists an $n \in \N$ such that $a^{n} = e_{G}$, and $n$ is the least integer with this property.
+			Consider $f(a^{n}) = f(e_{G}) = e_{K}$.
+			From the previous problem we also know that $\left( f(a) \right)^{n} = f\left( a^{n} \right)$, thus $\left( f(a) \right)^{n} = e_{K}$, therefore $n$ is either the order of $f(a)$, or the order of $f(a) = m$ such that $m|n$.
+			Thus, $\ord(f(a))|\ord(a)$.
+			\end{proof}
+			% subsubsection problem_1_62 (end)
+
+			\subsection*{Problem 1.63}
+			\label{sub:problem_1_63}
+			Prove (i) of Theorem 1.40.\\
+
+			\noindent{\textit{Theorem}.} Suppose $G$ and $K$ are groups and $f : G \to K$ is an isomorphism.
+			\begin{enumerate}[(i)]
+				\item $G$ is abelian if and only if $K$ is abelian.
+				\item For every $a \in G$, if $a$ has finite order then $\ord(a) = \ord(f(a))$.
+			\end{enumerate}
+			
+			\begin{proof} Let $G,K,f$ be as above.
+			$\Rightarrow)$ Suppose $G$ is Abelian, we'll show $K$ is Abelian as well, i.e., that for $a,b \in G$ and the values to which they are mapped $f(a),f(b) \in K$ we have $f(a)f(b) = f(b)f(a)$.
+			Since $G$ is Abelian we know that for $a,b \in G$ we have $ab = ba$, and since $f$ is an isomorphism we have $$f(a)f(b) = f(ab) = f(ba) = f(b)f(a),$$ as we aimed to do.
+
+			$\Leftarrow)$ Suppose $K$ is Abelian, we'll show that $G$ is Abelian as well.
+			Since $K$ is Abelian we know that for $f(a),f(b) \in K,$ we have $f(a)f(b) = f(b)f(a)$.
+			Recall that since $f$ is an isomorphism there exists a unique $f^{-1}$ such that $f^{-1}\left( f(ab) \right) = ab$, thus $$f(a)f(b) = f(ab) = f^{-1}\left( f(ab) \right) = ab = ba = f^{-1}\left( f(ba) \right) = f(ba) = f(b)f(a).$$
+			Hence, since $K$ is Abelian and $f$ is an isomorphism, $G$ is also Abelian, as we aimed to show.
+			\end{proof}
+			% subsubsection problem_1_63 (end)
+
+			\subsection*{Problem 1.64}
+			\label{sub:problem_1_64}
+			Prove (ii) of Theorem 1.40.
+			\begin{proof} Let $G,K,f$ be as in the previous problem.
+			Suppose $a \in G$ has finite order, $n = \ord(a)$.
+			Then,
+			\begin{align*}
+				a^{n} &= e_{G}, \\
+				f(a^{n}) &= f(e_{G}), \\
+				\left( f(a) \right)^{n} &= e_{K}.
+			\end{align*}
+			Thus, $\ord(a) = \ord\left( f(a) \right)$ as we aimed to show.
+			
+			\end{proof}
+			% subsubsection problem_1_64 (end)
+
+			\subsection*{Problem 1.65}
+			\label{sub:problem_1_65}
+			Suppose $G$ and $K$ are groups and $f : G \to K$ is a homomorphism. 
+			Define the set $f(G) = \{ y \in K : \text{there is some $a \in G$ with $f(a) = y$} \}$.
+			Prove that if $f(G)$ is a subgroup of $K$.
+			\begin{proof} We proceed directly.
+			Notice that $f(G)$ is the empty set if and only if $G$ is the trivial ring, thus for nontrivial $G$, $f(G)$ is nonempty.
+			Let $x,y \in f(G)$, then there exist $a,b \in G$ such that $f(a) = x, f(b) = y$.
+			We compute the following
+				\begin{align*}
+				x \star y &= f(a) \star f(b), \\
+				&= f(a \star b), \\
+				&= f(c), \ \ \ \text{for $c = a \star b, c \in G$.}
+				\end{align*}
+			Since $c \in G$ we know they $f(c) \in f(G)$, thus $f(G)$ is closed under the operation of $(K, \star)$.
+			Since $G,K$ are groups, their elements have inverses, therefore $y^{-1} \in K$ such that $y^{-1} = f(a)$ for some $a \in G$.
+			Then $y^{-1} \in f(G)$.
+			Thus, $f(G)$ is a subgroup of $K$.
+			\end{proof}
+			% subsubsection problem_1_65 (end)
+
+			\subsection*{Problem 1.66}
+			\label{sub:problem_1_66}
+			Suppose that $f : G \to K$ and $g : K \to H$ are homomorphisms of the groups $G$, $K$, and $H$. 
+			Prove that the function $g \circ f$ is a homomorphism from $G$ to $H$.
+			\begin{proof} Let $f,g,G,K,H$ be as above.
+			Suppose $a \in G, b = f(a) \in K, c = g(b) \in H$.
+			We compute that,
+				\begin{align*}
+				(g \circ f)(ab) &= (g \circ f)(a) \circ (g \circ f)(b), \\
+				&= g\left( f(a)f(b) \right), \\
+				&= g(f(a))g(f(b)), \\
+				&= (g \circ f)(a) \cdot (g \circ f)(b).
+				\end{align*}
+			Thus the composition of $f$ and $g$ is also a homomorphism.				
+			\end{proof}
+			% subsubsection problem_1_66 (end)
+		% section homomorphisms (end)
+
+		\section{Groups of Units}
+		\label{sec:groups_of_units}
+			\subsection*{Problem 2.1}
+			\label{sub:problem_2_1}
+			Find the elements of $(U(20), \cdot_{20})$ and show its Cayley table.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_1 (end)
+
+			\subsection*{Problem 2.2}
+			\label{sub:problem_2_2}
+			Find the elements of $(U(12), \cdot_{12})$ and show its Cayley table.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_2 (end)
+
+			\subsection*{Problem 2.3}
+			\label{sub:problem_2_3}
+			Find the elements of $(U(14), \cdot_{14})$ and show its Cayley table.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_3 (end)
+
+			\subsection*{Problem 2.5}
+			\label{sub:problem_2_5}
+			Find the elements of $(U(16), \cdot_{16})$ and show its Cayley table.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_5 (end)
+
+			\subsection*{Problem 2.8}
+			\label{sub:problem_2_8}
+			Find the elements of $(U(11), \cdot_{11})$ and show its Cayley table.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_8 (end)
+
+			\subsection*{Problem 2.11}
+			\label{sub:problem_2_11}
+			In the group $(U(21), \cdot_{21})$ find the order of each element.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_11 (end)
+
+			\subsection*{Problem 2.12}
+			\label{sub:problem_2_12}
+			In the group $(U(20), \cdot_{20})$ find the order of each element.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_12 (end)
+
+			\subsection*{Problem 2.14}
+			\label{sub:problem_2_14}
+			In the group $(U(12), \cdot_{12})$ find the order of each element.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_14 (end)
+
+			\subsection*{Problem 2.16}
+			\label{sub:problem_2_16}
+			In the group $(U(15), \cdot_{15})$ find the order of each element.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_16 (end)
+
+			\subsection*{Problem 2.17}
+			\label{sub:problem_2_17}
+			If we have positive integers $n < m$, is $U(n) \subseteq U(m)$?
+			Give a proof or counterexample.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_17 (end)
+
+			\subsection*{Problem 2.18}
+			\label{sub:problem_2_18}
+			Determine if the set $\{1,3,5,7,9\}$ is a group under the operation $\cdot_{10}$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_18 (end)
+
+			\subsection*{Problem 2.19}
+			\label{sub:problem_2_19}
+			Use Euler's function to determine the size of the set $U(p)$ for an arbitrary prime $p$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_19 (end)
+
+			\subsection*{Problem 2.20}
+			\label{sub:problem_2_20}
+			Prove or disprove: $U(p) = \Z_{p} - \{0\}$ for $p$ prime.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_20 (end)
+
+			\subsection*{Problem 2.21}
+			\label{sub:problem_2_21}
+			Suppose we have $n = p^{2}$ when $p$ is prime. 
+			Is it true that $U(n) = \Z_{n} - \{0\}$? 
+			Be sure to explain why or why not.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_21 (end)
+
+			\subsection*{Problem 2.22}
+			\label{sub:problem_2_22}
+			Using Euler's function, explain how to find the cardinality of $U(pq)$ when $p$ and $q$ are distinct primes.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_22 (end)
+
+			\subsection*{Problem 2.23}
+			\label{sub:problem_2_23}
+			Using Euler's function, what is the cardinality of $U(35)$?
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_23 (end)
+
+			\subsection*{Problem 2.24}
+			\label{sub:problem_2_24}
+			Using Euler's function, what is the cardinality of $U(50)$?
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_24 (end)
+
+			\subsection*{Problem 2.25}
+			\label{sub:problem_2_25}
+			Using Euler's function, what is the cardinality of $U(105)$?
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_25 (end)
+		% section groups_of_units (end)
+
+		\section{Cyclic Groups}
+		\label{sec:cyclic_groups}
+			\subsection*{Problem 2.26}
+			\label{sub:problem_2_26}
+			Find all of the cyclic subgroups in $(U(20), \cdot_{20})$.
+			Is $U(20)$ a cyclic group?
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_26 (end)
+
+			\subsection*{Problem 2.27}
+			\label{sub:problem_2_27}
+			Find all of the cyclic subgroups in $(U(15), \cdot_{15})$.
+			Is $U(15)$ a cyclic group?
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_27 (end)
+
+			\subsection*{Problem 2.28}
+			\label{sub:problem_2_28}
+			Find all of the cyclic subgroups in $(U(7), \cdot_{7})$.
+			Is $U(7)$ a cyclic group?
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_28 (end)
+
+			\subsection*{Problem 2.29}
+			\label{sub:problem_2_29}
+			Find all of the cyclic subgroups in $(U(12), \cdot_{12})$.
+			Is $U(12)$ a cyclic group?
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_29 (end)
+
+			\subsection*{Problem 2.30}
+			\label{sub:problem_2_30}
+			Find all of the cyclic subgroups in $(U(30), \cdot_{30})$.
+			Is $U(30)$ a cyclic group?
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_30 (end)
+
+			\subsection*{Problem 2.31}
+			\label{sub:problem_2_31}
+			Find all of the cyclic subgroups in $(U(10), \cdot_{10})$.
+			Is $U(lO)$ a cyclic group?
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_31 (end)
+
+			\subsection*{Problem 2.32}
+			\label{sub:problem_2_32}
+			Find all of the cyclic subgroups in $(U(9), \cdot_{9})$.
+			Is $U(9)$ a cyclic group?
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_32 (end)
+
+			\subsection*{Problem 2.33}
+			\label{sub:problem_2_33}
+			Let $G$ denote an arbitrary group with $a,b \in G$. 
+			Prove: If $a = b^{k}$ for some integer $k$, $and \ord(a) = \ord(b) = n$ for some $n \in \N$, then $\pid{a} = \pid{b}$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_33 (end)
+
+			\subsection*{Problem 2.34}
+			\label{sub:problem_2_34}
+			We needed \textbf{finite order} elements in the previous exercise since infinite order elements can make it fail! 
+			In the group $\Z$ under usual addition, find nonzero integers $a$ and $b$ with $a = b^{k}$ for some nonzero integer $k$, both $a$ and $b$ of infinite order, but $\pid{a} \neq \pid{b}$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_34 (end)
+
+			\subsection*{Problem 2.35}
+			\label{sub:problem_2_35}
+			Find two integers $1 \leq a \leq 5, 1 \leq b \leq 5$ for which $\pid{a} = \pid{b}$ is true in one of the groups $(U(7),\cdot_{7})$ or $(\Z_{6},+_{6})$ but is false in the other group.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_35 (end)
+
+			\subsection*{Problem 2.36}
+			\label{sub:problem_2_36}
+			Prove: If $G$ is a cyclic group then $G$ is abelian.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_36 (end)
+
+			\subsection*{Problem 2.37}
+			\label{sub:problem_2_37}
+			Let $G$ and $K$ be groups and $f : G \to K$ an isomorphism. 
+			Prove: $G$ is cyclic if and only if $K$ is cyclic.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_37 (end)
+
+			\subsection*{Problem 2.38}
+			\label{sub:problem_2_38}
+			Let $G$ and $K$ be groups and $f : G \to K$ a homomorphism. 
+			Prove or disprove: If $G$ is cyclic then $K$ is cyclic.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_38 (end)
+
+			\subsection*{Problem 2.39}
+			\label{sub:problem_2_39}
+			Let $G$ and $K$ be groups. 
+			Prove: If $G \times K$ is cyclic then both $G$ and $K$ must be cyclic.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_39 (end)
+
+			\subsection*{Problem 2.40}
+			\label{sub:problem_2_40}
+			Prove (ii) of Theorem 2.16.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_40 (end)
+
+			\subsection*{Problem 2.41}
+			\label{sub:problem_2_41}
+			Prove (i) of Theorem 2.18.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_41 (end)
+
+			\subsection*{Problem 2.42}
+			\label{sub:problem_2_42}
+			Consider the group of functions $\func{\R}$ under addition of functions. 
+			Determine the elements of the cyclic subgroup $\pid{f}$ where $f(x) = x - 1$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_42 (end)		
+		% section cyclic_groups (end)
+
+		\section{Permutation Groups}
+		\label{sec:permutation_groups}
+			\subsection*{Problem 2.43}
+			\label{sub:problem_2_43}
+			Prove: If $f:A \to B, g:B \to C$, and $h:C \to D$ are functions, then $h \circ (g \circ f) = (h \circ g) \circ f$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_43 (end)
+
+			\subsection*{Problem 2.44}
+			\label{sub:problem_2_44}
+			Let $A = \{ x \in R : x \neq 0, 1 \}$.
+			Determine if $f:A \to A$ defined by $f(x) = 1 - \frac{1}{x}$ is a permutation of $A$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_44 (end)
+
+			\subsection*{Problem 2.45}
+			\label{sub:problem_2_45}
+			Let $A = \{ x \in \R : x \neq 0,1 \}$. 
+			Determine if $f:A \to A$ defined by $f(x) = \frac{x}{x-1}$ is a permutation of $A$. 
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_45 (end)
+
+			\subsection*{Problem 2.46}
+			\label{sub:problem_2_46}
+			Determine if $f: \{ 0,1,2,3,4 \} \to \{ 0,1,2,3,4 \}$ defined by $f(x) = x^{3} \mod{5}$, where $x^{3}$ denotes usual integer multiplication, is a permutation of $\{ 0,1,2,3,4 \}$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_46 (end)
+
+			\subsection*{Problem 2.47}
+			\label{sub:problem_2_47}
+			Determine if $g: \{ 0,1,2,3,4,5 \} \to \{ 0,1,2,3,4,5 \}$ defined by $g(x) = (x+2) \mod{6}$, where $x + 2$ denotes usual integer addition, is a permutation of $\{ 0,1,2,3,4,5 \}$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_47 (end)
+
+			\subsection*{Problem 2.48}
+			\label{sub:problem_2_48}
+			Determine if $h: \{ 0,1,2,3,4,5,6 \} \to \{ 0,1,2,3,4,5,6 \}$ defined by $h(x) = x^{2} \mod{7}$, where $x^{2}$ denotes usual integer multiplication, is a permutation of $\{ 0,1,2,3,4,5,6 \}$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_48 (end)
+
+			\subsection*{Problem 2.49}
+			\label{sub:problem_2_49}
+			Write $\alpha \circ \alpha$, $\beta \circ \beta$, $\alpha \circ \beta$, and $\beta \circ \alpha$ as products of disjoint cycles for the $\alpha,\beta \in S_{7}$ defined in Example 2.33.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_49 (end)
+
+			\subsection*{Problem 2.50}
+			\label{sub:problem_2_50}
+			For the permutations $\alpha = (127)(38)(456)$ and $\beta = (23568)(147)$ in $S_{8}$, write $\alpha \circ \alpha$, $\beta \circ \beta$, $\alpha \circ \beta$, and $\beta \circ \alpha$ as products of disjoint cycles.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_50 (end)
+
+			\subsection*{Problem 2.51}
+			\label{sub:problem_2_51}
+			For the permutations $\alpha = (1254)(36)$ and $\beta = (14678)$ in $S_{8}$, write $\alpha \circ \alpha$, $\beta \circ \beta$, $\alpha \circ \beta$, and $\beta \circ \alpha$ as products of disjoint cycles.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_51 (end)
+
+			\subsection*{Problem 2.52}
+			\label{sub:problem_2_52}
+			For the permutations $\alpha = (234)(567)$ and $\beta = (2358)(147)$ in $S_{8}$, write $\alpha^{2}$, $\alpha^{-1}$, $\alpha \circ \beta$, and $\beta \circ \alpha^{-1}$ as products of disjoint cycles.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_52 (end)
+
+			\subsection*{Problem 2.53}
+			\label{sub:problem_2_53}
+			For the permutations $\alpha = (1356)$ and $\beta = (124)(35)$ in $S_{6}$, write $\alpha^{2}$, $\beta^{-1}$, $\alpha \circ \beta$, and $\beta^{-1} \circ \alpha$ as products of disjoint cycles.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_53 (end)
+
+			\subsection*{Problem 2.54}
+			\label{sub:problem_2_54}
+			For the permutations $\alpha = (15)(278)(34)$ and $\beta = (12)(368)$ in $S_{8}$, write $\alpha^{2} \circ \beta$, $\beta^{-1} \circ \alpha$, $\alpha^{-2} \circ \beta$, and $\beta^{-3}$ as products of disjoint cycles.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_54 (end)
+
+			\subsection*{Problem 2.55}
+			\label{sub:problem_2_55}
+			For the permutations $\alpha = (468)$ and $\beta = (1234)(58)$ in $S_{8}$, write $\alpha^{2} \circ \beta$, $\beta^{-1} \circ \alpha$, $\alpha^{-2} \circ \beta$, and $\beta^{-3}$ as products of disjoint cycles. 
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_55 (end)
+
+			\subsection*{Problem 2.56}
+			\label{sub:problem_2_56}
+			For the permutations $\alpha = (15)(278)(34)$ and $\beta = (12)(368)$ in $S_{8}$, write $\alpha^{3}$, $\beta \circ \alpha^{2}$, $\alpha^{-1} \circ \beta^{2}$, and $\beta \circ \alpha$ products of disjoint cycles.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_56 (end)
+
+			\subsection*{Problem 2.57}
+			\label{sub:problem_2_57}
+			Show that in $S_{k} (k < 1)$ two disjoint cycles will commute. 
+			That is, if $\alpha = (a_{1}a_{2} \cdots a_{n})$ and $\beta = (b_{1}b_{2} \cdots b_{m})$ are cycles with $\{ a_{1}, a_{2}, \dots, a_{n} \} \cap \{ b_{1}, b_{2}, \dots, b_{m} \} \neq \emptyset$, then $a \circ b = b \circ a$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_57 (end)
+
+			In exercises 58-64, write $\omega$ as a product of transpositions to determine if $\omega$ is even or odd.
+
+			\subsection*{Problem 2.58}
+			\label{sub:problem_2_58}
+			$\omega = (1234)(5678) \in S_{8}$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_58 (end)
+
+			\subsection*{Problem 2.59}
+			\label{sub:problem_2_59}
+			$\omega = (23456)(17) \in S_{8}$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_59 (end)
+
+			\subsection*{Problem 2.60}
+			\label{sub:problem_2_60}
+			$\omega = (135)(2678) \in S_{8}$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_60 (end)
+
+			\subsection*{Problem 2.61}
+			\label{sub:problem_2_61}
+			$\omega = (123)(456)(789) \in S_{9}$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_61 (end)
+
+			\subsection*{Problem 2.62}
+			\label{sub:problem_2_62}
+			$\omega = (2345678) \in S_{8}$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_62 (end)
+
+			\subsection*{Problem 2.63}
+			\label{sub:problem_2_63}
+			$\omega = (13)(2468) \in S_{8}$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_63 (end)
+
+			\subsection*{Problem 2.64}
+			\label{sub:problem_2_64}
+			$\omega = (14)(356) \in S_{7}$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_64 (end)
+
+			\subsection*{Problem 2.65}
+			\label{sub:problem_2_65}
+			Find an odd permutation of $S_{8}$ which (when written as a product of disjoint cycles) includes a cycle of length 5. 
+			What is its order?
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_65 (end)
+
+			\subsection*{Problem 2.66}
+			\label{sub:problem_2_66}
+			Write the permutation $\omega = (1234)(678) \in S_{8}$ as a product of transpositions two \underline{different ways}. 
+			Be sure to check that the product of the transpositions really does give you the same permutation.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_66 (end)
+
+			\subsection*{Problem 2.67}
+			\label{sub:problem_2_67}
+			Write the permutation $\omega = (127)(348)(56) \in S_{8}$ as a product of transpositions two \underline{different ways}. 
+			Be sure to check that the product of the transpositions really does give you the same permutation.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_67 (end)
+
+			\subsection*{Problem 2.68}
+			\label{sub:problem_2_68}
+			Write the permutation $\omega = (13)(456)(27) \in S_{8}$ as a product of transpositions two \underline{different ways}. 
+			Be sure to check that the product of the transpositions really does give you the same permutation.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_68 (end)
+
+			\subsection*{Problem 2.69}
+			\label{sub:problem_2_69}
+			Prove: For any $k > 1$, a cycle in $S_{k}$ of length $m > 1$ is even (as a permutation) if and only if $m$ is odd (as an integer).
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_69 (end)
+
+			\subsection*{Problem 2.70}
+			\label{sub:problem_2_70}
+			Prove: For any $k > 1$ and any permutation $\alpha \in S_{k}$, $\alpha^{2}$ must be an even permutation.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_70 (end)
+
+			\subsection*{Problem 2.71}
+			\label{sub:problem_2_71}
+			Prove: If $k \geq 3$ and $\alpha \in S_{k}$ is a cycle of length 3, $\alpha = (a_{1}a_{2}a_{3})$, then $\ord(a) = 3$.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_71 (end)
+
+			\subsection*{Problem 2.72}
+			\label{sub:problem_2_72}
+			Let $k > 1$ and $a \in S_{k}$ a cycle of length $m > 1$.
+			Prove: $a^{2}$ is a cycle if and only if $m$ is odd.
+			\begin{proof}
+			\end{proof}
+			% subsubsection problem_2_72 (end)			
+		% section permutation_groups (end)
+
+		\section{$^{\star}$Dihedral Groups}
+		\label{sec:dihedral_groups}
+		% section dihedral_groups (end)
+
+		\section{$^{\star}$Symmetric Groups}
+		\label{sec:_star_symmetric_groups}
+		% section _star_symmetric_groups (end)
+
+		\section{$^{\star}$Matrix Groups}
+		\label{sec:_star_matrix_groups}
+		% section _star_matrix_groups (end)
+
+		\section{$^{\star}$The Quaternion Group}
+		\label{sec:_star_the_quaternion_group}
+		% section _star_the_quaternion_group (end)		
+	% chapter groups (end)
+
+	\chapter{Quotient Groups}
+	\label{sec:quotient_groups}
+		\subsection{Cosets}
+		\label{sub:cosets}
+		% subsection cosets (end)
+
+		\subsection{Normal Subgroups}
+		\label{sub:normal_subgroups}
+		% subsection normal_subgroups (end)
+
+		\subsection{Quotient Groups}
+		\label{sub:quotient_groups}
+		% subsection quotient_groups (end)
+
+		\subsection{$^{\star}$The Isomorphism Theorems}
+		\label{sub:_star_the_isomorphism_theorems}
+		% subsection _star_the_isomorphism_theorems (end)
+
+		\subsection{Homomorphic Images of a Group}
+		\label{sub:homomorphic_images_of_a_group}
+		% subsection homomorphic_images_of_a_group (end)
+
+		\subsection{Theorems of Cauchy and Sylow}
+		\label{sub:theorems_of_cauchy_and_sylow}
+		% subsection theorems_of_cauchy_and_sylow (end)
+	% chapter quotient_groups (end)
+
+	\chapter{$^{\star}$Group Actions}
+	\label{sec:group_actions}
+		\subsection{$^{\star}$Introduction to Group Actions}
+		\label{sub:introduction_to_group_actions}
+		% subsection introduction_to_group_actions (end)
+
+		\subsection{$^{\star}$Group Actions and Permutation Representations}
+		\label{sub:group_actions_and_permutation_representations}
+		% subsection group_actions_and_permutation_representations (end)
+
+		\subsection{$^{\star}$Groups Acting on Themselves by Left Multiplication -- Cayley's Theorem}
+		\label{sub:groups_acting_on_themselves_by_left_multiplication_cayley_s_theorem}
+		% subsection groups_acting_on_themselves_by_left_multiplication_cayley_s_theorem (end)
+
+		\subsection{$^{\star}$Groups Acting on Themselves by Conjugation -- The Class Equation}
+		\label{sub:groups_acting_on_themselves_by_conjugation_the_class_equation}
+		% subsection groups_acting_on_themselves_by_conjugation_the_class_equation (end)
+
+		\subsection{$^{\star}$Automorphisms}
+		\label{sub:automorphisms}
+		% subsection automorphisms (end)
+
+		\subsection{$^{\star}$The Sylow Theorems}
+		\label{sub:the_sylow_theorems}
+		% subsection the_sylow_theorems (end)
+
+		\subsection{$^{\star}$The Simplicity of $A_{n}$}
+		\label{sub:the_simplicity_of_An}
+		% subsection the_simplicity_of_An (end)
+	% chapter group_actions (end)
+
+	\appendix
+
+	\chapter{Figures}
+	\label{sec:figures}
+		\subsection{Cayley Tables}
+		\label{sub:cayley_tables}
+		These are the Cayley tables required for several of the problems involving showing a set and binary operation form a group or subgroup.
+		\begin{figure}[h]
+			\begin{tabular}{c|cccccc}
+				$+_{6}$ & 0 & 1 & 2 & 3 & 4 & 5 \\
+				\hline
+				0 & 0 & 1 & 2 & 3 & 4 & 5 \\
+				1 & 1 & 2 & 3 & 4 & 5 & \color{red} 0 \color{black} \\
+				2 & 2 & 3 & 4 & 5 & \color{red} 0 \color{black} & 1 \\
+				3 & 3 & 4 & 5 & \color{red} 0 \color{black} & 1 & 2 \\
+				4 & 4 & 5 & \color{red} 0 \color{black} & 1 & 2 & 3 \\
+				5 & 5 & \color{red} 0 \color{black} & 1 & 2 & 3 & 4
+			\end{tabular}
+			\caption{Cayley Table for $(\Z_{6}, +_{6})$ from Problem 1.3.17}
+			\label{117CT}
+		\end{figure}
+
+		\begin{figure}[h]
+			\begin{tabular}{c|cccccccccc}
+				$*_{5 \times 2}$ & (0,0) & (0,1) & (1,0) &(1,1) & (2,0) & (2,1) & (3,0) & (3,1) & (4,0) & (4,1) \\
+				\hline
+				(0,0) & \color{red}(0,0)\color{black} & (0,1) & (1,0) & (1,1) & (2,0) & (2,1) & (3,0) & (3,1) & (4,0) & (4,1) \\
+				(0,1) & (0,1) & \color{red}(0,0)\color{black} & (1,1) & (1,0) & (2,1) & (2,0) & (3,1) & (3,0) & (4,1) & (4,0) \\
+				(1,0) & (1,0) & (1,1) & (2,0) & (2,1) & (3,0) & (3,1) & (4,0) & (4,1) & \color{red}(0,0)\color{black} & (0,1) \\
+				(1,1) & (1,1) & (1,0) & (2,1) & (2,0) & (3,1) & (3,0) & (4,1) & (4,0) & (0,1) & \color{red}(0,0)\color{black} \\
+				(2,0) & (2,0) & (2,1) & (3,0) & (3,1) & (4,0) & (4,1) & \color{red}(0,0)\color{black} & (0,1) & (1,0) & (0,1) \\
+				(2,1) & (2,1) & (2,0) & (3,1) & (3,0) & (4,1) & (4,0) & (0,1) & \color{red}(0,0)\color{black} & (1,1) & (1,0) \\
+				(3,0) & (3,0) & (3,1) & (4,0) & (4,1) & \color{red}(0,0)\color{black} & (0,1) & (1,0) & (1,1) & (2,0) & (2,1) \\
+				(3,1) & (3,1) & (3,0) & (4,1) & (4,0) & (0,1) & \color{red}(0,0)\color{black} & (1,1) & (1,0) & (2,1) & (2,0) \\
+				(4,0) & (4,0) & (4,1) & \color{red}(0,0)\color{black} & (0,1) & (1,0) & (1,1) & (2,0) & (2,1) & (3,0) & (3,1) \\
+				(4,1) & (4,1) & (4,0) & (0,1) & \color{red}(0,0)\color{black} & (1,1) & (1,0) & (2,1) & (2,0) & (3,1) & (3,0)  
+			\end{tabular}
+			\caption{Cayley Table for $(\Z_{5} \times \Z_{2}, *_{5 \times 2})$ from Problem 1.3.18}
+			\label{118CT}
+		\end{figure}
+
+		\begin{figure}[h]
+			\begin{tabular}{c|cccccc}
+				$*$ & S & H & V & D  \\
+				\hline
+				S & \color{red}S\color{black} & H & V & D \\
+				H & H & \color{red}S\color{black} & D & V \\
+				V & V & D & \color{red}S\color{black} & H \\
+				D & D & V & H & \color{red}S\color{black} \\
+			\end{tabular}
+			\caption{Cayley Table for $(G, *)$ from Problem 1.21}
+			\label{121CT}
+		\end{figure}
+
+		\begin{figure}[t]
+			\begin{tabular}{c|cccc}
+				$\times$ & $\begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$ & $\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$ & $\begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}$ & $\begin{pmatrix} -1 & 0 \\ 0 & -1 \end{pmatrix}$ \\
+				\hline
+				$\begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$ & \color{red}$\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$\color{black} & $\begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$ & $\begin{pmatrix} -1 & 0 \\ 0 & -1 \end{pmatrix}$ & $\begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}$ \\
+				$\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$ & $\begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$ & \color{red}$\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$\color{black} & $\begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}$ & $\begin{pmatrix} -1 & 0 \\ 0 & -1 \end{pmatrix}$ \\
+				$\begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}$ & $\begin{pmatrix} -1 & 0 \\ 0 & -1 \end{pmatrix}$ & $\begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}$ & \color{red}$\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$\color{black} & $\begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$ \\
+				$\begin{pmatrix} -1 & 0 \\ 0 & -1 \end{pmatrix}$ & $\begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}$ & $\begin{pmatrix} -1 & 0 \\ 0 & -1 \end{pmatrix}$ & $\begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$ & \color{red}$\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$ \color{black}
+			\end{tabular}
+			\caption{Cayley Table for $(A, \times)$ from Problem 1.22}
+			\label{122CT}
+		\end{figure}
+
+		\begin{figure}[h]
+			\begin{tabular}{c|cccc}
+				$+_{12}$ & 0 & 3 & 6 & 9 \\
+				\hline
+				0 & \color{red} 0 \color{black} & 3 & 6 & 9 \\
+				3 & 3 & 6 & 9 & \color{red} 0 \color{black} \\
+				6 & 6 & 9 & \color{red} 0 \color{black} & 3 \\
+				9 & 9 & \color{red} 0 \color{black} & 3 & 6
+			\end{tabular}
+			\caption{Cayley Table for Problem 1.40}
+			\label{140CT}
+		\end{figure}
+
+		\begin{figure}[h]
+			\begin{tabular}{c|ccccc}
+				$+_{18}$ & 0 & 2 & 4 & 8 & 16 \\
+				\hline
+				0  & \color{red} 0 \color{black}  & 2  & 4  & 8  & 16 \\
+				2  & 2  & 4  & 6  & 10 & \color{red} 0 \color{black} \\
+				4  & 4  & 6  & 8  & 12 & 2 \\
+				8  & 8  & 10 & 12 & 16 & 6 \\
+				16 & 16 & \color{red} 0 \color{black}  & 2  & 6  & 4
+			\end{tabular}
+			\caption{Cayley Table for Problem 1.42}
+			\label{142CT}
+		\end{figure}
+
+		\begin{figure}[h]
+			\begin{tabular}{c|cccc}
+				$*$ & (0,0) & (0,2) & (1,0) & (1,2) \\
+				\hline
+				(0,0) & \color{red} (0,0) \color{black} & (0,2) & (1,0) & (1,2) \\
+				(0,2) & (0,2) & \color{red} (0,0) \color{black} & (1,2) & (1,0) \\
+				(1,0) & (1,0) & (1,2) & \color{red} (0,0) \color{black} & (0,2) \\
+				(1,2) & (1,2) & (1,0) & (0,2) & \color{red} (0,0) \color{black}
+			\end{tabular}
+			\caption{Cayley Table for Problem 1.43}
+			\label{143CT}
+		\end{figure}
+
+		\begin{figure}[h]
+			\begin{tabular}{c|cc}
+				$+_{4}$ & $f(a) = 0$ & $f(b) = 2$ \\
+				\hline
+				$f(a) = 0$ & 0 & 2 \\
+				$f(b) = 2$ & 2 & 0
+			\end{tabular}
+			\caption{Cayley Table for part of Problem 1.54 where $f(a),f(b) \in \Z_{4}$, and $a,b \in \Z_{8}$}
+			\label{154CT}
+		\end{figure}
+		% subsection cayley_tables (end)
+
+		\subsection{Tables for Functions on Finite Sets}
+		\label{sub:tables_for_functions_on_finite_sets}
+		These are the tables that define some functions over finite sets for certain problems.\\
+
+		\begin{figure}[h]
+			\begin{tabular}{c|c}
+				$a$ & $2a \mod{4}$ \\
+				\hline
+				0 & 0 \\
+				1 & 2 \\
+				2 & 0 \\
+				3 & 2 \\
+				4 & 0 \\
+				5 & 2 \\
+				6 & 0 \\
+				7 & 2
+			\end{tabular}
+			\caption{Function table for $f:\Z_{8}\to\Z_{4}$ mapped by $a \mapsto 2a \mod{4}$ from Problem 1.54.}
+			\label{154f1}
+		\end{figure}
+		% subsection tables_for_functions_on_finite_sets (end)
+	% chapter figures (end)
+
+	\backmatter
+\end{document}

@@ -1,0 +1,284 @@
+%!TEX output_directory = temp
+\documentclass[letterpaper, 12pt]{amsart}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%% boilerplate packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\usepackage{amsmath,amssymb,amsthm}
+	\usepackage[mathscr]{euscript}
+	\usepackage{enumerate}
+	\usepackage{graphicx}
+	\usepackage{mathrsfs}
+	\usepackage{color}
+	\usepackage{hyperref}
+	\usepackage{verbatim}
+	% \usepackage[margin=1.5in]{geometry}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%% rename the abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% \renewcommand{\abstractname}{Introduction}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% sets %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% sets 
+		\DeclareMathOperator{\N}{\mathbb{N}}
+		\DeclareMathOperator{\Z}{\mathbb{Z}}
+		\DeclareMathOperator{\Zp}{\mathbb{Z}^{+}}
+		\DeclareMathOperator{\Q}{\mathbb{Q}}
+		\DeclareMathOperator{\Qp}{\mathbb{Q}^{+}}
+		\DeclareMathOperator{\Qc}{\mathbb{Q}^{c}}
+		\DeclareMathOperator{\R}{\mathbb{R}}
+		\DeclareMathOperator{\Rp}{\mathbb{R}^{+}}
+		\DeclareMathOperator{\C}{\mathbb{C}}
+		\DeclareMathOperator{\Cnon}{\mathbb{C}^{\times}}
+		%% powerset of a set
+		\DeclareMathOperator{\pset}{\mathcal{P}}
+		%% set of continuous functions in a certain variable
+		\DeclareMathOperator{\cont}{\mathscr{C}}
+		%% set of functions in a certain variable
+		\DeclareMathOperator{\func}{\mathscr{F}}
+		
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% linear algebra %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%% linear span
+		\DeclareMathOperator{\Ell}{\mathscr{L}}
+		%% bold vectors with arrows, and bold matrices
+		\newcommand{\bmat}[1]{{\mathbf{#1}}}
+		\newcommand{\bvec}[1]{{\vec{\mathbf{#1}}}}
+		%% independent vectors/matrices
+		\DeclareMathOperator{\ind}{\perp\!\!\!\perp}
+		%% order
+		\DeclareMathOperator{\ord}{\text{ord}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%% probability & statistics %%%%%%%%%%%%%%%%%%%%%%%%%
+		%% probability, expectation, variance, etc.
+		\renewcommand{\Pr}{\mathbb{P}}
+		\DeclareMathOperator{\E}{\mathbb{E}}
+		\DeclareMathOperator{\var}{\rm Var}
+		\DeclareMathOperator{\sd}{\rm SD}
+		\DeclareMathOperator{\cov}{\rm Cov}
+		\DeclareMathOperator{\SE}{\rm SE}
+		\DeclareMathOperator{\ssreg}{{\rm SS}_{{\rm Reg}}}
+		\DeclareMathOperator{\ssr}{{\rm SS}_{{\rm Res}}}
+		\DeclareMathOperator{\sst}{{\rm SS}_{{\rm Tot}}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% congruences %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\renewcommand{\mod}[1]{\ (\mathrm{mod}\ #1)}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% bracket notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		% I first used this for principal ideals, that is why the abbreviation is pid
+		\newcommand{\pid}[1]{\langle #1 \rangle}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% fatdot notation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\makeatletter
+			\newcommand*\fatdot{\mathpalette\fatdot@{.5}}
+			\newcommand*\fatdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+		\makeatother
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% use pretty letters %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\DeclareMathOperator{\ep}{\varepsilon}
+		\DeclareMathOperator{\ph}{\varphi}
+\begin{document}
+	\title{Homework 1  -- Math 392 \\ \today}
+	\author{Alex Thies \\ \href{mailto:athies@uoregon.edu}{\lowercase{athies$@$uoregon.edu}}}
+
+	\maketitle
+
+	\section{Book Problems}
+	\label{sec:book_problems}
+		\subsection*{Problem 7.23}
+		\label{sub:problem_7_23}
+		Let $A$ be a commutative ring with unity and $a(x) \in A[x]$. 
+		Determine if the following statement is true or false. 
+		Either prove it or find a counterexample: 
+		If every coefficient of $a(x)$ is a zero divisor of $A$, then $a(x)$ is a zero divisor in $A[x]$.
+			\begin{proof}
+				This is false, we present the following counterexample: consider the polynomial ring $\Z_{6}[x]$ and polynomial $3 + 2x = a(x) \in \Z_{6}[x]$.
+				Note that $2,3$ are zero divisors in $\Z_{6}$, we will demonstrate that for an arbitrary nonzero $b(x) \in \Z_{6}[x]$, that $a(x)b(x) \neq 0(x)$.
+				Furthermore, let $b(x) \in \Z_{6}[x]$ such that $b(x) \neq 0(x)$, thus $\deg(b(x)) = n$, and $b_{n} \neq 0$.
+				Consider the product of these polynomials,
+					\begin{align*}
+					a(x)b(x) &= (2x + 3)\left( \sum\limits_{i=0}^{n}b_{i}x^{i} \right), \\
+					&= (2x + 3)\left( b_{n}x^{n} + b_{n-1}x^{n-1} + \sum\limits_{i=0}^{n-2}b_{i}x^{i} \right), \\
+					&= 2b_{n}x^{n+1} + (3b_{n} + 2b_{n-1})x^{n-1} + \cdots.
+					\end{align*}
+				If $a(x)$ is in fact a zero divisor in $\Z_{6}[x]$, then every coefficient would be equivalent to $0$ modulo $6$.
+				Notably, it must be true that the coefficient of the new $(n+1)$th term is zero, i.e., $2b_{n} \equiv 0 \mod{6} \iff b_{n} = 3$.
+				If $b_{n} = 3$, then the coefficient for the $n$th term is $(9 + 2b_{n-1}) \equiv (3 + 2b_{n-1}) \mod{6}$.
+				Again, if $a(x)$ is a zero divisor, then there exists $b_{n-1} \in \Z_{6}$ such that $3 + 2b_{n-1} \equiv 0 \mod{6}$.
+				However, upon inspection its obvious that this congruence is not solvable, thus (in this counterexample) if the $(n+1)$th term is zero it is true that the $n$th term is not zero.
+				It follows that $a(x)b(x) \neq 0(x)$, hence $a(x)$ is not a zero divisor, even though its coefficients are zero divisors in their ring.
+			\end{proof}
+		% subsection problem_7_23 (end)
+
+		\subsection*{Problem 7.24}
+		\label{sub:problem_7_24}
+		Let $A$ be a commutative ring with unity and $a(x) \in A[x]$. 
+		Determine if the following statement is true or false, then either prove it or find a counterexample: 
+		If $a_{0} \neq 0_{A}$ is not a zero divisor of $A$, then $a(x)$ is not a zero divisor in $A[x]$.
+			\begin{proof}
+			This is true.
+			Let $A$, $A[x]$, $a(x)$ be as above.
+			Suppose $a_{0} \neq 0_{A}$ is not a zero divisor in $A$.
+			Further, consider the polynomial $b(x) \in A[x]$ such that $b(x) \neq 0(x)$, thus $\deg(b(x)) = n$ and $b_{n} \neq 0_{A}$.
+			Since each polynomial has a least term $a_{i}x^{i}$, notice that the product $a(x)b(x)$ will contain the term $a_{0}b_{i}x^{i}$, where $b_{i}x^{i}$ is the least term of $b(x)$. 
+			By our supposition $a_{0}b_{n} \neq 0_{A}$, thus the degree of the product $a(x)b(x)$ will be at least $n$ which means that $a(x)b(x)$ is not the zero polynomial and $a(x)$ is not a zero divisor of $A[x]$.
+			\end{proof}
+		% subsection problem_7_24 (end)
+
+		\subsection*{Problem 7.27}
+		\label{sub:problem_7_27}
+		Suppose $A$ is a commutative ring with unity. 
+		Let $S = \{ a(x) \in A[x] : a_{0} \neq 0_{A} \}$. 
+		Determine if $S$ is an ideal of $A[x]$. 
+		Either prove that it is an ideal or find a counterexample showing it fails to be an ideal.
+			\begin{proof}
+			It is immediately clear that $S$ is not closed under subtraction and thus not an ideal.
+
+			Since $A$ is a commutative ring with unity for each $a \in A$ there exists $-a \in A$ such that $a + (-a) = 0_{A}$.
+			It follows that $a(x) = a_{0}$ and $a'(x) = -a_{0}$ are each in $S$, but their sum is $0(x)$ which is not in $S$.
+			Hence, $S$ is not closed under subtraction, and not an ideal.
+			\end{proof}
+		% subsection problem_7_27 (end)
+
+		\subsection*{Problem 7.47}
+		\label{sub:problem_7_47}
+		Let $K$ be a field. Prove: 
+		The only units in $K[x]$ are the nonzero constant polynomials.
+		\begin{proof}
+		Since $K$ is a field, each of its nonzero elements are units, i.e., for each $k \in K$ such that $k \neq 0$, there exists $k^{-1} \in K$ such that $kk^{-1} = 1_{K}$.
+		Define $\ph : K \to K[x]$ mapped by $k \mapsto k_{0}$ and notice that $\ph(K) \subseteq K[x]$.
+		The set $\ph(K)$ is all of the nonzero constant polynomials in $K[x]$, it is clear by their construction that each element in $\ph(K)$ has its inverse also in $\ph(K)$, thus every element in $\ph(K)$ is a unit.
+		It remains to show that these are all of the units of $K[x]$.
+
+		Consider $a(x) \in K[x]$ such that $\deg(a(x)) = n$ and $n \geq 1$, and suppose by way of contradiction that there exists $b(x) \in K[x]$ with $\deg(b(x)) = m$ such that $a(x)b(x) = 1(x)$ (where $1(x)$ denotes the unity of $K[x]$).
+		Since $K$ is a field, $K[x]$ is an integral domain, thus $\deg(a(x)b(x)) = n + m$.
+		Recall that $n \geq 1$, thus $\deg(a(x)b(x)) \geq 1$, which implies that $a(x)b(x) \neq 1(x)$.
+		Thus, $a(x)$ is not a unit if its degree exceeds that of a nonzero constant polynomial, which implies that for a field $K$, the only units in the polynomial ring $K[x]$ are the nonzero constant polynomials, as we aimed to show.
+		\end{proof}
+		% subsection problem_7_47 (end)
+
+		\subsection*{Problem 7.52}
+		\label{sub:problem_7_52}
+		Let $A$ be a commutative ring with unity. 
+		Prove that the function $f : A[x] \to A$ defined by $f(a(x)) = a_{0}$ is a homomorphism. 
+		What is the kernel of $f$?
+		\begin{proof}
+		Let $A$, $A[x]$, and $f$ be as above.
+		Since the problem refers to $f$ as a function, we will omit showing that it is uniquely defined.
+		That leaves us with showing that $f$ is both additive and multiplicative.
+		Let $a(x), b(x) \in A[x]$ such that their respective degrees are finite.
+		We compute the following:
+			\begin{align*}
+			f(a(x) + b(x)) &= f\left( \sum\limits_{i=0}^{n}a_{i}x^{i} + \sum\limits_{i=0}^{m}b_{i}x^{i} \right), \\
+			&= f\left( \sum\limits_{i=0}^{\max{(n,m)}} (a_{i} + b_{i})x^{i} \right), \\
+			&= f\left( (a_{0} + b_{0}) + \sum\limits_{i=1}^{\max{(n,m)}} (a_{i} + b_{i})x^{i} \right), \\
+			&= a_{0} + b_{0}, \\
+			&= f(a(x)) + f(b(x)).
+			\end{align*}
+		Thus, $f$ is additive.
+		We will now show that it is also multiplicative:
+			\begin{align*}
+			f(a(x)b(x)) &= f\left( \sum\limits_{i=0}^{n}a_{i}x^{i}\sum\limits_{j=0}^{m}b_{j}x^{j} \right), \\
+			&= f\left( \sum\limits_{i+j=0}^{n+m} (a_{i}b_{j})x^{i+j} \right), \\
+			&= f\left( a_{0}b_{0} + \sum\limits_{i+j=1}^{n+m} (a_{i}b_{j})x^{i+j} \right), \\
+			&= a_{0}b_{0}, \\
+			&= f(a(x))f(b(x)).
+			\end{align*}
+		Thus, $f$ is both additive and multiplicative, hence it is a ring homomorphism.
+		\end{proof}
+		% subsection problem_7_52 (end)
+	% section book_problems (end)
+
+	\section{Extra Problems}
+	\label{sec:extra_problems}
+	Let $\C$ denote the complex numbers, $\{ a + bi : \text{$a, b$ are real numbers, and $i^{2}= -1$} \}$. 
+	Let $\R$ denote the real numbers. 
+	Define $T: \R[x] \to \C$ by $T(f) = f(i)$ (i.e. take a polynomial with real coefficients, and evaluate it at the complex number $i$).
+
+		\subsection*{Problem 1}
+		\label{sub:problem_1}
+		Prove that $T$ is a homomorphism (\textit{hint}: use theorems, or slight modifications of theorems, from chapter 7. 
+		Not everything needs to be proven from the definitions, although there's nothing wrong with that).
+			\begin{proof}
+			We will show that $T$ is uniquely defined, additive, multiplicative, and therefore a ring homomorphism.
+			
+			Let $T$ be as above, further let $a(x), a'(x) \in \R[x]$ such that $a(x) = a'(x)$.
+			Since $a(x) = a'(x)$ it is clear that $a(i) = a'(i)$, thus $T$ is uniquely defined.
+
+			Let $b(x) \in \R[x]$, we compute:
+			\begin{align*}
+			T(a(x) + b(x)) &= T\left( \sum\limits_{j=0}^{n} a_{j}x^{j} + \sum\limits_{j=0}^{m} b_{j}x^{j} \right), \\
+			&= T\left( \sum\limits_{j=0}^{\max{(n,m)}} (a_{j} + b_{j})x^{j} \right), \\
+			&= \sum\limits_{j=0}^{\max{(n,m)}} (a_{j} + b_{j})i^{j} \\
+			&= \sum\limits_{j=0}^{n} a_{j}i^{j} + \sum\limits_{j=0}^{m} b_{j}i^{j}, \\
+			&= a(i) + b(i), \\
+			&= T(a(x)) + T(b(x)).
+			\end{align*}
+			Thus, $T$ is additive; we will now show that $T$ is multiplicative.
+			\begin{align*}
+			T(a(x)b(x)) &= T\left( \sum\limits_{j=0}^{n} a_{j}x^{j}\sum\limits_{k=0}^{m} b_{k}x^{k} \right), \\
+			&= T\left( \sum\limits_{j+k = 0}^{n+m} a_{j}b_{k}x^{j+k} \right), \\
+			&= \sum\limits_{j+k = 0}^{n+m} a_{j}b_{k}i^{j+k}, \\
+			&= \sum\limits_{j+k = 0}^{n+m} a_{j}i^{j}b_{k}i^{k},
+			\end{align*}
+			\begin{align*}
+			&= \sum\limits_{j=0}^{n} a_{j}i^{j}\sum\limits_{k=0}^{m} b_{k}i^{k}, \\
+			&= a(i)b(i), \\
+			&= T(a(x))T(b(x)).
+			\end{align*}
+			Thus, $T$ is multiplicative, and we have shown that $T$ satisfies all of the conditions required of a ring homomorphism, as we aimed to do.
+			\end{proof}
+		% subsection problem_1 (end)
+
+		\subsection*{Problem 2}
+		\label{sub:problem_2}
+		Prove that the kernel of $T$ is $\pid{x^{2} + 1}$, i.e. the principal ideal generated by $x^{2} + 1$.
+			\begin{proof} 
+			We will show by double inclusion that $\ker{(T)} = \pid{x^{2} + 1}$.
+			Notice that $T(x^{2} + 1) = i^{2} + 1 = 0$, thus by the zero product property any $a(x) \in \pid{x^{2} + 1}$ is also equal to zero when evaluated at $i$.
+			Thus, $\pid{x^{2} + 1} \subseteq \ker{(T)}$; it remains to show that $\ker{(T)} \subseteq \pid{x^{2} + 1}$.
+
+			Let $b(x) \in \ker{(T)}$ be arbitrary, then $T(b(x)) = b(i) = 0$.
+			By the division algorithm we can write $b(x) = q(x)(x^{2} + 1) + r(x)$ for unique polynomials $q,r \in \R[x]$ such that $\deg(r(x)) < \deg(x^{2} + 1)$, or $r(x) = 0(x)$.
+			The rest of the proof pertains to the nature of $r(x)$.
+			For $\ker{(T)}$ to be a subset of $\pid{x^{2}+1}$ it must be true that $r(x) = 0(x)$, which we will show by cases.
+			Since $\deg(x^{2}+1) = 2$ we have that the degree of $r(x)$ is either 0 or 1, or that $r(x) = 0(x)$, i.e., we have the following cases (1) $r(x) = r_{0}$, or (2) $r(x) = r_{0} + r_{1}x$, or (3) $r(x) = 0(x)$.
+
+				\subsubsection*{Case 1}
+				\label{ssub:case_1}
+				If $\deg(r(x)) = 0$, then $r(x) = r_{0}$ and $r_{0} \neq 0$. 
+				It is plain to see that $r(i) \neq 0$ and then $b(i) \neq 0$, which would move $b(x)$ out of the kernel, thus $\deg(r(x)) \neq 0$.
+				% subsubsection case_1 (end)
+
+				\subsubsection*{Case 2}
+				\label{ssub:case_2}
+				If $\deg(r(x)) = 1$, then $r(x) = r_{0} + r_{1}x$, and $r_{1} \neq 0$.
+				Again, its fairly easy to see that $r(i) = r_{0} + r_{1}i \neq 0$, and for the same reason as before, $\deg(r(x)) \neq 1$.\\
+				% subsubsection case_2 (end)
+				\vspace*{1.5mm}
+
+			We have shown that cases one and two fail, leaving us with case three as the remaining possibility, that being that $r(x) = 0(x)$.
+			It is clear that if $r(x) = 0(x)$ then $b(i) = 0(x)$.
+			Since we wrote $b(x) = q(x)(x^{2}+1) + r(x)$ we can see that $b(x) \in \pid{x^{2} + 1}$.
+			We have shown that an arbitrary member of the kernel can be written as a linear combination of the polynomial that generates the principal ideal in question, thus $\ker{(T)} \subseteq \pid{x^{2} + 1}$.
+
+			We have shown that $\ker{(T)}$ and $\pid{x^{2} + 1}$ are subsets of one another, therefore they are equal, as desired.
+			\end{proof}
+		% subsection problem_2 (end)
+
+		\subsection*{Problem 3}
+		\label{sub:problem_3}
+		Prove that $\R[x]/\pid{x^{2} + 1}$ is isomorphic to $\C$.
+			\begin{proof}
+			Recall the Fundamental Homomorphism Theorem (FHT), which states: let $A$ and $K$ be rings, and let $f: A \to K$ be a ring homomorphism, then $$A/\ker{(f)} \cong f(A).$$
+			In Problem 1 we proved that $T$ is a homomorphism, and in Problem 2 we proved that $\ker{(T)} = \pid{x^{2}+1}$, this tees up the FHT; it remains to show that $T$ is surjective, which gives us $T(\R[x]) = \C$.
+			Notice that $a + bx \in \R[x]$ and $T(a+bx) = a+bi$, thus $T(a+bx)$ outputs all possible complex numbers.
+			Therefore, $T$ is surjective, $T(\R[x]) = \C$, and by the FHT: $\R[x]/\pid{x^{2} + 1} \cong \C$, as we aimed to prove.
+			\end{proof}
+		% subsection problem_3 (end)
+	% section extra_problems (end)
+\end{document}
